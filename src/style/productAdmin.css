@@ -1,0 +1,18 @@
+h1{
+    text-align: center;
+}
+
+.tambah-parcel{
+    margin-bottom: 3%;
+    margin-left: 16%;
+}
+
+.card-cont{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90vw;
+    margin-right: 5vw;
+    margin-left: 5vw;
+    justify-content: center;
+    margin-bottom: 5%;
+}
