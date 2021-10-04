@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react"
+import { Switch, Route } from "react-router-dom"
+import Homepage from "./pages/homepage"
+import { ToastContainer } from "react-toastify"
+import Register from "./pages/register"
+import Login from "./pages/login"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <>
+        <Switch>
+          <Route component={Homepage} path="/" exact />
+          <Route component={Register} path="/register" />
+          <Route component={Login} path="/login" />
+        </Switch>
+        <ToastContainer />
+      </>
+    )
+  }
 }
 
-export default App;
+export default App
