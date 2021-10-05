@@ -11,6 +11,9 @@ import {AiFillPlusCircle} from "react-icons/all"
 import {Button, Card} from "react-bootstrap"
 import "../style/productAdmin.css"
 
+//import Link
+import {Link} from "react-router-dom"
+
 class ProductAdmin extends React.Component{
     constructor(props){
         super(props)
@@ -68,7 +71,7 @@ class ProductAdmin extends React.Component{
                           </p>
                           </Card.Text>
                           <div style={{display:"flex", marginBottom:"0"}}>
-                          <Button variant="primary" style={{marginRight:"1vw"}}>Edit Product</Button>
+                          <Button variant="primary" style={{marginRight:"1vw"}} as={Link} to={`/editProductAdmin?${item.idproduct}`}>Edit Product</Button>
                           <Button variant="danger">Hapus Product</Button>
                           </div>
                         </Card.Body>
