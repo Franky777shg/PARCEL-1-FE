@@ -7,8 +7,10 @@ import Homepage from "./pages/homepage"
 import Login from "./pages/login"
 import Register from "./pages/register"
 import ProductAdmin from "./pages/productAdmin"
+
 import ParcelAdmin from "./pages/parcelAdmin"
 import EditProduct from "./pages/editProduct" 
+import Verify from "./pages/verify"
 
 class App extends Component{
   render(){
@@ -21,6 +23,7 @@ class App extends Component{
           <Route component={ProductAdmin} path="/productAdmin"/>
           <Route component={ParcelAdmin} path="/parcelAdmin"/>
           <Route component={EditProduct} path="/editProductAdmin"/>
+          <Route component={Verify} path="/verify/:token"/>
         </Switch>
         <ToastContainer />
       </>

@@ -1,6 +1,9 @@
 import React from "react";
 import axios from "axios";
-import { Image, Form, Button } from "react-bootstrap";
+
+
+//import styling
+import { Image, Form, Button, Modal } from "react-bootstrap";
 import {toast} from "react-toastify"
 
 class EditProduct extends React.Component {
@@ -10,6 +13,10 @@ class EditProduct extends React.Component {
       product: {},
       category: [],
       categorySelect: "",
+      uploadModal : false,
+      images: "",
+      successModal : false,
+      caption : ""
     };
   }
   componentDidMount() {
@@ -29,14 +36,14 @@ class EditProduct extends React.Component {
 
   confirmEditProduct=()=>{
       let product_name = this.refs.namaProduk.value
-      let product_category= this.state.categorySelect
+      let idproduct_category= this.state.categorySelect
       let product_desc = this.refs.deskripsi.value
-      let product_capital= this.refs.modal.value
-      let product_price = this.refs.harga.value
-      let product_stock = this.refs.stok.value
+      let product_capital= +this.refs.modal.value
+      let product_price = +this.refs.harga.value
+      let product_stock = +this.refs.stok.value
 
-      if(!product_name || !product_category || !product_desc || !product_capital || !product_price || !product_stock ){
-          return toast.error("Periksa Kembali seluruh form telah terisi", {
+      if(!product_name || !idproduct_category || !product_desc || !product_capital || !product_price || !product_stock ){
+          return toast.error("Pastikan seluruh form telah terisi", {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,
@@ -50,27 +57,67 @@ class EditProduct extends React.Component {
       // data yang dikirim untuk edit produk
       let data ={
           product_name,
-          product_category,
+          idproduct_category,
           product_desc,
           product_capital,
           product_price,
           product_stock
       }
       console.log(data)
+      axios.post(`http://localhost:2000/productAdmin/editProduct/${this.state.product.idproduct}`, data)
+      .then(res =>{
+          this.setState({product: res.data[0], categorySelect: res.data[0].idproduct_category, successModal: true, caption : "Data produk berhasil diubah"})
+          this.setState({successModal:false})
+      })
+      .catch(err => console.log(err))
 
       
   }
 
+  handleChoose=(e)=>{
+      this.setState({images: e.target.files[0]})
+  }
+
+  handleUpload =()=>{
+      const data = new FormData()
+      data.append('new', this.state.images)
+      console.log(data.get('new'))
+
+      axios.post(`http://localhost:2000/productAdmin/editUploadProduct/${this.state.product.idproduct}`, data, {headers:{'Content-Type': 'multipart/form-data'}}).then(res =>{
+          this.setState({product : res.data[0], categorySelect:res.data[0].idproduct_category, successModal: res.data[1].success, uploadModal: false, caption : "Gambar berhasil di upload" })
+          this.setState({successModal:false})
+      })
+      .catch(err => console.log(err))
+
+  }
+
   render() {
-    // console.log(this.state.product);
-    // console.log(this.state.category);
+    console.log(this.state.product);
+    console.log(this.state.category);
+    console.log(this.state.successModal)
     // console.log(this.state.categorySelect);
-    console.log(this.props.location.search.substring(1))
+    // console.log(this.props.location.search.substring(1))
+    console.log(this.state.images)
+    if(this.state.successModal===true){
+        toast.success(this.state.caption, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+        
+    }
     return (
       <div>
         <h1>Edit Product</h1>
         <div className="d-flex flex-wrap  bd-highlight mb-3 justify-content-center">
-          <Image src={`http://localhost:2000/uploads/products/${this.state.product.product_image}`} className="me-2" width={300} height={340} />
+            <div className="d-flex flex-column">
+          <Image src={`http://localhost:2000/uploads/products/${this.state.product.product_image}`} className="me-2 mb-2" width={300} height={340} />
+          <Button variant="primary" style={{width:"35%", margin:"auto", marginTop:"2%"}} onClick={()=>this.setState({uploadModal:true})}>Upload Foto</Button>
+            </div>
           <div style={{width:"40vw"}}>
 
             <Form.Label>Nama Produk</Form.Label>
@@ -105,6 +152,29 @@ class EditProduct extends React.Component {
           </div>
         </div>
         <Button variant="primary" style={{marginLeft:"75vw"}} onClick={this.confirmEditProduct}>Edit Produk</Button>
+
+        <Modal show={this.state.uploadModal} onHide={()=>this.setState({uploadModal: false})}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <form enctype="multipart/form-data">
+        <input 
+            type="file"
+            name="new"
+            accept="image/*"
+            onChange={(e)=>this.handleChoose(e)} />
+        </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={()=>this.setState({uploadModal: false})}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={this.handleUpload}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
       </div>
     );
   }
