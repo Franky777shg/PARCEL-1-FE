@@ -22,6 +22,7 @@ class FormRegister extends Component {
       errEmail: [false, ""],
       errPassword: [false, ""],
       errConfirmPassword: [false, ""],
+      isSubmit: false,
     }
   }
 
@@ -114,17 +115,22 @@ class FormRegister extends Component {
       password,
     }
 
+    this.setState({ ...this.state, isSubmit: true })
+
     axios
       .post(`${AUTH_API}/register`, newUser)
       .then((res) => {
+        this.setState({ ...this.state, isSubmit: false })
         toast.success(res.data)
         return this.props.history.push("/login")
       })
-      .catch((err) => toast.error(err.response.data))
+      .catch((err) => {
+        this.setState({ ...this.state, isSubmit: false }, () => toast.error(err.response.data))
+      })
   }
 
   render() {
-    const { username, email, name, address, password, confirmPassword } = this.state
+    const { username, email, name, address, password, confirmPassword, isSubmit } = this.state
     const [errUsername, errTextUsername] = this.state.errUsername
     const [errEmail, errTextEmail] = this.state.errEmail
     const [errPassword, errTextPassword] = this.state.errPassword
@@ -201,6 +207,7 @@ class FormRegister extends Component {
           style={{ backgroundColor: "#8F9B85", border: "none" }}
           size="lg"
           onClick={this.onSubmit}
+          disabled={isSubmit}
         >
           Daftar
         </Button>

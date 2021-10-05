@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { Col, Container, Image, Row } from "react-bootstrap"
-import { Link } from "react-router-dom"
+import { connect } from "react-redux"
+import { Link, Redirect } from "react-router-dom"
 import FormRegister from "../components/FormRegister"
 
 const IMAGE_PARCEL_URL =
@@ -8,6 +9,14 @@ const IMAGE_PARCEL_URL =
 
 class Register extends Component {
   render() {
+    const { role } = this.props
+
+    if (role === "admin") {
+      return <Redirect to="/parcelAdmin" />
+    } else if (role === "user") {
+      return <Redirect to="/" />
+    }
+
     return (
       <Container>
         <div className="d-flex align-items-center">
@@ -44,4 +53,8 @@ class Register extends Component {
   }
 }
 
-export default Register
+const mapStateToProps = (state) => ({
+  role: state.userReducer.role,
+})
+
+export default connect(mapStateToProps, {})(Register)
