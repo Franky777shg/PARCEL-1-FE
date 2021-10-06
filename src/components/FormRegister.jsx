@@ -106,6 +106,8 @@ class FormRegister extends Component {
       errConfirmPassword === true
     )
       return toast.error("Mohon masukkan data yang valid!")
+    
+    if ( password !== confirmPassword) return toast.error("Konfirmasi kata sandi tidak cocok!")
 
     const newUser = {
       username,
@@ -135,6 +137,7 @@ class FormRegister extends Component {
     const [errEmail, errTextEmail] = this.state.errEmail
     const [errPassword, errTextPassword] = this.state.errPassword
     const [errConfirmPassword, errTextConfirmPassword] = this.state.errConfirmPassword
+
     return (
       <>
         <div className="w-50">

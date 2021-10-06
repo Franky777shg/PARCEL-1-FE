@@ -3,6 +3,7 @@ import { FloatingLabel, Form, Button } from "react-bootstrap"
 import { toast } from "react-toastify"
 import { connect } from "react-redux"
 import { onLogin } from "../redux/actions"
+import { Link } from "react-router-dom"
 import Axios from "axios"
 
 const AUTH_API = "http://localhost:2000/auth"
@@ -60,7 +61,7 @@ class FormLogin extends Component {
 
     return (
       <>
-        <div className="w-50">
+        <div className="w-75">
           <FloatingLabel label="Username" className="mb-3">
             <Form.Control
               name="username"
@@ -80,6 +81,15 @@ class FormLogin extends Component {
               isInvalid={isError}
             />
           </FloatingLabel>
+          <p>
+            Lupa Kata Sandi? <Link to="/forgot-password">Klik disini</Link>
+          </p>
+          <p className="d-block d-md-none">
+            Belum punya akun?{" "}
+            <Link className="d-block d-md-none" to="/register">
+              Daftar Disini
+            </Link>
+          </p>
         </div>
         <Button
           style={{ backgroundColor: "#8F9B85", border: "none" }}
