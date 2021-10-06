@@ -20,7 +20,7 @@ class Login extends Component {
     return (
       <Container>
         <div className="d-flex align-items-center">
-          <Row className="w-100 bg-white rounded-3 ms-0 my-5">
+          <Row className="w-100 bg-white rounded-3 ms-0 my-5" style={{ minHeight: "75vh" }}>
             <Col
               md={8}
               className="d-flex flex-column justify-content-center align-items-center p-3"
@@ -28,11 +28,6 @@ class Login extends Component {
               <h3 className="fw-bold d-block d-md-none">Selamat Datang di ADJ Parcel</h3>
               <h3 className="fw-bold">Masuk dengan akun anda</h3>
               <FormLogin />
-              <br />
-              <p className="d-block d-md-none">Belum punya akun?</p>
-              <Link className="d-block d-md-none" to="/register">
-                Daftar Disini
-              </Link>
             </Col>
             <Col
               md={4}
