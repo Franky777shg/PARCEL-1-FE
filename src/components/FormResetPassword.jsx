@@ -33,21 +33,19 @@ class FormResetPassword extends Component {
         const isPasswordContainNumber = numberRegex.test(value)
         if (value.length < minLengthPassword || !isPasswordContainNumber)
           return this.setState({
-            ...this.state,
             password: value,
             errPassword: [true, "Kata sandi minimal 8 karakter dan mengandung angka."],
           })
-        this.setState({ ...this.state, password: value, errPassword: [false, ""] })
+        this.setState({ password: value, errPassword: [false, ""] })
         break
       case "confirmPassword":
         const isPasswordSame = value === this.state.password
         if (!isPasswordSame || errPassword)
           return this.setState({
-            ...this.state,
             confirmPassword: value,
             errConfirmPassword: [true, "Kata sandi tidak cocok."],
           })
-        this.setState({ ...this.state, confirmPassword: value, errConfirmPassword: [false, ""] })
+        this.setState({ confirmPassword: value, errConfirmPassword: [false, ""] })
         break
       default:
         break
@@ -70,16 +68,16 @@ class FormResetPassword extends Component {
 
     if (password !== confirmPassword) return toast.error("Konfirmasi kata sandi tidak cocok!")
 
-    this.setState({ ...this.state, isSubmit: true })
+    this.setState({ isSubmit: true })
 
     Axios.post(`${AUTH_API}/reset-password`, { password }, AxiosConfig)
       .then((res) => {
-        this.setState({ ...this.state, isSubmit: false })
+        this.setState({ isSubmit: false })
         toast.success(res.data)
         return history.push("/login")
       })
       .catch((err) => {
-        this.setState({ ...this.state, isSubmit: false }, () => toast.error(err.response.data))
+        this.setState({ isSubmit: false }, () => toast.error(err.response.data))
       })
   }
 
@@ -102,7 +100,7 @@ class FormResetPassword extends Component {
               onChange={(e) => this.handleChange(e)}
             />
             <InputGroup.Text
-              onClick={() => this.setState({ ...this.state, visibility: !visibility })}
+              onClick={() => this.setState({ visibility: !visibility })}
             >
               {visibility ? <FiEye /> : <FiEyeOff />}
             </InputGroup.Text>
@@ -121,7 +119,7 @@ class FormResetPassword extends Component {
             />
             <InputGroup.Text
               onClick={() =>
-                this.setState({ ...this.state, visibilityConfirm: !visibilityConfirm })
+                this.setState({ visibilityConfirm: !visibilityConfirm })
               }
             >
               {visibilityConfirm ? <FiEye /> : <FiEyeOff />}

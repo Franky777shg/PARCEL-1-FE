@@ -21,12 +21,12 @@ class FormLogin extends Component {
   onSubmit = () => {
     const { isError } = this.state
     if (isError) {
-      this.setState({ ...this.state, isError: false })
+      this.setState({ isError: false })
     }
     const username = this.refs.username.value
     const password = this.refs.password.value
     if (username === "" || password === "") {
-      return this.setState({ ...this.state, isError: true }, () =>
+      return this.setState({ isError: true }, () =>
         toast.error("Mohon masukkan seluruh data!!!")
       )
     }
@@ -36,7 +36,7 @@ class FormLogin extends Component {
       password,
     }
 
-    this.setState({ ...this.state, isSubmit: true })
+    this.setState({ isSubmit: true })
 
     Axios.post(`${AUTH_API}/login`, userData)
       .then((res) => {
@@ -46,12 +46,12 @@ class FormLogin extends Component {
         this.refs.username.value = ""
         this.refs.password.value = ""
 
-        this.setState({ ...this.state, isSubmit: false })
+        this.setState({ isSubmit: false })
         toast.success("Masuk akun berhasil!")
         this.props.onLogin(user)
       })
       .catch((err) => {
-        this.setState({ ...this.state, isSubmit: false })
+        this.setState({ isSubmit: false })
         toast.error(err.response.data)
       })
   }

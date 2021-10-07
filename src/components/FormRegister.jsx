@@ -36,45 +36,40 @@ class FormRegister extends Component {
         const isUsernameContainNumber = numberRegex.test(value)
         if (value.length < minLengthUsername || !isUsernameContainNumber)
           return this.setState({
-            ...this.state,
             username: value,
             errUsername: [true, "Username minimal 8 karakter dan mengandung angka!"],
           })
-        this.setState({ ...this.state, username: value, errUsername: [false, ""] })
+        this.setState({ username: value, errUsername: [false, ""] })
         break
       case "email":
         const emailValid = isEmail(value)
         if (!emailValid)
           return this.setState({
-            ...this.state,
             email: value,
             errEmail: [true, "Mohon masukkan email yang valid!."],
           })
-        this.setState({ ...this.state, email: value, errEmail: [false, ""] })
+        this.setState({ email: value, errEmail: [false, ""] })
         break
       case "password":
         const isPasswordContainNumber = numberRegex.test(value)
         if (value.length < minLengthPassword || !isPasswordContainNumber)
           return this.setState({
-            ...this.state,
             password: value,
             errPassword: [true, "Kata sandi minimal 8 karakter dan mengandung angka."],
           })
-        this.setState({ ...this.state, password: value, errPassword: [false, ""] })
+        this.setState({ password: value, errPassword: [false, ""] })
         break
       case "confirmPassword":
         const isPasswordSame = value === this.state.password
         if (!isPasswordSame)
           return this.setState({
-            ...this.state,
             confirmPassword: value,
             errConfirmPassword: [true, "Kata sandi tidak cocok."],
           })
-        this.setState({ ...this.state, confirmPassword: value, errConfirmPassword: [false, ""] })
+        this.setState({ confirmPassword: value, errConfirmPassword: [false, ""] })
         break
       default:
         this.setState({
-          ...this.state,
           [name]: value,
         })
     }
@@ -117,17 +112,17 @@ class FormRegister extends Component {
       password,
     }
 
-    this.setState({ ...this.state, isSubmit: true })
+    this.setState({ isSubmit: true })
 
     axios
       .post(`${AUTH_API}/register`, newUser)
       .then((res) => {
-        this.setState({ ...this.state, isSubmit: false })
+        this.setState({ isSubmit: false })
         toast.success(res.data)
         return this.props.history.push("/login")
       })
       .catch((err) => {
-        this.setState({ ...this.state, isSubmit: false }, () => toast.error(err.response.data))
+        this.setState({ isSubmit: false }, () => toast.error(err.response.data))
       })
   }
 

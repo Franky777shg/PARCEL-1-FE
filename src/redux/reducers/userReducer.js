@@ -25,6 +25,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
         gender: action.payload.gender,
         age: action.payload.age,
       }
+    case "LOGOUT":
+      return INITIAL_STATE
     default:
       return state
   }

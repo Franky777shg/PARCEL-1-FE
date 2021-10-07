@@ -25,3 +25,7 @@ export const keepLogin = () => {
     }
   }
 }
+
+export const onLogout = () => ({
+  type: "LOGOUT"
+})
