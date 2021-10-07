@@ -3,7 +3,6 @@ import { Switch, Route } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 
 //import Pages
-import Homepage from "./pages/homepage"
 import Login from "./pages/login"
 import Register from "./pages/register"
 import ProductAdmin from "./pages/productAdmin"
@@ -16,6 +15,8 @@ import AddProductAdmin from "./pages/addProductAdmin"
 import NotFound from "./pages/404"
 import ForgotPassword from "./pages/forgotPassword"
 import ResetPassword from "./pages/resetPassword"
+import Layout from "./components/Layout"
+import AuthWrapper from "./components/AuthWrapper"
 
 class App extends Component {
   componentDidMount() {
@@ -23,20 +24,32 @@ class App extends Component {
   }
 
   render() {
+    const { role } = this.props
     return (
       <>
         <Switch>
-          <Route component={Homepage} path="/" exact />
+          <Route component={AuthWrapper} path="/" exact />
+
+          {/* Router Khusus Tamu */}
           <Route component={Register} path="/register" />
           <Route component={Login} path="/login" />
           <Route component={Verify} path="/verify/:token" />
-          <Route component={ProductAdmin} path="/productAdmin"/>
-          <Route component={ParcelAdmin} path="/parcelAdmin"/>
-          <Route component={EditProduct} path="/editProductAdmin"/>
-          <Route component={Verify} path="/verify/:token"/>
-          <Route component={AddProductAdmin} path="/addProductAdmin" />
           <Route component={ForgotPassword} path="/forgot-password/" />
           <Route component={ResetPassword} path="/reset-password/:token" />
+
+          {/* Route Khusus Admin */}
+          {role === "admin" && (
+            <>
+              <Layout>
+                <Route component={ProductAdmin} path="/productAdmin" />
+                <Route component={ParcelAdmin} path="/parcelAdmin" />
+                <Route component={EditProduct} path="/editProductAdmin" />
+                <Route component={AddProductAdmin} path="/addProductAdmin" />
+              </Layout>
+              <Route component={NotFound} path="*" />
+            </>
+          )}
+          
           <Route component={NotFound} path="*" />
         </Switch>
         <ToastContainer />
@@ -45,4 +58,8 @@ class App extends Component {
   }
 }
 
-export default connect(null, { keepLogin })(App)
+const mapStateToProps = (state) => ({
+  role: state.userReducer.role,
+})
+
+export default connect(mapStateToProps, { keepLogin })(App)

@@ -21,7 +21,7 @@ class ResetPassword extends Component {
     const isToken = isJWT(token)
 
     if (isToken) {
-      return this.setState({ ...this.state, token })
+      return this.setState({ token })
     } else {
       history.push("/")
     }

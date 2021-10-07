@@ -27,7 +27,6 @@ class Verify extends Component {
         .then((res) => {
           this.setState(
             {
-              ...this.state,
               verifySuccess: true,
               responseText: res.data,
               isLoading: false,
@@ -40,14 +39,11 @@ class Verify extends Component {
           )
         })
         .catch((err) => {
-          this.setState(
-            { ...this.state, responseText: err.response.data, isLoading: false },
-            () => {
-              setTimeout(() => {
-                history.push("/")
-              }, 6000)
-            }
-          )
+          this.setState({ responseText: err.response.data, isLoading: false }, () => {
+            setTimeout(() => {
+              history.push("/")
+            }, 6000)
+          })
         })
     }
   }

@@ -1,7 +1,7 @@
-import React from "react"
 import axios from "axios"
-import {toast} from "react-toastify"
-import {Button, Form, Image} from "react-bootstrap"
+import React from "react"
+import { Button, Form } from "react-bootstrap"
+import { toast } from "react-toastify"
 
 class AddProductAdmin extends React.Component{
     constructor(props){

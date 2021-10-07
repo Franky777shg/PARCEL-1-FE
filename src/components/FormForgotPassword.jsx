@@ -19,17 +19,17 @@ class FormForgotPassword extends Component {
     const email = this.refs.email.value
     const { history } = this.props
 
-    this.setState({ ...this.state, isSubmit: true })
+    this.setState({ isSubmit: true })
 
     Axios.post(`${AUTH_API}/forgot-password`, { email })
       .then((res) => {
-        this.setState({ ...this.state, isSubmit: false }, () => {
+        this.setState({ isSubmit: false }, () => {
           toast.success(res.data)
           history.push("/login")
         })
       })
       .catch((err) => {
-        this.setState({ ...this.state, isSubmit: false }, () => {
+        this.setState({ isSubmit: false }, () => {
           toast.error(err.response.data)
         })
       })
