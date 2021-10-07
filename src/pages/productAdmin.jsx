@@ -18,46 +18,69 @@ class ProductAdmin extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            product :[],
-            currentPage :1,
-            productPerPage : 9,
-            active : 1
+            active : 1,
+            currentV1 : "",
+            productV1 : [],
+            perPageV1 : "",
+            totalItemsV1 : ""
         }
     }
 
+
     componentDidMount(){
-        axios.get('http://localhost:2000/productAdmin/getProductAdmin')
-        .then(res =>{
-            this.setState({product : res.data})
-        })
-        .catch(err => console.log(err))
+        axios.get(`http://localhost:2000/productAdmin/getProductPerPage/${1}`)
+            .then(res =>{
+                this.setState({productV1: res.data[0], perPageV1:res.data[2].perpage, currentV1:res.data[1].current, totalItemsV1 : res.data[3].totalItems})
+
+            })
+            .catch(err => console.log(err))
+
     }
 
 
 
 
     render(){
-        const {currentPage, productPerPage, product}= this.state
+        const {currentV1, perPageV1,totalItemsV1, productV1}= this.state
 
-        const indexOfLastProduct = currentPage * productPerPage
-        const indexOfFirstPost = indexOfLastProduct - productPerPage
-        const currentProduct = product.slice(indexOfFirstPost, indexOfLastProduct)
+        //paginasi 
+        const paginate=(pageNum)=> {
+            axios.get(`http://localhost:2000/productAdmin/getProductPerPage/${pageNum}`)
+            .then(res =>{
+                this.setState({productV1: res.data[0], perPageV1:res.data[2].perpage, currentV1:res.data[1].current, totalItemsV1 : res.data[3].totalItems, active: pageNum})
+            })
+        }
 
-        const paginate=(pageNum)=> this.setState({currentPage: pageNum, active:pageNum})
+        //pindah ke halaman selanjutnya
+        const nextPage =()=> {
+            axios.get(`http://localhost:2000/productAdmin/getProductPerPage/${currentV1+1}`)
+            .then(res =>{
+                this.setState({productV1: res.data[0], perPageV1:res.data[2].perpage, currentV1:res.data[1].current, totalItemsV1 : res.data[3].totalItems, active: currentV1+1})
+            })
+        }
 
-        const nextPage =()=> this.setState({currentPage: currentPage+1, active:"next"})
+        //pindah ke halaman sebelumnya
+        const prevPage=()=>{
+            axios.get(`http://localhost:2000/productAdmin/getProductPerPage/${currentV1-1}`)
+            .then(res =>{
+                this.setState({productV1: res.data[0], perPageV1:res.data[2].perpage, currentV1:res.data[1].current, totalItemsV1 : res.data[3].totalItems, active: currentV1-1})
+            })
+        }
 
-        const prevPage=()=>this.setState({currentPage: currentPage-1, active: "prev"})
+        // console.log(this.state.productV1)
+        // console.log(this.state.totalItemsV1)
+        // console.log(this.state.perPageV1)
+        // console.log(this.state.currentV1)
 
 
         return(
             <div style={{backgroundColor:'#F1F1F1'}}>
                 <h1>Product Admin</h1>
                 <div>
-                <Button variant="primary" className="tambah-parcel"><AiFillPlusCircle style={{marginBottom:"3%"}}/> Tambah Produk</Button>
+                <Button variant="primary" className="tambah-parcel" as={Link} to={'/addProductAdmin'}><AiFillPlusCircle style={{marginBottom:"3%"}}/> Tambah Produk</Button>
                 </div>
                 <div className="card-cont" id="product">
-                    {currentProduct.map((item, index) =>{
+                    {productV1.map((item, index) =>{
                         return(
                         <Card style={{ width: '18rem', marginLeft:"1vw", marginBottom:"1vh" }} key={index}>
                         <Card.Img variant="top" src={`http://localhost:2000/uploads/products/${item.product_image}`} style={{height:"35vh"}} />
@@ -81,7 +104,8 @@ class ProductAdmin extends React.Component{
                     })}
 
                 </div>
-                <Pagination productPerPage={productPerPage} totalProduct={product.length} paginate={paginate} nextPage={nextPage} prevPage={prevPage} active={this.state.active}/>
+
+                <Pagination productPerPage={perPageV1} totalProduct={totalItemsV1} paginate={paginate} nextPage={nextPage} prevPage={prevPage} active={this.state.active}/>
 
 
             </div>

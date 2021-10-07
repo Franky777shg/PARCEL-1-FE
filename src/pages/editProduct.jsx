@@ -63,7 +63,7 @@ class EditProduct extends React.Component {
           product_price,
           product_stock
       }
-      console.log(data)
+      // console.log(data)
       axios.post(`http://localhost:2000/productAdmin/editProduct/${this.state.product.idproduct}`, data)
       .then(res =>{
           this.setState({product: res.data[0], categorySelect: res.data[0].idproduct_category, successModal: true, caption : "Data produk berhasil diubah"})
@@ -83,7 +83,7 @@ class EditProduct extends React.Component {
       data.append('new', this.state.images)
       console.log(data.get('new'))
 
-      axios.post(`http://localhost:2000/productAdmin/editUploadProduct/${this.state.product.idproduct}`, data, {headers:{'Content-Type': 'multipart/form-data'}}).then(res =>{
+      axios.post(`http://localhost:2000/productAdmin/editUploadProduct/${this.state.product.idproduct}/products`, data, {headers:{'Content-Type': 'multipart/form-data'}}).then(res =>{
           this.setState({product : res.data[0], categorySelect:res.data[0].idproduct_category, successModal: res.data[1].success, uploadModal: false, caption : "Gambar berhasil di upload" })
           this.setState({successModal:false})
       })
@@ -92,9 +92,9 @@ class EditProduct extends React.Component {
   }
 
   render() {
-    console.log(this.state.product);
-    console.log(this.state.category);
-    console.log(this.state.successModal)
+    // console.log(this.state.product);
+    // console.log(this.state.category);
+    // console.log(this.state.successModal)
     // console.log(this.state.categorySelect);
     // console.log(this.props.location.search.substring(1))
     console.log(this.state.images)
@@ -158,6 +158,7 @@ class EditProduct extends React.Component {
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+        <Modal.Body>
         <form enctype="multipart/form-data">
         <input 
             type="file"
@@ -165,6 +166,7 @@ class EditProduct extends React.Component {
             accept="image/*"
             onChange={(e)=>this.handleChoose(e)} />
         </form>
+        </Modal.Body>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={()=>this.setState({uploadModal: false})}>

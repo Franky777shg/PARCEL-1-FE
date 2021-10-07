@@ -2,9 +2,13 @@ import React from "react"
 
 class Pagination extends React.Component{
     render(){
+
+        //5  152  1  2 0 1
         const {productPerPage, totalProduct, paginate, nextPage, prevPage, active}= this.props
 
         const pageNumber=[]
+
+        //152/5 
         for(let i=1; i<=Math.ceil(totalProduct/productPerPage);i++){
             pageNumber.push(i)
         }

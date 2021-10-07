@@ -12,6 +12,7 @@ import EditProduct from "./pages/editProduct"
 import Verify from "./pages/verify"
 import { connect } from "react-redux"
 import { keepLogin } from "./redux/actions"
+import AddProductAdmin from "./pages/addProductAdmin"
 import NotFound from "./pages/404"
 import ForgotPassword from "./pages/forgotPassword"
 import ResetPassword from "./pages/resetPassword"
@@ -29,11 +30,13 @@ class App extends Component {
           <Route component={Register} path="/register" />
           <Route component={Login} path="/login" />
           <Route component={Verify} path="/verify/:token" />
+          <Route component={ProductAdmin} path="/productAdmin"/>
+          <Route component={ParcelAdmin} path="/parcelAdmin"/>
+          <Route component={EditProduct} path="/editProductAdmin"/>
+          <Route component={Verify} path="/verify/:token"/>
+          <Route component={AddProductAdmin} path="/addProductAdmin" />
           <Route component={ForgotPassword} path="/forgot-password/" />
           <Route component={ResetPassword} path="/reset-password/:token" />
-          <Route component={ProductAdmin} path="/productAdmin" />
-          <Route component={ParcelAdmin} path="/parcelAdmin" />
-          <Route component={EditProduct} path="/editProductAdmin" />
           <Route component={NotFound} path="*" />
         </Switch>
         <ToastContainer />
