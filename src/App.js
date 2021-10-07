@@ -28,6 +28,7 @@ class App extends Component {
     return (
       <>
         <Switch>
+          {/* Route Homepage diarahkan dulu ke AuthWrapper */}
           <Route component={AuthWrapper} path="/" exact />
 
           {/* Router Khusus Tamu */}
@@ -36,6 +37,9 @@ class App extends Component {
           <Route component={Verify} path="/verify/:token" />
           <Route component={ForgotPassword} path="/forgot-password/" />
           <Route component={ResetPassword} path="/reset-password/:token" />
+
+          {/* Route Khusus User */}
+          {/* Soon */}
 
           {/* Route Khusus Admin */}
           {role === "admin" && (

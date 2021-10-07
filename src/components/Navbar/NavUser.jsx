@@ -1,13 +1,16 @@
 import React, { Component } from "react"
-import Avatar from "react-avatar"
 import { Nav, NavDropdown } from "react-bootstrap"
+import { connect } from "react-redux"
+import Avatar from "../Avatar"
 
 class NavUser extends Component {
   render() {
-    const { onLogout } = this.props
+    const { onLogout, name } = this.props
     return (
       <Nav.Link>
         <div className="d-md-flex align-items-center">
+          
+          {/* CART */}
           {/* <div className="d-none d-md-block">
             <FiShoppingCart className="fs-3" />
             <Badge
@@ -22,7 +25,9 @@ class NavUser extends Component {
               9
             </Badge>
           </div> */}
-          <Avatar name="Andra Andaru" size={40} round className="d-none d-md-block me-3" />
+          <Avatar />
+
+          {/* DROPDOWN MOBILE */}
           <div className="d-md-none">
             {/* <NavDropdown.Item>
               Cart
@@ -34,7 +39,9 @@ class NavUser extends Component {
             <NavDropdown.Item>Transaksi</NavDropdown.Item>
             <NavDropdown.Item onClick={onLogout}>Keluar</NavDropdown.Item>
           </div>
-          <NavDropdown align="end" title="Halo Andra Andaru" className="border d-none d-md-block">
+
+          {/* DROPDOWN TABLET - DESKTOP */}
+          <NavDropdown align="end" title={`Halo ${name}`} className="border d-none d-md-block">
             <NavDropdown.Item>Profil</NavDropdown.Item>
             <NavDropdown.Item>Transaksi</NavDropdown.Item>
             <NavDropdown.Divider />
@@ -46,4 +53,9 @@ class NavUser extends Component {
   }
 }
 
-export default NavUser
+const mapStateToProps = (state) => ({
+  name: state.userReducer.name
+})
+
+
+export default connect(mapStateToProps, {}) (NavUser)

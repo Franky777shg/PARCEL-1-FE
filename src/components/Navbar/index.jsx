@@ -16,6 +16,7 @@ class Navbar extends Component {
           <NavbarBS.Toggle />
           <NavbarBS.Collapse>
             <Nav className="ms-auto">
+              {/* Jika User Login, Button Masuk tidak muncul */}
               {role ? (
                 <PrivateNav />
               ) : (
