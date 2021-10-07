@@ -8,12 +8,14 @@ import Login from "./pages/login"
 import Register from "./pages/register"
 import ProductAdmin from "./pages/productAdmin"
 import ParcelAdmin from "./pages/parcelAdmin"
-import EditProduct from "./pages/editProduct" 
+import EditProduct from "./pages/editProduct"
 import Verify from "./pages/verify"
 import { connect } from "react-redux"
 import { keepLogin } from "./redux/actions"
 import AddProductAdmin from "./pages/addProductAdmin"
 import NotFound from "./pages/404"
+import ForgotPassword from "./pages/forgotPassword"
+import ResetPassword from "./pages/resetPassword"
 
 class App extends Component {
   componentDidMount() {
@@ -33,6 +35,8 @@ class App extends Component {
           <Route component={EditProduct} path="/editProductAdmin"/>
           <Route component={Verify} path="/verify/:token"/>
           <Route component={AddProductAdmin} path="/addProductAdmin" />
+          <Route component={ForgotPassword} path="/forgot-password/" />
+          <Route component={ResetPassword} path="/reset-password/:token" />
           <Route component={NotFound} path="*" />
         </Switch>
         <ToastContainer />
