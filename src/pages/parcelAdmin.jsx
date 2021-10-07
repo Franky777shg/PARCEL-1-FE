@@ -18,31 +18,47 @@ class ParcelAdmin extends React.Component{
         super(props)
         this.state={
             parcel :[],
-            currentPage :1,
-            productPerPage : 6,
-            active : 1
+            currentPage :"",
+            productPerPage : "",
+            active : 1,
+            totalItems : ""
         }
     }
     componentDidMount(){
-        axios.get('http://localhost:2000/productAdmin/getParcelAdmin')
+        axios.get(`http://localhost:2000/productAdmin/getParcelPerPage/${1}`)
         .then(res =>{
-            this.setState({parcel : res.data})
+            this.setState({parcel : res.data[0], productPerPage : res.data[2].perpage, currentPage : res.data[1].current, totalItems : res.data[3].totalItems})
         })
         .catch(err => console.log(err))
     }
     render(){
 
-        const {currentPage, productPerPage, parcel}= this.state
+        const {currentPage, productPerPage, totalItems, parcel}= this.state
 
-        const indexOfLastProduct = currentPage * productPerPage
-        const indexOfFirstPost = indexOfLastProduct - productPerPage
-        const currentProduct = parcel.slice(indexOfFirstPost, indexOfLastProduct)
 
-        const paginate=(pageNum)=> this.setState({currentPage: pageNum, active:pageNum})
+        // console.log(totalItems)
+        
+        //pindah ke halaman xx
+        const paginate=(pageNum)=> {
+            axios.get(`http://localhost:2000/productAdmin/getParcelPerPage/${pageNum}`)
+            .then(res =>{
+                this.setState({parcel : res.data[0], productPerPage : res.data[2].perpage, currentPage : res.data[1].current, totalItems : res.data[3].totalItems, active : pageNum})
+            })
+        }
+        //halaman selanjutnya
+        const nextPage =()=> {
+            axios.get(`http://localhost:2000/productAdmin/getParcelPerPage/${currentPage+1}`)
+            .then(res =>{
+                this.setState({parcel : res.data[0], productPerPage : res.data[2].perpage, currentPage : res.data[1].current, totalItems : res.data[3].totalItems, active : currentPage+1})
+            })
+        }
 
-        const nextPage =()=> this.setState({currentPage: currentPage+1, active:"next"})
-
-        const prevPage=()=>this.setState({currentPage: currentPage-1, active: "prev"})
+        const prevPage=()=>{
+            axios.get(`http://localhost:2000/productAdmin/getParcelPerPage/${currentPage-1}`)
+            .then(res =>{
+                this.setState({parcel : res.data[0], productPerPage : res.data[2].perpage, currentPage : res.data[1].current, totalItems : res.data[3].totalItems, active : currentPage-1})
+            })
+        }
 
 
         return(
@@ -53,7 +69,7 @@ class ParcelAdmin extends React.Component{
                 </div>
 
                 <div className="card-cont" id="product">
-                    {currentProduct.map(item =>{
+                    {parcel.map(item =>{
                         return(
                         <Card className="card">
                         <Card.Img variant="top" src={`http://localhost:2000/uploads/parcels/${item.parcel_image}`} style={{height:"30vh"}} />
@@ -75,7 +91,7 @@ class ParcelAdmin extends React.Component{
                     })}
 
                 </div>
-                <Pagination productPerPage={productPerPage} totalProduct={parcel.length} paginate={paginate} nextPage={nextPage} prevPage={prevPage} active={this.state.active}/>
+                <Pagination productPerPage={productPerPage} totalProduct={totalItems} paginate={paginate} nextPage={nextPage} prevPage={prevPage} active={this.state.active}/>
 
 
             </div>
