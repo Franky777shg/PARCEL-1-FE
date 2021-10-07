@@ -1,4 +1,5 @@
 import React from  "react"
+import {connect} from "react-redux"
 
 //import axios
 import axios from "axios"
@@ -10,6 +11,9 @@ import Pagination from "../components/pagination"
 import {AiFillPlusCircle} from "react-icons/all"
 import {Button, Card} from "react-bootstrap"
 import "../style/productAdmin.css"
+
+//import action
+import {productForAdmin} from '../redux/actions'
 
 //import Link
 import {Link} from "react-router-dom"
@@ -28,9 +32,11 @@ class ProductAdmin extends React.Component{
 
 
     componentDidMount(){
-        axios.get(`http://localhost:2000/productAdmin/getProductPerPage/${1}`)
+        axios.get(`http://localhost:2000/productAdmin/getProductPerPage/${this.props.currentPage}`)
             .then(res =>{
                 this.setState({productV1: res.data[0], perPageV1:res.data[2].perpage, currentV1:res.data[1].current, totalItemsV1 : res.data[3].totalItems})
+
+                this.props.productForAdmin(this.props.currentPage)
 
             })
             .catch(err => console.log(err))
@@ -47,7 +53,8 @@ class ProductAdmin extends React.Component{
         const paginate=(pageNum)=> {
             axios.get(`http://localhost:2000/productAdmin/getProductPerPage/${pageNum}`)
             .then(res =>{
-                this.setState({productV1: res.data[0], perPageV1:res.data[2].perpage, currentV1:res.data[1].current, totalItemsV1 : res.data[3].totalItems, active: pageNum})
+                this.setState({productV1: res.data[0], perPageV1:res.data[2].perpage, currentV1:res.data[1].current, totalItemsV1 : res.data[3].totalItems, active: this.props.currentPage})
+                this.props.productForAdmin(pageNum)
             })
         }
 
@@ -71,6 +78,8 @@ class ProductAdmin extends React.Component{
         // console.log(this.state.totalItemsV1)
         // console.log(this.state.perPageV1)
         // console.log(this.state.currentV1)
+        console.log(this.props.currentPage)
+        console.log(this.props.product)
 
 
         return(
@@ -105,7 +114,7 @@ class ProductAdmin extends React.Component{
 
                 </div>
 
-                <Pagination productPerPage={perPageV1} totalProduct={totalItemsV1} paginate={paginate} nextPage={nextPage} prevPage={prevPage} active={this.state.active}/>
+                <Pagination productPerPage={perPageV1} totalProduct={totalItemsV1} paginate={paginate} nextPage={nextPage} prevPage={prevPage} active={this.props.currentPage}/>
 
 
             </div>
@@ -113,5 +122,16 @@ class ProductAdmin extends React.Component{
     }
 }
 
+const mapStateToProps=(state)=>{
+    return{
+        currentPage : state.adminReducer.currentPage,
+        productPerPage : state.adminReducer.productPerPage,
+        totalProduct : state.adminReducer.totalProduct,
+        product : state.adminReducer.product,
+        activePage : state.adminReducer.active
 
-export default ProductAdmin
+    }
+}
+
+
+export default connect(mapStateToProps, {productForAdmin}) (ProductAdmin)
