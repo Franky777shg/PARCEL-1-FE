@@ -9,6 +9,7 @@ class AuthWrapper extends Component {
     const { role } = this.props
     return (
       <>
+        {/* Wrapper untuk home, admin = dashboard admin, tamu/user = homepage */}
         {role === "admin" ? (
           <>
             <Layout>

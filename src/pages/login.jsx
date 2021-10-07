@@ -11,9 +11,7 @@ class Login extends Component {
   render() {
     const { role } = this.props
 
-    if (role === "admin") {
-      return <Redirect to="/parcelAdmin" />
-    } else if (role === "user") {
+    if (role) {
       return <Redirect to="/" />
     }
 

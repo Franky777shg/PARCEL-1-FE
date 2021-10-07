@@ -21,6 +21,7 @@ class PrivateNav extends Component {
     const { role } = this.props
     return (
       <>
+        {/* User = Nav User, Admin = Nav Admin */}
         {role === "user" && <NavUser onLogout={this.onLogout} />}
         {role === "admin" && <NavAdmin onLogout={this.onLogout} />}
       </>
