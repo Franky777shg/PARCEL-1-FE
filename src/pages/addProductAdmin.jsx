@@ -151,7 +151,7 @@ class AddProductAdmin extends React.Component{
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Harga Jual</Form.Label>
-              <Form.Control type="number" placeholder="harga Jual" value={this.state.jual} ref="harga"   />
+              <Form.Control type="number" placeholder="harga Jual" value={this.state.jual} onChange={(e)=>this.setState({jual : e.target.value})} ref="harga"   />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Stock</Form.Label>
