@@ -1,3 +1,8 @@
-import { combineReducers } from "redux";
+import {combineReducers} from 'redux'
+import adminReducer from './adminReducer'
+import userReducer from './userReducer'
 
-export default combineReducers({});
+export default combineReducers({
+    adminReducer,
+    userReducer
+})
