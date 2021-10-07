@@ -16,14 +16,16 @@ class EditProduct extends React.Component {
       uploadModal : false,
       images: "",
       successModal : false,
-      caption : ""
+      caption : "",
+      jual : 0,
+      persen : 20
     };
   }
   componentDidMount() {
     axios
       .get(`http://localhost:2000/productAdmin/getProductId/${this.props.location.search.substring(1)}`)
       .then((res) => {
-        this.setState({ product: res.data[0], categorySelect: res.data[0].idproduct_category });
+        this.setState({ product: res.data[0], categorySelect: res.data[0].idproduct_category, jual : res.data[0].product_price });
         axios
           .get(`http://localhost:2000/productAdmin/productCategories`)
           .then((res) => {
@@ -39,7 +41,7 @@ class EditProduct extends React.Component {
       let idproduct_category= this.state.categorySelect
       let product_desc = this.refs.deskripsi.value
       let product_capital= +this.refs.modal.value
-      let product_price = +this.refs.harga.value
+      let product_price = +this.state.jual
       let product_stock = +this.refs.stok.value
 
       if(!product_name || !idproduct_category || !product_desc || !product_capital || !product_price || !product_stock ){
@@ -63,7 +65,7 @@ class EditProduct extends React.Component {
           product_price,
           product_stock
       }
-      // console.log(data)
+      console.log(data)
       axios.post(`http://localhost:2000/productAdmin/editProduct/${this.state.product.idproduct}`, data)
       .then(res =>{
           this.setState({product: res.data[0], categorySelect: res.data[0].idproduct_category, successModal: true, caption : "Data produk berhasil diubah"})
@@ -142,8 +144,13 @@ class EditProduct extends React.Component {
               <Form.Control type="number" defaultValue={this.state.product.product_capital} ref="modal" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Masukkan Keuntungan(%)</Form.Label>
+              <Form.Control type="number" defaultValue={this.state.persen} value={this.state.persen} onChange={(e)=>this.setState({persen : e.target.value, jual : (e.target.value/100 * this.refs.modal.value)+parseInt(this.refs.modal.value)})} ref="persen" />
+            </Form.Group>
+            
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Harga Jual</Form.Label>
-              <Form.Control type="number" defaultValue={this.state.product.product_price} ref="harga" />
+              <Form.Control type="number" defaultValue={this.state.product.product_price} ref="harga" value={this.state.jual} onChange={(e)=>this.setState({jual : e.target.value})} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Stock</Form.Label>
@@ -170,10 +177,10 @@ class EditProduct extends React.Component {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={()=>this.setState({uploadModal: false})}>
-            Close
+            Batal 
           </Button>
           <Button variant="primary" onClick={this.handleUpload}>
-            Save Changes
+            Simpan Perubahan
           </Button>
         </Modal.Footer>
       </Modal>
