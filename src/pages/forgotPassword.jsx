@@ -7,9 +7,7 @@ import FormForgotPassword from "../components/FormForgotPassword"
 class ForgotPassword extends Component {
   render() {
     const { role } = this.props
-    if (role === "admin") {
-      return <Redirect to="/parcelAdmin" />
-    } else if (role === "user") {
+    if (role) {
       return <Redirect to="/" />
     }
     
