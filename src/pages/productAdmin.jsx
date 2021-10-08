@@ -9,7 +9,7 @@ import Pagination from "../components/pagination"
 
 //import styling dan Icons
 import {AiFillPlusCircle} from "react-icons/all"
-import {Button, Card} from "react-bootstrap"
+import {Button, Card, Modal} from "react-bootstrap"
 import "../style/productAdmin.css"
 import {toast} from "react-toastify"
 
@@ -27,7 +27,10 @@ class ProductAdmin extends React.Component{
             currentV1 : "",
             productV1 : [],
             perPageV1 : "",
-            totalItemsV1 : ""
+            totalItemsV1 : "",
+            name : "",
+            id : 0,
+            modal : false
         }
     }
 
@@ -44,16 +47,23 @@ class ProductAdmin extends React.Component{
 
     }
 
-    onDelete=(id,name)=>{
+    onDeleteModal=(id,name)=>{
         console.log(id)
+        this.setState({id : id, name :name, modal :true})
+        
+    }
+
+    onDelete=()=>{
         let data={
-            id,
-            name,
+            id :this.state.id,
+            name :this.state.name,
             page : this.props.currentPage
         }
         console.log(data)
 
         this.props.deleteProduct(data)
+        this.setState({modal : false})
+
     }
 
     changeModal =()=>{
@@ -165,7 +175,7 @@ class ProductAdmin extends React.Component{
                           </Card.Text>
                           <div style={{display:"flex", marginBottom:"0"}}>
                           <Button variant="primary" style={{marginRight:"1vw"}} as={Link} to={`/editProductAdmin?${item.idproduct}`}>Edit Product</Button>
-                          <Button variant="danger" onClick={()=>this.onDelete(item.idproduct, item.product_name)}>Hapus Product</Button>
+                          <Button variant="danger" onClick={()=>this.onDeleteModal(item.idproduct, item.product_name)}>Hapus Product</Button>
                           </div>
                         </Card.Body>
                       </Card>
@@ -176,6 +186,21 @@ class ProductAdmin extends React.Component{
                 </div>
 
                 <Pagination productPerPage={perPageV1} totalProduct={totalItemsV1} paginate={paginate} nextPage={nextPage} prevPage={prevPage} active={this.props.currentPage}/>
+
+                <Modal show={this.state.modal} onHide={()=>this.setState({modal : false})}>
+                <Modal.Header closeButton>
+                <Modal.Title>Peringatan</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Apakah anda yakin menghapus produk {this.state.name} ?</Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={()=>this.setState({modal : false})}>
+                Batal
+                </Button>
+                <Button variant="success" onClick={this.onDelete}>
+                Hapus
+                </Button>
+                </Modal.Footer>
+                </Modal>
 
 
             </div>
