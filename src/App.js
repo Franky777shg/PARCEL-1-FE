@@ -17,6 +17,7 @@ import ForgotPassword from "./pages/forgotPassword"
 import ResetPassword from "./pages/resetPassword"
 import Layout from "./components/Layout"
 import AuthWrapper from "./components/AuthWrapper"
+import ParcelDetail from "./pages/parcelDetail"
 
 class App extends Component {
   componentDidMount() {
@@ -37,6 +38,9 @@ class App extends Component {
           <Route component={Verify} path="/verify/:token" />
           <Route component={ForgotPassword} path="/forgot-password/" />
           <Route component={ResetPassword} path="/reset-password/:token" />
+          <Route component={ParcelDetail} path="/parcel-detail" />
+          
+          
 
           {/* Route Khusus User */}
           {/* Soon */}
