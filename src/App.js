@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Switch, Route } from "react-router-dom"
+import { Switch, Route, Redirect } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 
 //import Pages
@@ -17,6 +17,7 @@ import ForgotPassword from "./pages/forgotPassword"
 import ResetPassword from "./pages/resetPassword"
 import Layout from "./components/Layout"
 import AuthWrapper from "./components/AuthWrapper"
+import FillParcel from "./pages/fillParcel"
 
 class App extends Component {
   componentDidMount() {
@@ -39,10 +40,18 @@ class App extends Component {
           <Route component={ResetPassword} path="/reset-password/:token" />
 
           {/* Route Khusus User */}
-          {/* Soon */}
+          {role === "user" ? (
+            <>
+              <Layout>
+                <Route component={FillParcel} path="/fill-parcel/:idparcel" />
+              </Layout>
+            </>
+          ) : (
+            <Redirect to="/login" />
+          )}
 
           {/* Route Khusus Admin */}
-          {role === "admin" && (
+          {role === "admin" ? (
             <>
               <Layout>
                 <Route component={ProductAdmin} path="/productAdmin" />
@@ -52,8 +61,10 @@ class App extends Component {
               </Layout>
               <Route component={NotFound} path="*" />
             </>
+          ) : (
+            <Redirect to="/login" />
           )}
-          
+
           <Route component={NotFound} path="*" />
         </Switch>
         <ToastContainer />

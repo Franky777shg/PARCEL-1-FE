@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import Navbar from '../components/Navbar'
+import React, { Component } from "react"
+import { Link } from "react-router-dom"
+import Navbar from "../components/Navbar"
 
 export default class Homepage extends Component {
   render() {
@@ -7,6 +8,7 @@ export default class Homepage extends Component {
       <div>
         <Navbar />
         <h1>Hello World</h1>
+        <Link to="/fill-parcel/1">Isi Parsel</Link>
       </div>
     )
   }
