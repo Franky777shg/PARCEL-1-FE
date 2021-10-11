@@ -17,6 +17,7 @@ import ForgotPassword from "./pages/forgotPassword"
 import ResetPassword from "./pages/resetPassword"
 import Layout from "./components/Layout"
 import AuthWrapper from "./components/AuthWrapper"
+import AddParcel from "./pages/addParcel"
 
 class App extends Component {
   componentDidMount() {
@@ -49,6 +50,7 @@ class App extends Component {
                 <Route component={ParcelAdmin} path="/parcelAdmin" />
                 <Route component={EditProduct} path="/editProductAdmin" />
                 <Route component={AddProductAdmin} path="/addProductAdmin" />
+                <Route component={AddParcel} path="/addParcel" />
               </Layout>
               <Route component={NotFound} path="*" />
             </>
