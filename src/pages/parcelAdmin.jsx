@@ -13,6 +13,8 @@ import {AiFillPlusCircle} from "react-icons/all"
 //import Pagination
 import Pagination from "../components/pagination"
 
+import {Link} from "react-router-dom"
+
 class ParcelAdmin extends React.Component{
     constructor(props){
         super(props)
@@ -65,7 +67,7 @@ class ParcelAdmin extends React.Component{
             <div>
                 <h1>Parcel</h1>
                 <div>
-                <Button variant="primary" className="tambahProduk"><AiFillPlusCircle style={{marginBottom:"3%"}}/> Tambah Produk</Button>
+                <Button variant="primary" className="tambahProduk" as={Link} to="/addParcel"><AiFillPlusCircle style={{marginBottom:"3%"}}/> Tambah Produk</Button>
                 </div>
 
                 <div className="card-cont" id="product">

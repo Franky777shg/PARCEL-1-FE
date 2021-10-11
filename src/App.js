@@ -17,6 +17,8 @@ import ForgotPassword from "./pages/forgotPassword"
 import ResetPassword from "./pages/resetPassword"
 import Layout from "./components/Layout"
 import AuthWrapper from "./components/AuthWrapper"
+import AddParcel from "./pages/addParcel"
+import ParcelDetail from "./pages/parcelDetail"
 import FillParcel from "./pages/fillParcel"
 
 class App extends Component {
@@ -38,6 +40,9 @@ class App extends Component {
           <Route component={Verify} path="/verify/:token" />
           <Route component={ForgotPassword} path="/forgot-password/" />
           <Route component={ResetPassword} path="/reset-password/:token" />
+          <Route component={ParcelDetail} path="/parcel-detail" />
+          
+          
 
           {/* Route Khusus User */}
           {role === "user" ? (
@@ -58,6 +63,7 @@ class App extends Component {
                 <Route component={ParcelAdmin} path="/parcelAdmin" />
                 <Route component={EditProduct} path="/editProductAdmin" />
                 <Route component={AddProductAdmin} path="/addProductAdmin" />
+                <Route component={AddParcel} path="/addParcel" />
               </Layout>
               <Route component={NotFound} path="*" />
             </>
