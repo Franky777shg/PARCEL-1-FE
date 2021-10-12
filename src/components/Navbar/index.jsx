@@ -21,7 +21,22 @@ class Navbar extends Component {
                 <PrivateNav />
               ) : (
                 <>
-                  <Button style={{ backgroundColor: "#8F9B85", border: "none" }} as={Link} to="/login">Masuk</Button>
+                  <Button
+                    className="my-1 me-md-2"
+                    style={{ backgroundColor: "#8F9B85", border: "none" }}
+                    as={Link}
+                    to="/login"
+                  >
+                    Masuk
+                  </Button>
+                  <Button
+                    className="my-1 ms-md-2"
+                    style={{ backgroundColor: "#7792A8", border: "none" }}
+                    as={Link}
+                    to="/register"
+                  >
+                    Daftar
+                  </Button>
                 </>
               )}
             </Nav>
