@@ -1,0 +1,40 @@
+.parcel-container {
+  background-color: white;
+  width: 80vw;
+  height: 69vh;
+  margin: 5vh 10vw 6vh 10vw;
+  border-radius: 100px;
+  display: flex;
+}
+.image-detail {
+  width: 23vw;
+  height: 28vh;
+  margin-left: 5vw;
+  margin-top: 15vh;
+}
+
+.detail-container {
+  background-color: white;
+  width: 35vw;
+  height: 44vh;
+  margin-top: 9vh;
+  margin-left: 5vw;
+}
+
+.button-detail {
+  margin-top: 30vh;
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 20vh;
+  width: 13vw;
+  margin-right: 5vw;
+}
+.parcelitems-container {
+  display: flex;
+
+  width: 10vw;
+  justify-content: space-between;
+}

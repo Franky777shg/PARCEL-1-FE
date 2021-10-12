@@ -3,6 +3,9 @@ import React, { Component } from "react";
 //import axios
 import axios from "axios"
 
+//import link
+import {Link} from "react-router-dom"
+
 //import component
 import Navbar from "../components/Navbar";
 import Pagination from "../components/pagination";
@@ -27,19 +30,24 @@ class Homepage extends Component {
     axios.get(`http://localhost:2000/homepage/getHomepage/${1}`)
     .then(res=> {
       this.setState({...this.state,...res.data})
+      console.log(this.state)
     })
     .catch(err => console.log(err))
   }
+
+  onSort = (sort) => {
+    console.log(sort)
+
+  }  
   
   render() {
-    console.log(this.state)
-    const {currentPage, parcelPerPage, totalParcels, parcel} = this.state
+    const {currentPage, parcelPerPage, totalParcels} = this.state
 
     //pindah ke halaman tertentu
     const paginate=(pageNum)=> {
       axios.get(`http://localhost:2000/homepage/getHomepage/${pageNum}`)
       .then(res =>{
-        console.log(res.data)
+        
           this.setState({ ...this.state,...res.data, active : pageNum})
       })
   }
@@ -132,29 +140,32 @@ const prevPage=()=>{
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">by Parsel Name</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">by Parsel Price</Dropdown.Item>
+                <Dropdown.Item href="#/action-1" onClick={() => this.onSort("parcel_name")}>by Parsel Name (A-Z)</Dropdown.Item>
+                <Dropdown.Item href="#/action-1" onClick={() => this.onSort("parcel_name")}>by Parsel Name (Z-A)</Dropdown.Item>
+                <Dropdown.Item href="#/action-2" onClick={() => this.onSort("parcel_price")}>by Parsel Price (Low - High)</Dropdown.Item>
+                <Dropdown.Item href="#/action-2" onClick={() =>this.onSort("parcel_price")}>by Parsel Price (High - Low)</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
             </div>
             <div className="card-container">
-              {this.state.parcel.map(item => {
+              {this.state.parcel.map((item,index) => {
                 return (
-              <Card style={{ width: "18rem" }}>
+              <Card style={{ width: "18rem" }} key={index}>
                 <Card.Img variant="top" src={`http://localhost:2000/uploads/parcels/${item.parcel_image}`} style={{height:"15vh", marginTop:"1vh"}} />
                 <Card.Body>
-                  <Card.Title>{item.parcel_name}</Card.Title>
+                  <Card.Title> <b> {item.parcel_name} </b></Card.Title>
                   <div className="card-desc">                    
                   <Card.Text>
                    {item.parcel_desc}
                    
                   </Card.Text>
                   <Card.Text>                
-                   Rp. {(item.parcel_price).toLocaleString()}
+                  <b> Rp. {(item.parcel_price).toLocaleString()} </b>
                   </Card.Text>
                   
                   <Button
                     style={{ backgroundColor: "#8F9B85", border: "none"}}
+                    as={Link} to={`/parcel-detail/?${item.idparcel}`}
                   >
                     Detail Parsel
                   </Button>
