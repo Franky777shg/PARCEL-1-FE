@@ -45,12 +45,6 @@ class ParcelDetail extends Component {
       .catch((err) => console.log(err));
   }
 
-  onCustom = () => {
-    if (!this.props.username) {
-      return this.setState({ toLogin: true });
-    }
-  };
-
   render() {
     const {
       parcelName,
@@ -98,7 +92,8 @@ class ParcelDetail extends Component {
               </h5>
               <Button
                 style={{ backgroundColor: "#8F9B85", border: "none" }}
-                onClick={this.onCustom}
+                as={Link}
+                to={`/fill-parcel/${this.props.location.search.substring(1)}`}
               >
                 Kreasikan Parsel Sekarang
               </Button>

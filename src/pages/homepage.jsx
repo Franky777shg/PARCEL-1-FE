@@ -69,7 +69,7 @@ const prevPage=()=>{
 
     return (
       <div className="main-container">
-        <div className="navbar">
+        <div className="navbar-homepage">
           <Navbar />
         </div>
         <div className="content-container">
