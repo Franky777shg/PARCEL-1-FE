@@ -5,6 +5,7 @@ import { connect } from "react-redux"
 import { toast } from "react-toastify"
 import FillParcelDetail from "../components/FillParcelDetail"
 import FillParcelFilter from "../components/FillParcelFilter"
+import FillParcelModal from "../components/FillParcelModal"
 import FillParcelOverlay from "../components/FillParcelOverlay"
 import FillParcelProduct from "../components/FillParcelProduct"
 
@@ -26,6 +27,8 @@ class FillParcel extends Component {
       parcelContents: [],
       parcelProducts: [],
       viewParcel: false,
+      showModal: false,
+      modalMessage: "",
     }
   }
 
@@ -85,22 +88,47 @@ class FillParcel extends Component {
     return label
   }
 
+  isProductOnCart = (idProduct) => {
+    const { parcelContents } = this.state
+    const isProductOnCart = parcelContents.filter((product) => product.idProduct === idProduct)
+    if (isProductOnCart.length !== 0) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   onAddParcel = (product, qty) => {
-    const { idproduct, idproduct_category, product_name } = product
-    const newParcelContents = [...this.state.parcelContents]
+    const { idproduct, idproduct_category, product_name, product_stock } = product
+    let newParcelContents = [...this.state.parcelContents]
     const productCategory = this.getCategoryLabel(idproduct_category)
     const maxQty = this.calculateMaxQty(idproduct_category).value
     if (qty > maxQty) {
       return toast.error("Kamu tidak bisa menambahkan lebih dari qty per kategori")
     }
-    const parcelContent = {
-      productCategory,
-      qty,
-      idCategory: idproduct_category,
-      idProduct: idproduct,
-      productName: product_name,
+    let parcelContent
+    if (this.isProductOnCart(idproduct)) {
+      if (product_stock !== 1) {
+        newParcelContents.forEach((product) => {
+          if (product.idProduct === idproduct) {
+            product.qty += 1
+          }
+        })
+      } else {
+        return toast.error(
+          `Gagal menambahkan produk ke dalam parsel! Kamu hanya dapat membeli 1 Pcs ${product_name}`
+        )
+      }
+    } else {
+      parcelContent = {
+        productCategory,
+        qty,
+        idCategory: idproduct_category,
+        idProduct: idproduct,
+        productName: product_name,
+      }
+      newParcelContents.push(parcelContent)
     }
-    newParcelContents.push(parcelContent)
     toast.success(`Berhasil menambahkan ${qty} Pcs ${product_name} ke dalam parsel!`)
     this.setState({ parcelContents: newParcelContents })
   }
@@ -125,20 +153,20 @@ class FillParcel extends Component {
       return toast.error("Oops, isi parselmu masih kosong!")
     }
 
-    const isCategoryFull = parcelContents.map((product) => {
-      const isCategoryFull = []
-      const { idCategory, productCategory } = product
-      const maxQtyValue = this.calculateMaxQty(idCategory).percent
+    const isCategoryNotFull = []
+    parcelData.categories.forEach((category) => {
+      const { id, label } = category
+      const maxQtyValue = this.calculateMaxQty(id).percent
       if (maxQtyValue < 100) {
-        isCategoryFull.push(productCategory)
+        isCategoryNotFull.push(label)
       }
-      return isCategoryFull
     })
 
-    if (isCategoryFull.length !== 0) {
-      return isCategoryFull.map((categoryName) =>
-        toast.error(`Oops, Kategori ${categoryName} masih belum penuh!`)
-      )
+    if (isCategoryNotFull.length !== 0) {
+      const modalMessage = isCategoryNotFull.map((category) => {
+        return <p>{`Kategori ${category} masih belum penuh!`}</p>
+      })
+      return this.setState({ modalMessage, showModal: true })
     }
 
     const orderData = {
@@ -160,12 +188,29 @@ class FillParcel extends Component {
 
     Axios.post(`${TRX_API}/new-order`, axiosBody)
       .then((res) => toast.success(res.data))
-      .catch((err) => toast.error(err.response.data))
+      .catch((err) => {
+        const modalMessage = err.response.data.map((err) => {
+          return <p>{`${err.message}`}</p>
+        })
+        return this.setState({ modalMessage, showModal: true })
+      })
+  }
+
+  handleCloseModal = () => {
+    this.setState({ showModal: false, modalMessage: "" })
   }
 
   render() {
     const { categories } = this.state.parcelData
-    const { parcelProducts, currentCategory, parcelData, viewParcel, parcelContents } = this.state
+    const {
+      parcelProducts,
+      currentCategory,
+      parcelData,
+      viewParcel,
+      parcelContents,
+      showModal,
+      modalMessage,
+    } = this.state
 
     return (
       <>
@@ -192,6 +237,11 @@ class FillParcel extends Component {
             parcelContents={parcelContents}
             handleViewParcel={this.handleViewParcel}
             onDeleteParcel={this.onDeleteParcel}
+          />
+          <FillParcelModal
+            showModal={showModal}
+            modalMessage={modalMessage}
+            handleCloseModal={this.handleCloseModal}
           />
         </Container>
       </>
