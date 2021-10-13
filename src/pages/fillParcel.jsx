@@ -2,12 +2,14 @@ import Axios from "axios"
 import React, { Component } from "react"
 import { Container } from "react-bootstrap"
 import { connect } from "react-redux"
+import { Redirect } from "react-router"
 import { toast } from "react-toastify"
 import FillParcelDetail from "../components/FillParcelDetail"
 import FillParcelFilter from "../components/FillParcelFilter"
 import FillParcelModal from "../components/FillParcelModal"
 import FillParcelOverlay from "../components/FillParcelOverlay"
 import FillParcelProduct from "../components/FillParcelProduct"
+import Navbar from "../components/Navbar"
 
 const TRX_API = "http://localhost:2000/transaction"
 
@@ -211,9 +213,24 @@ class FillParcel extends Component {
       showModal,
       modalMessage,
     } = this.state
+    const { role, location } = this.props
+
+    if (role === "admin") {
+      return <Redirect to="/" />
+    } else if (role !== "user") {
+      return (
+        <Redirect
+          to={{
+            pathname: "/login",
+            state: { referrer: location.pathname },
+          }}
+        />
+      )
+    }
 
     return (
       <>
+        <Navbar />
         <Container fluid>
           <FillParcelDetail
             parcelData={parcelData}
