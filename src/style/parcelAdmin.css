@@ -10,9 +10,9 @@ h1{
 .card-cont{
     display: flex;
     flex-wrap: wrap;
-    width: 90vw;
-    margin-right: 5vw;
-    margin-left: 5vw;
+    width: 90%;
+    margin-right: 3%;
+    margin-left: 3%;
     justify-content: center;
 
 }

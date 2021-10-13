@@ -4,7 +4,12 @@ const INITIAL_STATE={
     productPerPage : "",
     totalProduct : "",
     active : 1,
-    modal : [false, ""]
+    modal : [false, ""],
+    parcel :[],
+    parcelPerPage : "",
+    currentPageParcel : 1,
+    activeParcel : 1,
+    totalParcel : ""
 }
 
 const adminReducer =(state=INITIAL_STATE, action)=>{
@@ -33,6 +38,25 @@ const adminReducer =(state=INITIAL_STATE, action)=>{
             return{
                 ...state,
                 modal : [false, ""]
+            }
+        case 'PAGINATION_PARCEL' :
+            return{
+                ...state,
+                currentPageParcel : action.payload[1].current,
+                parcel : action.payload[0],
+                parcelPerPage : action.payload[2].perpage,
+                totalParcel : action.payload[3].totalItems,
+                active : action.payload[1].current
+            }
+        case 'DELETE_PARCEL':
+            return{
+                ...state,
+                currentPageParcel : action.payload[1].current,
+                parcel : action.payload[0],
+                parcelPerPage : action.payload[2].perpage,
+                totalParcel : action.payload[3].totalItems,
+                active : action.payload[1].current,
+                modal : [true, action.payload[4].caption]
             }
         default:
             return state

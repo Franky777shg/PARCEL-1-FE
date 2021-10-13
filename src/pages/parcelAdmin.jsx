@@ -1,11 +1,11 @@
 import React from "react"
+import {connect} from "react-redux"
 
-//import axios
-import axios from "axios"
 
 //import styling 
-import {Card, Button} from "react-bootstrap"
+import {Card, Button, Modal} from "react-bootstrap"
 import "../style/parcelAdmin.css"
+import {toast} from "react-toastify"
 
 //import Icons 
 import {AiFillPlusCircle} from "react-icons/all"
@@ -13,7 +13,11 @@ import {AiFillPlusCircle} from "react-icons/all"
 //import Pagination
 import Pagination from "../components/pagination"
 
+//import Link
 import {Link} from "react-router-dom"
+
+//import action
+import {parcelForAdmin, deleteParcel, modalSuccess} from "../redux/actions"
 
 class ParcelAdmin extends React.Component{
     constructor(props){
@@ -23,57 +27,86 @@ class ParcelAdmin extends React.Component{
             currentPage :"",
             productPerPage : "",
             active : 1,
-            totalItems : ""
+            totalItems : "",
+            modal : false,
+            nama : "",
+            id : ""
         }
     }
+    
+
     componentDidMount(){
-        axios.get(`http://localhost:2000/productAdmin/getParcelPerPage/${1}`)
-        .then(res =>{
-            this.setState({parcel : res.data[0], productPerPage : res.data[2].perpage, currentPage : res.data[1].current, totalItems : res.data[3].totalItems})
-        })
-        .catch(err => console.log(err))
+        window.scrollTo(0,0)
+        this.props.parcelForAdmin(this.props.currentPage)
     }
+
+    onDelete=(id, name)=>{
+        this.setState({modal : true, nama : name, id : id})
+    }
+
+    onDeleteParcel=()=>{
+        let data ={
+            id : this.state.id,
+            nama : this.state.nama,
+            page : this.props.currentPage
+        }
+
+        // console.log(data)
+        this.props.deleteParcel(data)
+    }
+
+    changeModal =()=>{
+        this.props.modalSuccess()
+        this.setState({modal : false, id : "", nama : ""})
+    }
+
+
+
+
     render(){
 
-        const {currentPage, productPerPage, totalItems, parcel}= this.state
-
-
-        // console.log(totalItems)
-        
-        //pindah ke halaman xx
-        const paginate=(pageNum)=> {
-            axios.get(`http://localhost:2000/productAdmin/getParcelPerPage/${pageNum}`)
-            .then(res =>{
-                this.setState({parcel : res.data[0], productPerPage : res.data[2].perpage, currentPage : res.data[1].current, totalItems : res.data[3].totalItems, active : pageNum})
-            })
+        if(this.props.modal[0]===true){
+            toast.success(this.props.modal[1], {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
+            this.changeModal()
         }
+
+        const paginate=(pageNum)=> {
+            this.props.parcelForAdmin(pageNum)
+            window.scrollTo(0,0)
+        }
+
         //halaman selanjutnya
         const nextPage =()=> {
-            axios.get(`http://localhost:2000/productAdmin/getParcelPerPage/${currentPage+1}`)
-            .then(res =>{
-                this.setState({parcel : res.data[0], productPerPage : res.data[2].perpage, currentPage : res.data[1].current, totalItems : res.data[3].totalItems, active : currentPage+1})
-            })
+            this.props.parcelForAdmin(this.props.currentPage+1)
+            window.scrollTo(0,0)
         }
 
+        //halaman sebelumnya
         const prevPage=()=>{
-            axios.get(`http://localhost:2000/productAdmin/getParcelPerPage/${currentPage-1}`)
-            .then(res =>{
-                this.setState({parcel : res.data[0], productPerPage : res.data[2].perpage, currentPage : res.data[1].current, totalItems : res.data[3].totalItems, active : currentPage-1})
-            })
+            this.props.parcelForAdmin(this.props.currentPage-1)
+            window.scrollTo(0,0)
         }
 
 
         return(
-            <div>
-                <h1>Parcel</h1>
+            <div className="w-100 p-3">
+                <h1>Parsel</h1>
                 <div>
                 <Button variant="primary" className="tambahProduk" as={Link} to="/addParcel"><AiFillPlusCircle style={{marginBottom:"3%"}}/> Tambah Produk</Button>
                 </div>
 
                 <div className="card-cont" id="product">
-                    {parcel.map(item =>{
+                    {this.props.parcel.map((item, index) =>{
                         return(
-                        <Card className="card">
+                        <Card className="card" key={index}>
                         <Card.Img variant="top" src={`http://localhost:2000/uploads/parcels/${item.parcel_image}`} style={{height:"30vh"}} />
                         <Card.Body>
                           <Card.Title>{item.parcel_name}</Card.Title>
@@ -84,7 +117,7 @@ class ParcelAdmin extends React.Component{
                          
                           <div style={{display:"flex"}}>
                           <Button variant="primary" style={{marginRight:"1vw"}}>Edit Parcel</Button>
-                          <Button variant="danger">Hapus Parcel</Button>
+                          <Button variant="danger" onClick={()=>this.onDelete(item.idparcel, item.parcel_name)}>Hapus Parcel</Button>
                           </div>
                         </Card.Body>
                       </Card>
@@ -93,7 +126,22 @@ class ParcelAdmin extends React.Component{
                     })}
 
                 </div>
-                <Pagination productPerPage={productPerPage} totalProduct={totalItems} paginate={paginate} nextPage={nextPage} prevPage={prevPage} active={this.state.active}/>
+                <Pagination productPerPage={this.props.productPerPage} totalProduct={this.props.totalParcel} paginate={paginate} nextPage={nextPage} prevPage={prevPage} active={this.props.currentPage} />
+
+                <Modal show={this.state.modal} onHide={()=>this.setState({modal : false})}>
+                <Modal.Header closeButton>
+                <Modal.Title>Peringatan</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Apakah anda yakin menghapus {this.state.nama} ?</Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={()=>this.setState({modal : false})}>
+                Batal
+                </Button>
+                <Button variant="success" onClick={this.onDeleteParcel}>
+                Hapus
+                </Button>
+                </Modal.Footer>
+                </Modal>
 
 
             </div>
@@ -101,4 +149,15 @@ class ParcelAdmin extends React.Component{
     }
 }
 
-export default ParcelAdmin
+const mapStateToProps=(state)=>{
+    return{
+        currentPage : state.adminReducer.currentPageParcel,
+        productPerPage : state.adminReducer.parcelPerPage,
+        totalParcel : state.adminReducer.totalParcel,
+        parcel : state.adminReducer.parcel,
+        activePage : state.adminReducer.activeParcel,
+        modal : state.adminReducer.modal
+    }
+}
+
+export default connect(mapStateToProps, {parcelForAdmin, deleteParcel, modalSuccess}) (ParcelAdmin)

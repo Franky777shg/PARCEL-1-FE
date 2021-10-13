@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 
+//import Redirect
+import {Redirect} from "react-router-dom"
 
 //import styling
 import { Image, Form, Button, Modal } from "react-bootstrap";
@@ -22,6 +24,7 @@ class EditProduct extends React.Component {
     };
   }
   componentDidMount() {
+    window.scrollTo(0,0)
     axios
       .get(`http://localhost:2000/productAdmin/getProductId/${this.props.location.search.substring(1)}`)
       .then((res) => {
@@ -65,7 +68,7 @@ class EditProduct extends React.Component {
           product_price,
           product_stock
       }
-      console.log(data)
+      // console.log(data)
       axios.post(`http://localhost:2000/productAdmin/editProduct/${this.state.product.idproduct}`, data)
       .then(res =>{
           this.setState({product: res.data[0], categorySelect: res.data[0].idproduct_category, successModal: true, caption : "Data produk berhasil diubah"})
@@ -99,7 +102,7 @@ class EditProduct extends React.Component {
     // console.log(this.state.successModal)
     // console.log(this.state.categorySelect);
     // console.log(this.props.location.search.substring(1))
-    console.log(this.state.images)
+    // console.log(this.state.images)
     if(this.state.successModal===true){
         toast.success(this.state.caption, {
             position: "top-center",
@@ -110,6 +113,7 @@ class EditProduct extends React.Component {
             draggable: true,
             progress: undefined,
             });
+            return <Redirect to="/productAdmin"/>
         
     }
     return (
