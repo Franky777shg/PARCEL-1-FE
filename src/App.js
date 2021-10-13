@@ -7,6 +7,7 @@ import Layout from "./components/Layout"
 import NotFound from "./pages/404"
 import AddParcel from "./pages/addParcel"
 import AddProductAdmin from "./pages/addProductAdmin"
+import Cart from "./pages/cart"
 import EditProduct from "./pages/editProduct"
 import FillParcel from "./pages/fillParcel"
 import ForgotPassword from "./pages/forgotPassword"
@@ -18,12 +19,12 @@ import ProductAdmin from "./pages/productAdmin"
 import Register from "./pages/register"
 import ResetPassword from "./pages/resetPassword"
 import Verify from "./pages/verify"
-import { keepLogin } from "./redux/actions"
-
+import { keepLogin, getTotalParcel } from "./redux/actions"
 
 class App extends Component {
   componentDidMount() {
     this.props.keepLogin()
+    this.props.getTotalParcel()
   }
 
   render() {
@@ -48,6 +49,7 @@ class App extends Component {
             <>
               <Layout>
                 <Switch>
+                  <Route component={Cart} path="/cart" />
                   <Route component={NotFound} path="*" />
                 </Switch>
               </Layout>
@@ -83,4 +85,4 @@ const mapStateToProps = (state) => ({
   role: state.userReducer.role,
 })
 
-export default connect(mapStateToProps, { keepLogin })(App)
+export default connect(mapStateToProps, { keepLogin, getTotalParcel })(App)

@@ -2,7 +2,7 @@ import Axios from "axios"
 import React, { Component } from "react"
 import { Container } from "react-bootstrap"
 import { connect } from "react-redux"
-import { Redirect } from "react-router"
+import { Redirect, withRouter } from "react-router"
 import { toast } from "react-toastify"
 import FillParcelDetail from "../components/FillParcelDetail"
 import FillParcelFilter from "../components/FillParcelFilter"
@@ -189,7 +189,11 @@ class FillParcel extends Component {
     }
 
     Axios.post(`${TRX_API}/new-order`, axiosBody)
-      .then((res) => toast.success(res.data))
+      .then((res) => {
+        const { history } = this.props
+        toast.success(res.data)
+        return history.push("/cart")
+      })
       .catch((err) => {
         const modalMessage = err.response.data.map((err) => {
           return <p>{`${err.message}`}</p>
@@ -271,4 +275,4 @@ const mapStateToProps = (state) => ({
   idusers: state.userReducer.idusers,
 })
 
-export default connect(mapStateToProps, {})(FillParcel)
+export default withRouter(connect(mapStateToProps, {})(FillParcel))

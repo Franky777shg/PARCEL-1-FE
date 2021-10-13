@@ -22,7 +22,7 @@ export default class FillParcelOverlay extends Component {
             </thead>
             <tbody>
               {parcelContents.map((parcelContent, index) => (
-                <tr>
+                <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{parcelContent.productName}</td>
                   <td>{parcelContent.qty}</td>
