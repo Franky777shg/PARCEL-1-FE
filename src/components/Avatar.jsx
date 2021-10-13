@@ -7,8 +7,6 @@ const AVATAR_URL = "http://localhost:2000/uploads/avatars"
 class Avatar extends Component {
   render() {
     const { name, avatar } = this.props
-    console.log(name)
-    console.log(avatar)
     return (
       <>
         {avatar ? (
