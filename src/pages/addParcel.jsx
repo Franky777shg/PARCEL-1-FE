@@ -1,11 +1,14 @@
 import React from "react";
 
 // import Styling
-import { Container, Col, Row, Image, Form, FloatingLabel, Button } from "react-bootstrap";
+import { Container, Col, Row,  Form, FloatingLabel, Button } from "react-bootstrap";
 import {toast} from "react-toastify"
 
 //import axios
 import axios from "axios";
+
+//import Redirect 
+import {Redirect} from "react-router-dom"
 
 class AddParcel extends React.Component {
   constructor(props) {
@@ -34,7 +37,7 @@ class AddParcel extends React.Component {
       let data ={
           idparcel : this.state.idparcel,
           idproduct_category : "",
-          qty_parcel_category : 0
+          qty_parcel_category : 1
       }
 
       this.setState({
@@ -62,7 +65,7 @@ class AddParcel extends React.Component {
       dataNew[index]= res.data
       // dataNew.push(res.data)
       // dataNew = res.data
-      console.log(dataNew)
+      // console.log(dataNew)
 
       // let newSubCate = [...this.state.subCategory]
       // console.log(newSubCate)
@@ -112,9 +115,11 @@ class AddParcel extends React.Component {
       const photo = new FormData()
       photo.append('new', this.state.images)
       // console.log(photo.get('new'))
+      // console.log(newItems)
+      // console.log(photo.values)
 
-      if(!data.nama || !data.price || !data.desc || !photo || !newItems.newItems){
-        toast.error('Pastikan semua form telah terisi!', {
+      if(!data.nama || !data.price || !data.desc || !this.state.images || newItems.newItems.length===0){
+        return toast.error('Pastikan semua form telah terisi!', {
           position: "top-center",
           autoClose: 3000,
           hideProgressBar: false,
@@ -156,6 +161,7 @@ class AddParcel extends React.Component {
 
   }
 
+
   render() {
 
     if(this.state.modal[0]===true){
@@ -168,6 +174,7 @@ class AddParcel extends React.Component {
         draggable: true,
         progress: undefined,
         });
+        return <Redirect to="/parcelAdmin" />
     }
       // console.log(this.state.isiParcel)
       // console.log(this.state.subCategory)
@@ -199,16 +206,16 @@ class AddParcel extends React.Component {
               </FloatingLabel>
             </Col>
             <Col className="col-6">
-            <Button variant="primary" onClick={this.onTambah}>Tambah isi parccel</Button>
+            <Button variant="primary" onClick={this.onTambah}>Tambah isi parsel</Button>
 
             {this.state.isiParcel.map((item,index)=>{
                 return(
-                    <div className="d-inline-flex mb-2">
+                    <div key={index} className="d-inline-flex mb-2">
                         <Form.Select onChange={(e)=>this.onKategori(e.target.value, index)} aria-label="Default select example">
                         <option>Kategori </option>
                         {this.state.category.map(item =>{
                             return (
-                                <option value={item.idproduct_category} onChange={(e)=>this.onQuantity(e.target.value, index)}>{item.category_name}</option>
+                                <option key={index} value={item.idproduct_category} onChange={(e)=>this.onQuantity(e.target.value, index)}>{item.category_name}</option>
                             )
                         })}
                         </Form.Select>
@@ -216,11 +223,11 @@ class AddParcel extends React.Component {
                         <option>SubKategori</option>
                         {this.state.subCategory[index].map(item=>{
                             return(
-                                <option value={item.idproduct_category} onChange={(e)=>this.onSubKategori(e.target.value, index)}>{item.category_name}</option>
+                                <option key={index} value={item.idproduct_category} onChange={(e)=>this.onSubKategori(e.target.value, index)}>{item.category_name}</option>
                             )
                         })}
                         </Form.Select>
-                        <Form.Control type="number" placeholder="Kuantitas" onChange={(e)=>this.onQuantity(e.target.value, index)}/>
+                        <Form.Control type="number" placeholder="Kuantitas" defaultValue={1} onChange={(e)=>this.onQuantity(e.target.value, index)}/>
                         <Button variant="danger" onClick={()=>this.onHapus(index)} >Hapus</Button>
                     </div>
                 )
