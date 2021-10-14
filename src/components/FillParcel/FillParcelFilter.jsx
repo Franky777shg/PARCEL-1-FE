@@ -16,7 +16,7 @@ export default class FillParcelFilter extends Component {
               onChange={(e) => fetchParcelProduct(e.target.value)}
             >
               {categories.map((category) => {
-                return <option value={category.id}>{category.label}</option>
+                return <option value={category.id} key={category.id}>{category.label}</option>
               })}
             </Form.Select>
           </Col>

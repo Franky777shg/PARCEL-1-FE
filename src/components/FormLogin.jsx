@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { FloatingLabel, Form, Button } from "react-bootstrap"
 import { toast } from "react-toastify"
 import { connect } from "react-redux"
-import { onLogin } from "../redux/actions"
+import { onLogin, getTotalParcel } from "../redux/actions"
 import { Link } from "react-router-dom"
 import Axios from "axios"
 
@@ -49,6 +49,7 @@ class FormLogin extends Component {
         this.setState({ isSubmit: false })
         toast.success("Masuk akun berhasil!")
         this.props.onLogin(user)
+        this.props.getTotalParcel()
       })
       .catch((err) => {
         this.setState({ isSubmit: false })
@@ -109,4 +110,4 @@ const mapStateToProps = (state) => ({
   responseText: state.userReducer.responseText,
 })
 
-export default connect(mapStateToProps, { onLogin })(FormLogin)
+export default connect(mapStateToProps, { onLogin, getTotalParcel })(FormLogin)
