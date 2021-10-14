@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 
 export default class CartSummaryButton extends Component {
   render() {
+    const { onCheckout } = this.props
     return (
       <>
         <Button
@@ -15,7 +16,12 @@ export default class CartSummaryButton extends Component {
         >
           Lanjut Belanja
         </Button>
-        <Button style={{ backgroundColor: "#8F9B85", border: "none" }} size="lg" className="mx-1">
+        <Button
+          style={{ backgroundColor: "#8F9B85", border: "none" }}
+          size="lg"
+          className="mx-1"
+          onClick={onCheckout}
+        >
           Checkout Sekarang
         </Button>
       </>

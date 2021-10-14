@@ -19,6 +19,7 @@ class Cart extends Component {
     super(props)
 
     this.state = {
+      idOrder: 0,
       totalParcel: 0,
       cartItems: [],
       orderPrice: 0,
@@ -77,7 +78,9 @@ class Cart extends Component {
           this.fetchData()
         })
         .catch((err) => {
-          const modalMessage = err.response.data.map((err) => <p>{`${err.message}`}</p>)
+          const modalMessage = err.response.data.map((err) => (
+            <p key={err.id}>{`${err.message}`}</p>
+          ))
           return this.setState({ modalMessage, showModal: true })
         })
     }
@@ -112,6 +115,38 @@ class Cart extends Component {
     this.setState({ nameRecipient: name, addressRecipient: address, showModalAddress: false })
   }
 
+  onCheckout = () => {
+    const { cartItems, idOrder, orderPrice, nameRecipient, addressRecipient } = this.state
+    const orderData = {
+      order_price: orderPrice,
+      recipient_name: nameRecipient,
+      recipient_address: addressRecipient,
+    }
+    const axiosBody = {
+      idOrder,
+      cartItems,
+      orderData,
+    }
+
+    Axios.post(`${TRX_API}/checkout`, axiosBody)
+      .then((res) => {
+        const { history, getTotalParcel } = this.props
+        toast.success(res.data)
+        getTotalParcel()
+        history.push(`/upload-payment/${idOrder}`)
+      })
+      .catch((err) => {
+        if (typeof err.response.data !== "string") {
+          const modalMessage = err.response.data.map((err) => (
+            <p key={err.id}>{`${err.message}`}</p>
+          ))
+          return this.setState({ modalMessage, showModal: true })
+        } else {
+          toast.error(err.response.data)
+        }
+      })
+  }
+
   render() {
     const {
       totalParcel,
@@ -144,7 +179,7 @@ class Cart extends Component {
                       />
                     </Col>
                     <div className="d-flex justify-content-end my-3 pe-0">
-                      <CartSummaryButton />
+                      <CartSummaryButton onCheckout={this.onCheckout} />
                     </div>
                   </Row>
                 </Col>
