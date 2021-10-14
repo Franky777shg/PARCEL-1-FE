@@ -1,33 +1,34 @@
-import React, { Component } from "react"
-import { Switch, Route, Redirect } from "react-router-dom"
-import { ToastContainer } from "react-toastify"
+import React, { Component } from "react";
+import { Switch, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 //import Pages
-import Login from "./pages/login"
-import Register from "./pages/register"
-import ProductAdmin from "./pages/productAdmin"
-import ParcelAdmin from "./pages/parcelAdmin"
-import EditProduct from "./pages/editProduct"
-import Verify from "./pages/verify"
-import { connect } from "react-redux"
-import { keepLogin } from "./redux/actions"
-import AddProductAdmin from "./pages/addProductAdmin"
-import NotFound from "./pages/404"
-import ForgotPassword from "./pages/forgotPassword"
-import ResetPassword from "./pages/resetPassword"
-import Layout from "./components/Layout"
-import AuthWrapper from "./components/AuthWrapper"
-import AddParcel from "./pages/addParcel"
-import ParcelDetail from "./pages/parcelDetail"
-import FillParcel from "./pages/fillParcel"
+import Login from "./pages/login";
+import Register from "./pages/register";
+import ProductAdmin from "./pages/productAdmin";
+import ParcelAdmin from "./pages/parcelAdmin";
+import EditProduct from "./pages/editProduct";
+import Verify from "./pages/verify";
+import { connect } from "react-redux";
+import { keepLogin } from "./redux/actions";
+import AddProductAdmin from "./pages/addProductAdmin";
+import NotFound from "./pages/404";
+import ForgotPassword from "./pages/forgotPassword";
+import ResetPassword from "./pages/resetPassword";
+import Layout from "./components/Layout";
+import AuthWrapper from "./components/AuthWrapper";
+import AddParcel from "./pages/addParcel";
+import ParcelDetail from "./pages/parcelDetail";
+import FillParcel from "./pages/fillParcel";
+import UserProfile from "./pages/userProfile";
 
 class App extends Component {
   componentDidMount() {
-    this.props.keepLogin()
+    this.props.keepLogin();
   }
 
   render() {
-    const { role } = this.props
+    const { role } = this.props;
     return (
       <>
         <Switch>
@@ -41,46 +42,45 @@ class App extends Component {
           <Route component={ForgotPassword} path="/forgot-password/" />
           <Route component={ResetPassword} path="/reset-password/:token" />
           <Route component={ParcelDetail} path="/parcel-detail" />
-          
-          
 
           {/* Route Khusus User */}
-          {role === "user" ? (
+          {role === "user" && (
             <>
               <Layout>
-                <Route component={FillParcel} path="/fill-parcel/:idparcel" />
+                <Switch>
+                  <Route component={FillParcel} path="/fill-parcel/:idparcel" />
+                  <Route component={UserProfile} path="/user-profile" />
+                </Switch>
               </Layout>
             </>
-          ) : (
-            <Redirect to="/login" />
           )}
 
           {/* Route Khusus Admin */}
-          {role === "admin" ? (
+          {role === "admin" && (
             <>
               <Layout>
-                <Route component={ProductAdmin} path="/productAdmin" />
-                <Route component={ParcelAdmin} path="/parcelAdmin" />
-                <Route component={EditProduct} path="/editProductAdmin" />
-                <Route component={AddProductAdmin} path="/addProductAdmin" />
-                <Route component={AddParcel} path="/addParcel" />
+                <Switch>
+                  <Route component={ProductAdmin} path="/productAdmin" />
+                  <Route component={ParcelAdmin} path="/parcelAdmin" />
+                  <Route component={EditProduct} path="/editProductAdmin" />
+                  <Route component={AddProductAdmin} path="/addProductAdmin" />
+                  <Route component={AddParcel} path="/addParcel" />
+                  <Route component={NotFound} path="*" />
+                </Switch>
               </Layout>
-              <Route component={NotFound} path="*" />
             </>
-          ) : (
-            <Redirect to="/login" />
           )}
 
           <Route component={NotFound} path="*" />
         </Switch>
         <ToastContainer />
       </>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state) => ({
   role: state.userReducer.role,
-})
+});
 
-export default connect(mapStateToProps, { keepLogin })(App)
+export default connect(mapStateToProps, { keepLogin })(App);

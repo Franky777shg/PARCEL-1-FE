@@ -8,7 +8,7 @@ const INITIAL_STATE = {
   avatar: null,
   gender: null,
   age: null,
-}
+};
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -24,12 +24,23 @@ const userReducer = (state = INITIAL_STATE, action) => {
         avatar: action.payload.avatar,
         gender: action.payload.gender,
         age: action.payload.age,
-      }
+      };
+    case "UPDATE":
+      return {
+        ...state,
+        idusers: action.payload.idusers,
+        email: action.payload.email,
+        name: action.payload.name,
+        address: action.payload.address,
+        avatar: action.payload.avatar,
+        gender: action.payload.gender,
+        age: action.payload.age,
+      };
     case "LOGOUT":
-      return INITIAL_STATE
+      return INITIAL_STATE;
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default userReducer
+export default userReducer;
