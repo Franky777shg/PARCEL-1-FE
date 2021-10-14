@@ -18,6 +18,7 @@ import ParcelDetail from "./pages/parcelDetail"
 import ProductAdmin from "./pages/productAdmin"
 import Register from "./pages/register"
 import ResetPassword from "./pages/resetPassword"
+import uploadPayment from "./pages/uploadPayment"
 import Verify from "./pages/verify"
 import { keepLogin, getTotalParcel } from "./redux/actions"
 
@@ -50,6 +51,7 @@ class App extends Component {
               <Layout>
                 <Switch>
                   <Route component={Cart} path="/cart" />
+                  <Route component={uploadPayment} path="/upload-payment/:idorder" />
                   <Route component={NotFound} path="*" />
                 </Switch>
               </Layout>
