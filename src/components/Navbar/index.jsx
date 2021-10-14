@@ -10,7 +10,7 @@ class Navbar extends Component {
     return (
       <NavbarBS bg="light" expand="lg" sticky="top">
         <Container>
-          <NavbarBS.Brand href="/" className="fw-bold fs-3">
+          <NavbarBS.Brand as={Link} to="/" className="fw-bold fs-3">
             ADJ Parcel
           </NavbarBS.Brand>
           <NavbarBS.Toggle />

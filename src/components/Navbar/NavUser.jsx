@@ -1,40 +1,43 @@
 import React, { Component } from "react"
-import { Nav, NavDropdown } from "react-bootstrap"
+import { Badge, Nav, NavDropdown, Button } from "react-bootstrap"
 import { connect } from "react-redux"
+import { FiShoppingCart } from "react-icons/fi"
 import Avatar from "../Avatar"
+import { Link } from "react-router-dom"
 
 class NavUser extends Component {
   render() {
-    const { onLogout, name } = this.props
+    const { onLogout, name, totalParcel } = this.props
     return (
       <Nav.Link>
         <div className="d-md-flex align-items-center">
-          
           {/* CART */}
-          {/* <div className="d-none d-md-block">
-            <FiShoppingCart className="fs-3" />
-            <Badge
-              bg="dark"
-              className="me-3"
-              style={{
-                position: "relative",
-                top: "-.5em",
-                borderRadius: "100%",
-              }}
-            >
-              9
-            </Badge>
-          </div> */}
+          <div className="d-none d-md-block">
+            <Button variant="link" as={Link} to="/cart">
+              <FiShoppingCart className="fs-3 text-black" />
+              <Badge
+                bg="dark"
+                className="me-3"
+                style={{
+                  position: "relative",
+                  top: "-.5em",
+                  borderRadius: "100%",
+                }}
+              >
+                {totalParcel}
+              </Badge>
+            </Button>
+          </div>
           <Avatar />
 
           {/* DROPDOWN MOBILE */}
           <div className="d-md-none">
-            {/* <NavDropdown.Item>
-              Cart
+            <NavDropdown.Item>
+              Keranjang
               <Badge bg="dark" className="ms-1">
-                9
+                {totalParcel}
               </Badge>
-            </NavDropdown.Item> */}
+            </NavDropdown.Item>
             <NavDropdown.Item>Profil</NavDropdown.Item>
             <NavDropdown.Item>Transaksi</NavDropdown.Item>
             <NavDropdown.Item onClick={onLogout}>Keluar</NavDropdown.Item>
@@ -54,8 +57,8 @@ class NavUser extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.userReducer.name
+  name: state.userReducer.name,
+  totalParcel: state.transactionReducer.totalParcel,
 })
 
-
-export default connect(mapStateToProps, {}) (NavUser)
+export default connect(mapStateToProps, {})(NavUser)

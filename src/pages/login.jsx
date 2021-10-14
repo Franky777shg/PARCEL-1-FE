@@ -12,6 +12,10 @@ class Login extends Component {
     const { role } = this.props
 
     if (role) {
+      const referrer = this.props.location.state?.referrer
+      if (referrer) {
+        return <Redirect to={referrer} />
+      }
       return <Redirect to="/" />
     }
 
