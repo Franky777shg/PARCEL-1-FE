@@ -39,14 +39,18 @@ class NavUser extends Component {
               </Badge>
             </NavDropdown.Item>
             <NavDropdown.Item>Profil</NavDropdown.Item>
-            <NavDropdown.Item>Transaksi</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/my-transaction">
+              Transaksi
+            </NavDropdown.Item>
             <NavDropdown.Item onClick={onLogout}>Keluar</NavDropdown.Item>
           </div>
 
           {/* DROPDOWN TABLET - DESKTOP */}
           <NavDropdown align="end" title={`Halo ${name}`} className="border d-none d-md-block">
             <NavDropdown.Item>Profil</NavDropdown.Item>
-            <NavDropdown.Item>Transaksi</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/my-transaction">
+              Transaksi
+            </NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={onLogout}>Keluar</NavDropdown.Item>
           </NavDropdown>

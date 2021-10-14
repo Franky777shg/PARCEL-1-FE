@@ -1,16 +1,27 @@
 import React, { Component } from "react"
 import { Form, Image, Button } from "react-bootstrap"
-import placeholderImage from "../assets/img/no-img.png"
+import NumberFormat from "react-number-format"
+import { Link } from "react-router-dom"
+import placeholderImage from "../../assets/img/no-img.png"
 
 export default class UploadPaymentForm extends Component {
   render() {
-    const { orderNumber, previewImage, onUploadPayment, handleUploadPayment } = this.props
+    const { orderNumber, orderPrice, previewImage, onUploadPayment, handleUploadPayment } =
+      this.props
     return (
       <>
         <h2 className="fw-bold text-center">Upload Bukti Pembayaran</h2>
         <h3 className="text-center">Nomor Pesanan #{orderNumber}</h3>
         <p className="lead text-center">
-          Selesaikan transaksi anda dengan transfer ke rekening <br />
+          Selesaikan transaksi anda dengan transfer sejumlah{" "}
+          <NumberFormat
+            value={orderPrice}
+            prefix="Rp. "
+            displayType="text"
+            thousandSeparator="."
+            decimalSeparator=","
+          />{" "}
+          ke rekening <br />
           BCA 512309471237 a/n ADJ Parsel
         </p>
         {previewImage ? (
@@ -34,7 +45,13 @@ export default class UploadPaymentForm extends Component {
         >
           Kirim Bukti Pembayaran
         </Button>
-        <Button style={{ backgroundColor: "#7792A8", border: "none" }}>Nanti Saja</Button>
+        <Button
+          style={{ backgroundColor: "#7792A8", border: "none" }}
+          as={Link}
+          to="/my-transaction"
+        >
+          Nanti Saja
+        </Button>
       </>
     )
   }
