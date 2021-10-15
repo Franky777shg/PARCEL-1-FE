@@ -1,18 +1,20 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Route, Switch } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { Route, Switch } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
 import { keepLogin, getTotalParcel } from "./redux/actions";
-import AuthWrapper from "./components/AuthWrapper";
-import Layout from "./components/Layout";
+import AuthWrapper from "./components/AuthWrapper"
+import Layout from "./components/Layout"
+import NotFound from "./pages/404"
+import AddParcel from "./pages/addParcel"
+import AddProductAdmin from "./pages/addProductAdmin"
+import Cart from "./pages/cart"
+import EditProduct from "./pages/editProduct"
+import EditParcel from "./pages/editParcel"
+import FillParcel from "./pages/fillParcel"
+import ForgotPassword from "./pages/forgotPassword"
+
 //import Pages
-import NotFound from "./pages/404";
-import AddParcel from "./pages/addParcel";
-import AddProductAdmin from "./pages/addProductAdmin";
-import Cart from "./pages/cart";
-import EditProduct from "./pages/editProduct";
-import FillParcel from "./pages/fillParcel";
-import ForgotPassword from "./pages/forgotPassword";
 import Login from "./pages/login";
 import ParcelAdmin from "./pages/parcelAdmin";
 import ParcelDetail from "./pages/parcelDetail";
@@ -77,6 +79,7 @@ class App extends Component {
                   <Route component={EditProduct} path="/editProductAdmin" />
                   <Route component={AddProductAdmin} path="/addProductAdmin" />
                   <Route component={AddParcel} path="/addParcel" />
+                  <Route component={EditParcel} path="/editParcelAdmin" />
                   <Route component={NotFound} path="*" />
                 </Switch>
               </Layout>
