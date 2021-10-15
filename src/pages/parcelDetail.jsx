@@ -59,6 +59,8 @@ class ParcelDetail extends Component {
       return <Redirect to="/login" />;
     }
 
+    console.log(this.props)
+
     return (
       <div>
         <Navbar />
