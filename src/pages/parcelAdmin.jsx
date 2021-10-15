@@ -40,9 +40,7 @@ class ParcelAdmin extends React.Component{
     componentDidMount(){
         window.scrollTo(0,0)
         this.props.parcelForAdmin(this.props.currentPage)
-        axios.get(`http://localhost:2000/productAdmin/getParcelbyId/2`)
-        .then(res => console.log(res.data))
-
+        
     }
 
     onDelete=(id, name)=>{

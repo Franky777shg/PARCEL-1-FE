@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { Route, Switch } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
+import { keepLogin, getTotalParcel } from "./redux/actions";
 import AuthWrapper from "./components/AuthWrapper"
 import Layout from "./components/Layout"
 import NotFound from "./pages/404"
@@ -12,25 +13,35 @@ import EditProduct from "./pages/editProduct"
 import EditParcel from "./pages/editParcel"
 import FillParcel from "./pages/fillParcel"
 import ForgotPassword from "./pages/forgotPassword"
+
 //import Pages
-import Login from "./pages/login"
-import ParcelAdmin from "./pages/parcelAdmin"
-import ParcelDetail from "./pages/parcelDetail"
-import ProductAdmin from "./pages/productAdmin"
-import Register from "./pages/register"
-import ResetPassword from "./pages/resetPassword"
-import uploadPayment from "./pages/uploadPayment"
-import Verify from "./pages/verify"
-import { keepLogin, getTotalParcel } from "./redux/actions"
+import NotFound from "./pages/404";
+import AddParcel from "./pages/addParcel";
+import AddProductAdmin from "./pages/addProductAdmin";
+import Cart from "./pages/cart";
+import EditProduct from "./pages/editProduct";
+import FillParcel from "./pages/fillParcel";
+import ForgotPassword from "./pages/forgotPassword";
+import Login from "./pages/login";
+import ParcelAdmin from "./pages/parcelAdmin";
+import ParcelDetail from "./pages/parcelDetail";
+import ProductAdmin from "./pages/productAdmin";
+import Register from "./pages/register";
+import ResetPassword from "./pages/resetPassword";
+import uploadPayment from "./pages/uploadPayment";
+import UserTransaction from "./pages/userTransaction";
+import Verify from "./pages/verify";
+import UserProfile from "./pages/userProfile";
+import TransactionDetail from "./pages/transactionDetail";
 
 class App extends Component {
   componentDidMount() {
-    this.props.keepLogin()
-    this.props.getTotalParcel()
+    this.props.keepLogin();
+    this.props.getTotalParcel();
   }
 
   render() {
-    const { role } = this.props
+    const { role } = this.props;
     return (
       <>
         <Switch>
@@ -52,7 +63,13 @@ class App extends Component {
               <Layout>
                 <Switch>
                   <Route component={Cart} path="/cart" />
-                  <Route component={uploadPayment} path="/upload-payment/:idorder" />
+                  <Route
+                    component={uploadPayment}
+                    path="/upload-payment/:idorder"
+                  />
+                  <Route component={UserTransaction} path="/user-transaction" />
+                  <Route component={TransactionDetail} path="/transaction-detail/:idorder" />
+                  <Route component={UserProfile} path="/user-profile" />
                   <Route component={NotFound} path="*" />
                 </Switch>
               </Layout>
@@ -81,12 +98,12 @@ class App extends Component {
         </Switch>
         <ToastContainer />
       </>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state) => ({
   role: state.userReducer.role,
-})
+});
 
-export default connect(mapStateToProps, { keepLogin, getTotalParcel })(App)
+export default connect(mapStateToProps, { keepLogin, getTotalParcel })(App);
