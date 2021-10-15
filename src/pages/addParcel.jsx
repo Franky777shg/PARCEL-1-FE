@@ -213,7 +213,7 @@ class AddParcel extends React.Component {
                     <div key={index} className="d-inline-flex mb-2">
                         <Form.Select onChange={(e)=>this.onKategori(e.target.value, index)} aria-label="Default select example">
                         <option>Kategori </option>
-                        {this.state.category.map(item =>{
+                        {this.state.category.map((item, index) =>{
                             return (
                                 <option key={index} value={item.idproduct_category} onChange={(e)=>this.onQuantity(e.target.value, index)}>{item.category_name}</option>
                             )
@@ -221,7 +221,7 @@ class AddParcel extends React.Component {
                         </Form.Select>
                         <Form.Select aria-label="Default select example" onChange={(e)=>this.onSubKategori(e.target.value, index)}>
                         <option>SubKategori</option>
-                        {this.state.subCategory[index].map(item=>{
+                        {this.state.subCategory[index].map((item,index)=>{
                             return(
                                 <option key={index} value={item.idproduct_category} onChange={(e)=>this.onSubKategori(e.target.value, index)}>{item.category_name}</option>
                             )

@@ -19,6 +19,8 @@ import {Link} from "react-router-dom"
 //import action
 import {parcelForAdmin, deleteParcel, modalSuccess} from "../redux/actions"
 
+import axios from "axios"
+
 class ParcelAdmin extends React.Component{
     constructor(props){
         super(props)
@@ -38,6 +40,7 @@ class ParcelAdmin extends React.Component{
     componentDidMount(){
         window.scrollTo(0,0)
         this.props.parcelForAdmin(this.props.currentPage)
+        
     }
 
     onDelete=(id, name)=>{
@@ -116,7 +119,7 @@ class ParcelAdmin extends React.Component{
                           </Card.Text>
                          
                           <div style={{display:"flex"}}>
-                          <Button variant="primary" style={{marginRight:"1vw"}}>Edit Parcel</Button>
+                          <Button variant="primary" style={{marginRight:"1vw"}} as={Link} to={`/editParcelAdmin?${item.idparcel}`}>Edit Parcel</Button>
                           <Button variant="danger" onClick={()=>this.onDelete(item.idparcel, item.parcel_name)}>Hapus Parcel</Button>
                           </div>
                         </Card.Body>

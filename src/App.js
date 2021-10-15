@@ -2,15 +2,20 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { Route, Switch } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
+import { keepLogin, getTotalParcel } from "./redux/actions"
+
+// Import Components
 import AuthWrapper from "./components/AuthWrapper"
 import AdminRoute from "./components/CustomRoute/AdminRoute"
 import UserRoute from "./components/CustomRoute/UserRoute"
-//import Pages
+
+//Import Pages
 import NotFound from "./pages/404"
 import AddParcel from "./pages/addParcel"
 import AddProductAdmin from "./pages/addProductAdmin"
 import Cart from "./pages/cart"
 import EditProduct from "./pages/editProduct"
+import EditParcel from "./pages/editParcel"
 import FillParcel from "./pages/fillParcel"
 import ForgotPassword from "./pages/forgotPassword"
 import Login from "./pages/login"
@@ -20,11 +25,10 @@ import ProductAdmin from "./pages/productAdmin"
 import Register from "./pages/register"
 import ResetPassword from "./pages/resetPassword"
 import TransactionDetail from "./pages/transactionDetail"
-import uploadPayment from "./pages/uploadPayment"
+import UploadPayment from "./pages/uploadPayment"
 import UserProfile from "./pages/userProfile"
 import UserTransaction from "./pages/userTransaction"
 import Verify from "./pages/verify"
-import { getTotalParcel, keepLogin } from "./redux/actions"
 
 class App extends Component {
   componentDidMount() {
@@ -50,7 +54,7 @@ class App extends Component {
           {/* Route Khusus User Menggunakan Custom Route UserRoute */}
           <UserRoute component={FillParcel} path="/fill-parcel/:idparcel" />
           <UserRoute component={Cart} path="/cart" />
-          <UserRoute component={uploadPayment} path="/upload-payment/:idorder" />
+          <UserRoute component={UploadPayment} path="/upload-payment/:idorder" />
           <UserRoute component={UserTransaction} path="/user-transaction" />
           <UserRoute component={TransactionDetail} path="/transaction-detail/:idorder" />
           <UserRoute component={UserProfile} path="/user-profile" />
@@ -61,8 +65,8 @@ class App extends Component {
           <AdminRoute component={EditProduct} path="/editProductAdmin" />
           <AdminRoute component={AddProductAdmin} path="/addProductAdmin" />
           <AdminRoute component={AddParcel} path="/addParcel" />
+          <AdminRoute component={EditParcel} path="/editParcelAdmin" />
 
-          {/* Route Not Found */}
           <Route component={NotFound} path="*" />
         </Switch>
         <ToastContainer />
