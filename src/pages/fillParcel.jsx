@@ -2,14 +2,12 @@ import Axios from "axios"
 import React, { Component } from "react"
 import { Container } from "react-bootstrap"
 import { connect } from "react-redux"
-import { Redirect, withRouter } from "react-router"
 import { toast } from "react-toastify"
 import FillParcelDetail from "../components/FillParcel/FillParcelDetail"
 import FillParcelFilter from "../components/FillParcel/FillParcelFilter"
 import FillParcelModal from "../components/FillParcel/FillParcelModal"
 import FillParcelOverlay from "../components/FillParcel/FillParcelOverlay"
 import FillParcelProduct from "../components/FillParcel/FillParcelProduct"
-import Navbar from "../components/Navbar"
 
 const TRX_API = "http://localhost:2000/transaction"
 
@@ -217,24 +215,11 @@ class FillParcel extends Component {
       showModal,
       modalMessage,
     } = this.state
-    const { role, location } = this.props
 
-    if (role === "admin") {
-      return <Redirect to="/" />
-    } else if (role !== "user") {
-      return (
-        <Redirect
-          to={{
-            pathname: "/login",
-            state: { referrer: location.pathname },
-          }}
-        />
-      )
-    }
+    console.log(this.props)
 
     return (
       <>
-        <Navbar />
         <Container fluid>
           <FillParcelDetail
             parcelData={parcelData}
@@ -271,8 +256,7 @@ class FillParcel extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  role: state.userReducer.role,
   idusers: state.userReducer.idusers,
 })
 
-export default withRouter(connect(mapStateToProps, {})(FillParcel))
+export default connect(mapStateToProps, {})(FillParcel)
