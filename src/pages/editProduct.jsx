@@ -134,8 +134,8 @@ class EditProduct extends React.Component {
               <option value={this.state.product.idproduct_category} >
                 {this.state.product.category_name}
               </option>
-              {this.state.category.map((item) => {
-                return <option value={item.idproduct_category}>{item.category_name}</option>;
+              {this.state.category.map((item, index) => {
+                return <option key={index} value={item.idproduct_category}>{item.category_name}</option>;
               })}
             </Form.Select>
 

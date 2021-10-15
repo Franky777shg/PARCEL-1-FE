@@ -9,6 +9,7 @@ import AddParcel from "./pages/addParcel"
 import AddProductAdmin from "./pages/addProductAdmin"
 import Cart from "./pages/cart"
 import EditProduct from "./pages/editProduct"
+import EditParcel from "./pages/editParcel"
 import FillParcel from "./pages/fillParcel"
 import ForgotPassword from "./pages/forgotPassword"
 //import Pages
@@ -68,6 +69,7 @@ class App extends Component {
                   <Route component={EditProduct} path="/editProductAdmin" />
                   <Route component={AddProductAdmin} path="/addProductAdmin" />
                   <Route component={AddParcel} path="/addParcel" />
+                  <Route component={EditParcel} path="/editParcelAdmin" />
                   <Route component={NotFound} path="*" />
                 </Switch>
               </Layout>
