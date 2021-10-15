@@ -32,14 +32,16 @@ class NavUser extends Component {
 
           {/* DROPDOWN MOBILE */}
           <div className="d-md-none">
-            <NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/cart">
               Keranjang
               <Badge bg="dark" className="ms-1">
                 {totalParcel}
               </Badge>
             </NavDropdown.Item>
-            <NavDropdown.Item>Profil</NavDropdown.Item>
-            <NavDropdown.Item as={Link} to="/my-transaction">
+            <NavDropdown.Item as={Link} to="/user-profile">
+              Profil
+            </NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/user-transaction">
               Transaksi
             </NavDropdown.Item>
             <NavDropdown.Item onClick={onLogout}>Keluar</NavDropdown.Item>
@@ -47,8 +49,10 @@ class NavUser extends Component {
 
           {/* DROPDOWN TABLET - DESKTOP */}
           <NavDropdown align="end" title={`Halo ${name}`} className="border d-none d-md-block">
-            <NavDropdown.Item>Profil</NavDropdown.Item>
-            <NavDropdown.Item as={Link} to="/my-transaction">
+            <NavDropdown.Item as={Link} to="/user-profile">
+              Profil
+            </NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/user-transaction">
               Transaksi
             </NavDropdown.Item>
             <NavDropdown.Divider />

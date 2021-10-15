@@ -23,6 +23,7 @@ import uploadPayment from "./pages/uploadPayment";
 import UserTransaction from "./pages/userTransaction";
 import Verify from "./pages/verify";
 import UserProfile from "./pages/userProfile";
+import TransactionDetail from "./pages/transactionDetail";
 
 class App extends Component {
   componentDidMount() {
@@ -57,7 +58,8 @@ class App extends Component {
                     component={uploadPayment}
                     path="/upload-payment/:idorder"
                   />
-                  <Route component={UserTransaction} path="/my-transaction" />
+                  <Route component={UserTransaction} path="/user-transaction" />
+                  <Route component={TransactionDetail} path="/transaction-detail/:idorder" />
                   <Route component={UserProfile} path="/user-profile" />
                   <Route component={NotFound} path="*" />
                 </Switch>

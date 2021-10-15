@@ -64,11 +64,11 @@ export default class TransactionBody extends Component {
                 <>
                   <Button
                     style={{ backgroundColor: "#7792A8", border: "none" }}
-                    as={Link}
-                    to="/my-transaction"
                     className="me-2"
+                    as={Link}
+                    to={`/transaction-detail/${idorder}`}
                   >
-                    Lihat Detil Transaksi
+                    Lihat Detail Transaksi
                   </Button>
                   <Button
                     style={{ backgroundColor: "#8F9B85", border: "none" }}
@@ -80,7 +80,12 @@ export default class TransactionBody extends Component {
                   </Button>
                 </>
               ) : (
-                <Button style={{ backgroundColor: "#8F9B85", border: "none" }} className="me-2">
+                <Button
+                  style={{ backgroundColor: "#8F9B85", border: "none" }}
+                  className="me-2"
+                  as={Link}
+                  to={`/transaction-detail/${idorder}`}
+                >
                   Lihat Detail Transaksi
                 </Button>
               )}
