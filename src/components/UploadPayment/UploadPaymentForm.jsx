@@ -48,7 +48,7 @@ export default class UploadPaymentForm extends Component {
         <Button
           style={{ backgroundColor: "#7792A8", border: "none" }}
           as={Link}
-          to="/my-transaction"
+          to="/user-transaction"
         >
           Nanti Saja
         </Button>

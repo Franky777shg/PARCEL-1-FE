@@ -10,20 +10,28 @@ class NavAdmin extends Component {
         <div className="d-md-flex align-items-center">
           {/* DROPDOWN MOBILE */}
           <div className="d-md-none">
-            <NavDropdown.Item as={Link}>Transaksi</NavDropdown.Item>
-            <NavDropdown.Item as={Link} to="/parcelAdmin">Parsel</NavDropdown.Item>
-            <NavDropdown.Item as={Link} to="/productAdmin">Produk</NavDropdown.Item>
-            <NavDropdown.Item as={Link}>Laporan Penjualan</NavDropdown.Item>
-            <NavDropdown.Item as={Link}>Penghasilan</NavDropdown.Item>
+            <NavDropdown.Item>Transaksi</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/parcelAdmin">
+              Parsel
+            </NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/productAdmin">
+              Produk
+            </NavDropdown.Item>
+            <NavDropdown.Item>Laporan Penjualan</NavDropdown.Item>
+            <NavDropdown.Item>Penghasilan</NavDropdown.Item>
             <NavDropdown.Item onClick={onLogout}>Keluar</NavDropdown.Item>
           </div>
           {/* DROPDOWN TABLET - DESKTOP */}
           <NavDropdown align="end" title="Halo Admin" className="border d-none d-md-block">
-            <NavDropdown.Item as={Link}>Transaksi</NavDropdown.Item>
-            <NavDropdown.Item as={Link} to="/parcelAdmin">Parsel</NavDropdown.Item>
-            <NavDropdown.Item as={Link} to="/productAdmin">Produk</NavDropdown.Item>
-            <NavDropdown.Item as={Link}>Laporan Penjualan</NavDropdown.Item>
-            <NavDropdown.Item as={Link}>Penghasilan</NavDropdown.Item>
+            <NavDropdown.Item>Transaksi</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/parcelAdmin">
+              Parsel
+            </NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/productAdmin">
+              Produk
+            </NavDropdown.Item>
+            <NavDropdown.Item>Laporan Penjualan</NavDropdown.Item>
+            <NavDropdown.Item>Penghasilan</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={onLogout}>Keluar</NavDropdown.Item>
           </NavDropdown>

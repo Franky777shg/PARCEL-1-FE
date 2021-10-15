@@ -64,6 +64,11 @@ export default class uploadPayment extends Component {
     this.setState({ showModal: false, modalMessage: "" }, () => history.push("/"))
   }
 
+  handleCloseToMember = () => {
+    const { history } = this.props
+    this.setState({ showModal: false, modalMessage: "" }, () => history.push("/user-transaction"))
+  }
+
   handleUploadPayment = (img) => {
     this.setState({ previewImage: URL.createObjectURL(img), paymentProof: img })
   }
@@ -91,6 +96,7 @@ export default class uploadPayment extends Component {
           showModal={showModal}
           modalMessage={modalMessage}
           handleCloseModal={this.handleCloseModal}
+          handleCloseToMember={this.handleCloseToMember}
         />
       </Container>
     )
