@@ -64,9 +64,11 @@ class EditParcel extends React.Component{
 
     onHapus=(index)=>{
         // console.log(index)
-        let newIsiParcel =[...this.state.parcel].splice(1, index)
+        // let newIsiParcel =[...this.state.parcel].splice(1, index)
+        let newIsiParcel = this.state.parcel.filter((item, i)=> i !== index)
         // console.log(newIsiParcel)
-        this.setState({parcel : newIsiParcel})
+        console.log(newIsiParcel)
+        // this.setState({parcel : newIsiParcel})
     }
 
     onKategori=(e,index)=>{
