@@ -216,8 +216,6 @@ class FillParcel extends Component {
       modalMessage,
     } = this.state
 
-    console.log(this.props)
-
     return (
       <>
         <Container fluid>

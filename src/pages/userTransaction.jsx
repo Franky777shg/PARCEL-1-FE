@@ -47,7 +47,6 @@ export default class UserTransaction extends Component {
   }
 
   handleFilter = (idOrderStatus) => {
-    console.log(idOrderStatus)
     const token = localStorage.getItem("token")
     if (token) {
       const axiosConfig = { headers: { Authorization: `Bearer ${token}` } }
