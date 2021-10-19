@@ -14,6 +14,8 @@ import FilterByDateRange from "../components/Revenue/Filter/FilterByDateRange"
 import FilterByMonth from "../components/Revenue/Filter/FilterByMonth"
 import FilterContainer from "../components/Revenue/Filter/FilterContainer"
 import FilterInput from "../components/Revenue/Filter/FilterInput"
+import ParcelRevenue from "../components/Revenue/Parcel/ParcelRevenue"
+import ParcelRevenueContainer from "../components/Revenue/Parcel/ParcelRevenueContainer"
 
 const REVENUE_API = "http://localhost:2000/revenue"
 
@@ -23,6 +25,7 @@ const defaultRevanueData = {
   totalGrossRevenues: 0,
   totalProductCapital: 0,
   totalNetRevenues: 0,
+  parcelRevenueData: [],
 }
 
 class Revenue extends Component {
@@ -36,6 +39,7 @@ class Revenue extends Component {
         totalGrossRevenues: 0,
         totalProductCapital: 0,
         totalNetRevenues: 0,
+        parcelRevenueData: [],
       },
       filterStatus: 0,
       revenueDesc: "",
@@ -47,7 +51,7 @@ class Revenue extends Component {
   }
 
   fetchData = () => {
-    Axios.get(`${REVENUE_API}`)
+    Axios.post(`${REVENUE_API}`)
       .then((res) => this.setState({ revenueData: res.data, revenueDesc: "", filterStatus: 0 }))
       .catch((err) =>
         this.setState({ revenueData: defaultRevanueData, revenueDesc: "", filterStatus: 0 }, () =>
@@ -65,7 +69,7 @@ class Revenue extends Component {
 
     const revenueDesc = `Tanggal ${format(startDate, "dd MMMM yyyy", { locale: id })}`
 
-    Axios.post(`${REVENUE_API}/date`, dateData)
+    Axios.post(`${REVENUE_API}`, dateData)
       .then((res) => this.setState({ revenueData: res.data, revenueDesc, filterStatus: 1 }))
       .catch((err) =>
         this.setState({ revenueData: defaultRevanueData, revenueDesc, filterStatus: 1 }, () =>
@@ -84,10 +88,10 @@ class Revenue extends Component {
 
     const revenueDesc = `Bulan ${format(startDate, "MMMM yyyy", { locale: id })}`
 
-    Axios.post(`${REVENUE_API}/month`, monthData)
+    Axios.post(`${REVENUE_API}`, monthData)
       .then((res) => this.setState({ revenueData: res.data, revenueDesc, filterStatus: 2 }))
       .catch((err) =>
-        this.setState({ revenueData: defaultRevanueData, filterStatus: 2 }, () =>
+        this.setState({ revenueData: defaultRevanueData, revenueDesc, filterStatus: 2 }, () =>
           toast.error(err.response.data)
         )
       )
@@ -103,7 +107,7 @@ class Revenue extends Component {
     const revenueDesc = `Dari ${format(startDate, "dd MMMM yyyy", { locale: id })} s.d 
     ${format(endDate, "dd MMMM yyyy", { locale: id })}`
 
-    Axios.post(`${REVENUE_API}/date-range`, dateRangeData)
+    Axios.post(`${REVENUE_API}`, dateRangeData)
       .then((res) => this.setState({ revenueData: res.data, revenueDesc, filterStatus: 3 }))
       .catch((err) =>
         this.setState({ revenueData: defaultRevanueData, revenueDesc, filterStatus: 3 }, () =>
@@ -182,7 +186,8 @@ class Revenue extends Component {
 
   render() {
     const { revenueData, filterStatus, revenueDesc } = this.state
-    const { totalGrossRevenues, totalProductCapital, totalNetRevenues } = revenueData
+    const { totalGrossRevenues, totalProductCapital, totalNetRevenues, parcelRevenueData } =
+      revenueData
     return (
       <Container>
         <Row className="m-4">
@@ -203,6 +208,9 @@ class Revenue extends Component {
           <DataProductCapital totalProductCapital={totalProductCapital} />
           <DataNetRevenues totalNetRevenues={totalNetRevenues} />
         </DataContainer>
+        <ParcelRevenueContainer>
+          <ParcelRevenue parcelRevenueData={parcelRevenueData} />
+        </ParcelRevenueContainer>
       </Container>
     )
   }

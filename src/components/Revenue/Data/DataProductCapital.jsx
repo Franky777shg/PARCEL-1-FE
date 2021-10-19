@@ -6,7 +6,7 @@ export default class DataProductCapital extends Component {
   render() {
     const { totalProductCapital } = this.props
     return (
-      <Col>
+      <Col xs={12} md={4}>
         <h3>Jumlah Modal</h3>
         <p className="lead">
           <NumberFormat

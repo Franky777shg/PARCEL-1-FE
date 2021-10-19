@@ -6,7 +6,7 @@ export default class DataNetRevenues extends Component {
   render() {
     const { totalNetRevenues } = this.props
     return (
-      <Col>
+      <Col xs={12} md={4}>
         <h3>Jumlah Penghasilan Bersih</h3>
         <p className="lead">
           <NumberFormat

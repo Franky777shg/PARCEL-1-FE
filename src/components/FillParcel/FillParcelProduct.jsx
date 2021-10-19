@@ -12,7 +12,6 @@ export default class FillParcelProduct extends Component {
   handleChangeQty = (value, idProduct, idCategory) => {
     const { calculateMaxQty } = this.props
     const max = calculateMaxQty(idCategory).value
-    console.log(max)
     if (value > max) {
       return (this.refs[`product-${idProduct}`].value = max)
     } else if (value === "" || value === 0) {
