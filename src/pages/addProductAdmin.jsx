@@ -68,7 +68,7 @@ class AddProductAdmin extends React.Component {
       !capital ||
       !price ||
       !stock ||
-      !photo
+      !this.state.images
     ) {
       return toast.error("Pastikan seluruh form telah terisi", {
         position: "top-center",
@@ -183,6 +183,7 @@ class AddProductAdmin extends React.Component {
                   })
                 }
                 ref="modal"
+                min="1"
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -200,6 +201,7 @@ class AddProductAdmin extends React.Component {
                   })
                 }
                 ref="persen"
+                min="1"
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -210,6 +212,7 @@ class AddProductAdmin extends React.Component {
                 value={this.state.jual}
                 onChange={(e) => this.setState({ jual: e.target.value })}
                 ref="harga"
+                min="1"
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">

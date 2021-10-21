@@ -17,15 +17,15 @@ class Pagination extends React.Component{
             <nav>
                 <ul className="pagination justify-content-center flex-wrap">
                     <li className={`page-item ${active=== 1 ? "disabled" : ""}`}>
-                        <a className="page-link" href={null} onClick={()=>prevPage()}>Sebelumnya</a>
+                        <button className="page-link"  onClick={()=>prevPage()}>Sebelumnya</button>
                     </li>
                     {pageNumber.map(item =>(
                         <li key={item} className={`page-item ${active===item ? "active" : ""}`}>
-                            <a className="page-link" href={null}  onClick={()=>paginate(item)}>{item}</a>
+                            <button className="page-link"   onClick={()=>paginate(item)}>{item}</button>
                         </li>
                     ))}
                     <li className={`page-item ${active===Math.ceil(totalProduct/productPerPage) ? "disabled" : ""}`}>
-                        <a className="page-link" href={null}  onClick={()=>nextPage()}>Berikutnya</a>
+                        <button className="page-link"   onClick={()=>nextPage()}>Berikutnya</button>
                     </li>
                 </ul>
             </nav>
