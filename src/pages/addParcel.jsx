@@ -3,6 +3,7 @@ import React from "react";
 // import Styling
 import { Container, Col, Row,  Form, FloatingLabel, Button } from "react-bootstrap";
 import {toast} from "react-toastify"
+import {MdAdd} from "react-icons/all"
 
 //import axios
 import axios from "axios";
@@ -22,7 +23,9 @@ class AddParcel extends React.Component {
       idparcel : 0,
       images : "",
       gambar : "",
-      modal : []
+      modal : [],
+      newSubCategory : [],
+      categoryName : ""
     };
   }
 
@@ -42,7 +45,8 @@ class AddParcel extends React.Component {
 
       this.setState({
         isiParcel :[...this.state.isiParcel, data],
-        subCategory:[...this.state.subCategory,[]]})
+        subCategory:[...this.state.subCategory,[]],
+      })
       axios.get(`http://localhost:2000/productAdmin/mainCategories`)
     .then(res =>{
         this.setState({category : res.data})
@@ -52,8 +56,9 @@ class AddParcel extends React.Component {
 
   onHapus=(index)=>{
       // console.log(index)
-      let newIsiParcel = [...this.state.isiParcel].splice(1,index)
-      this.setState({isiParcel : newIsiParcel})
+      let newPar = this.state.isiParcel.filter((item,ind)=>ind !== index)
+      let newSubCate = this.state.subCategory.filter((item,ind)=> ind !==index)
+      this.setState({isiParcel : newPar, subCategory : newSubCate})
 
   }
 
@@ -63,22 +68,11 @@ class AddParcel extends React.Component {
       // console.log(res.data)
       let dataNew =[...this.state.subCategory].slice()
       dataNew[index]= res.data
-      // dataNew.push(res.data)
-      // dataNew = res.data
-      // console.log(dataNew)
 
-      // let newSubCate = [...this.state.subCategory]
-      // console.log(newSubCate)
-      // let newSubCategory =[...this.state.subCategory].splice(1,index,dataNew)
-      // newSubCategory=res.data
-      // console.log(newSubCategory)
         this.setState({subCategory :dataNew})
     })
-      // console.log(e, index)
       let newKategori =[...this.state.isiParcel]
       newKategori[index].kategori = e
-    //   console.log(newKategori)
-    // console.log(this.state.isiParcel)
     
   }
 
@@ -92,13 +86,24 @@ class AddParcel extends React.Component {
   onQuantity=(e, index)=>{
       let newQuantity=[...this.state.isiParcel]
       newQuantity[index].qty_parcel_category = e
+      
       // console.log(this.state.isiParcel)
       
   }
 
   handleChoose=(e)=>{
     this.setState({images: e.target.files[0], gambar : e.target.files[0].name})
-    // console.log(this.state.images)
+  }
+
+  onNewSubKategori=(e, name)=>{
+    axios.get(`http://localhost:2000/productAdmin/subCategories/${e}`)
+    .then(res =>{
+      this.setState({newSubCategory : res.data, categoryName : name })
+    })
+  }
+
+  onAdd=()=>{
+
   }
 
 
@@ -114,9 +119,21 @@ class AddParcel extends React.Component {
 
       const photo = new FormData()
       photo.append('new', this.state.images)
-      // console.log(photo.get('new'))
-      // console.log(newItems)
-      // console.log(photo.values)
+
+
+      for(let i=0; i<newItems.newItems.length; i++){
+        if(!newItems.newItems[i].idproduct_category){
+          return toast.error('Pastikan setiap kategori telah telah terisi!', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+        }
+      }
 
       if(!data.nama || !data.price || !data.desc || !this.state.images || newItems.newItems.length===0){
         return toast.error('Pastikan semua form telah terisi!', {
@@ -163,6 +180,11 @@ class AddParcel extends React.Component {
 
 
   render() {
+    // console.log(this.state.isiParcel)
+    // console.log(this.state.subCategory)
+    // console.log(this.state.quantity)
+    // console.log(this.state.categoryName)
+    
 
     if(this.state.modal[0]===true){
       toast.success(this.state.modal[1], {
@@ -176,23 +198,19 @@ class AddParcel extends React.Component {
         });
         return <Redirect to="/parcelAdmin" />
     }
-      // console.log(this.state.isiParcel)
-      // console.log(this.state.subCategory)
-      // console.log(this.state.images)
-      // console.log(this.state.idparcel)
+      
     return (
       <div>
-        <Container>
+        <Container className="container-fluid">
             <h1>Add Parcel</h1>
-          <Row>
-            <Col className="col-4">
+          <Row className="justify-content-start">
+            <Col className="col-sm-12 col-md-8 col-lg-4">
             <Form.Group controlId="formFile" className="mb-3">
             <Form.Label>Default file input example</Form.Label>
             <Form.Control type="file"name="new"
             accept="image/*"
             onChange={(e)=>this.handleChoose(e)} />
             </Form.Group>
-              {/* <Image src="holder.js/171x180" rounded /> */}
               <FloatingLabel controlId="floatingTextarea" label="Nama Parcel" className="mb-3">
                 <Form.Control as="textarea" onChange={(e)=>this.setState({nama : e.target.value})} />
               </FloatingLabel>
@@ -206,11 +224,11 @@ class AddParcel extends React.Component {
               </FloatingLabel>
             </Col>
             <Col className="col-6">
-            <Button variant="primary" onClick={this.onTambah}>Tambah isi parsel</Button>
+            <Button variant="primary" onClick={this.onTambah}><MdAdd/> Tambah isi parsel</Button>
 
             {this.state.isiParcel.map((item,index)=>{
                 return(
-                    <div key={index} className="d-inline-flex mb-2">
+                    <div key={index} className="d-inline-flex mb-2 col-12">
                         <Form.Select onChange={(e)=>this.onKategori(e.target.value, index)} aria-label="Default select example">
                         <option>Kategori </option>
                         {this.state.category.map((item, index) =>{
@@ -227,11 +245,57 @@ class AddParcel extends React.Component {
                             )
                         })}
                         </Form.Select>
-                        <Form.Control type="number" placeholder="Kuantitas" defaultValue={1} onChange={(e)=>this.onQuantity(e.target.value, index)}/>
+                        <Form.Control type="number" placeholder="Kuantitas" defaultValue={1} onChange={(e)=>this.onQuantity(e.target.value, index)} min="1"/>
                         <Button variant="danger" onClick={()=>this.onHapus(index)} >Hapus</Button>
                     </div>
                 )
             })}
+
+            {/* <div className="d-flex inline">
+            <Form.Select aria-label="Default select example"  className="input-group input-group-sm mb-3" onChange={(e,n)=>this.onNewSubKategori(e.target.value, n.target.value)}>
+             <option>Kategori </option>
+              {this.state.category.map((item, index) =>{
+              return (
+              <option key={index} value={item.idproduct_category} onChange={(e)=>this.onNewSubKategori(e.target.value, item.category_name)}>{item.category_name}</option>
+              )
+              })}
+              </Form.Select>
+              <Form.Select aria-label="Default select example" className="input-group mb-3" >
+              <option>SubKategori</option>
+              {this.state.newSubCategory.map((item,index)=>{
+              return(
+              <option key={index} value={item.idproduct_category}>{item.category_name}</option>
+              )
+              })}
+              </Form.Select>
+              <Form.Control type="number" placeholder="Kuantitas" defaultValue={1}  min="1" className="input-group mb-3"/>
+              <Button variant="primary" className="input-group mb-3"><MdAdd/> Tambah isi parsel</Button>
+            </div> */}
+
+            {/* <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Kategori</th>
+                  <th>SubKategori</th>
+                  <th>Kuantitas</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.isiParcel.map((item,index)=>{
+                  return(
+                      <tr key={index}>
+                        <td>{index+1}</td>
+                        <td>{item.category_name}</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                      </tr>
+                  )
+                })}
+              </tbody>
+            </Table> */}
 
             </Col>
           </Row>

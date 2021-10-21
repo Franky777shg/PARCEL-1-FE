@@ -30,6 +30,7 @@ import UserProfile from "./pages/userProfile";
 import UserTransaction from "./pages/userTransaction";
 import Verify from "./pages/verify";
 import Revenue from "./pages/revenue";
+import SalesReport from "./pages/salesReport";
 import ChangePassword from "./pages/changePassword";
 import AdminTransaction from "./pages/transactionAdmin";
 
@@ -79,6 +80,7 @@ class App extends Component {
           <AdminRoute component={AddProductAdmin} path="/addProductAdmin" />
           <AdminRoute component={AddParcel} path="/addParcel" />
           <AdminRoute component={EditParcel} path="/editParcelAdmin" />
+          <AdminRoute component={SalesReport} path="/salesReport" />
           <AdminRoute component={Revenue} path="/revenue" />
           <AdminRoute component={AdminTransaction} path="/admin-transaction" />
 

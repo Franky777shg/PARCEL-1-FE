@@ -86,7 +86,7 @@ class EditProduct extends React.Component {
   handleUpload =()=>{
       const data = new FormData()
       data.append('new', this.state.images)
-      console.log(data.get('new'))
+      // console.log(data.get('new'))
 
       axios.post(`http://localhost:2000/productAdmin/editUploadProduct/${this.state.product.idproduct}/products`, data, {headers:{'Content-Type': 'multipart/form-data'}}).then(res =>{
           this.setState({product : res.data[0], categorySelect:res.data[0].idproduct_category, successModal: res.data[1].success, uploadModal: false, caption : "Gambar berhasil di upload" })
@@ -145,20 +145,20 @@ class EditProduct extends React.Component {
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Harga Modal Produk</Form.Label>
-              <Form.Control type="number" defaultValue={this.state.product.product_capital} ref="modal" />
+              <Form.Control type="number" defaultValue={this.state.product.product_capital} ref="modal" min="1" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Masukkan Keuntungan(%)</Form.Label>
-              <Form.Control type="number" defaultValue={this.state.persen} value={this.state.persen} onChange={(e)=>this.setState({persen : e.target.value, jual : (e.target.value/100 * this.refs.modal.value)+parseInt(this.refs.modal.value)})} ref="persen" />
+              <Form.Control type="number" defaultValue={this.state.persen} value={this.state.persen} onChange={(e)=>this.setState({persen : e.target.value, jual : (e.target.value/100 * this.refs.modal.value)+parseInt(this.refs.modal.value)})} ref="persen" min="1" />
             </Form.Group>
             
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Harga Jual</Form.Label>
-              <Form.Control type="number" defaultValue={this.state.product.product_price} ref="harga" value={this.state.jual} onChange={(e)=>this.setState({jual : e.target.value})} />
+              <Form.Control type="number" defaultValue={this.state.product.product_price} ref="harga" value={this.state.jual} onChange={(e)=>this.setState({jual : e.target.value})} min="1" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Stock</Form.Label>
-              <Form.Control type="number" defaultValue={this.state.product.product_stock} ref="stok" />
+              <Form.Control type="number" defaultValue={this.state.product.product_stock} ref="stok" min="1" />
             </Form.Group>
           </div>
         </div>

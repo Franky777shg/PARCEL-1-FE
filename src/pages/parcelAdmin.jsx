@@ -8,7 +8,7 @@ import "../style/parcelAdmin.css"
 import {toast} from "react-toastify"
 
 //import Icons 
-import {AiFillPlusCircle} from "react-icons/all"
+import {AiFillPlusCircle,AiOutlineSetting,AiOutlineDelete} from "react-icons/all"
 
 //import Pagination
 import Pagination from "../components/pagination"
@@ -19,7 +19,6 @@ import {Link} from "react-router-dom"
 //import action
 import {parcelForAdmin, deleteParcel, modalSuccess} from "../redux/actions"
 
-import axios from "axios"
 
 class ParcelAdmin extends React.Component{
     constructor(props){
@@ -119,8 +118,8 @@ class ParcelAdmin extends React.Component{
                           </Card.Text>
                          
                           <div style={{display:"flex"}}>
-                          <Button variant="primary" style={{marginRight:"1vw"}} as={Link} to={`/editParcelAdmin?${item.idparcel}`}>Edit Parcel</Button>
-                          <Button variant="danger" onClick={()=>this.onDelete(item.idparcel, item.parcel_name)}>Hapus Parcel</Button>
+                          <Button variant="primary" style={{marginRight:"1vw"}} as={Link} to={`/editParcelAdmin?${item.idparcel}`}><AiOutlineSetting/> Edit Parcel</Button>
+                          <Button variant="danger" onClick={()=>this.onDelete(item.idparcel, item.parcel_name)}><AiOutlineDelete/> Hapus Parcel</Button>
                           </div>
                         </Card.Body>
                       </Card>
