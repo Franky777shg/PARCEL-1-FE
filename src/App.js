@@ -29,6 +29,7 @@ import UploadPayment from "./pages/uploadPayment"
 import UserProfile from "./pages/userProfile"
 import UserTransaction from "./pages/userTransaction"
 import Verify from "./pages/verify"
+import Revenue from "./pages/revenue"
 import SalesReport from "./pages/salesReport"
 
 class App extends Component {
@@ -68,7 +69,7 @@ class App extends Component {
           <AdminRoute component={AddParcel} path="/addParcel" />
           <AdminRoute component={EditParcel} path="/editParcelAdmin" />
           <AdminRoute component={SalesReport} path="/salesReport" />
-
+          <AdminRoute component={Revenue} path="/revenue" />
           <Route component={NotFound} path="*" />
         </Switch>
         <ToastContainer />
