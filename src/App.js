@@ -1,40 +1,42 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import { Route, Switch } from "react-router-dom"
-import { ToastContainer } from "react-toastify"
-import { keepLogin, getTotalParcel } from "./redux/actions"
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Route, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { keepLogin, getTotalParcel } from "./redux/actions";
 
 // Import Components
-import AuthWrapper from "./components/AuthWrapper"
-import AdminRoute from "./components/CustomRoute/AdminRoute"
-import UserRoute from "./components/CustomRoute/UserRoute"
+import AuthWrapper from "./components/AuthWrapper";
+import AdminRoute from "./components/CustomRoute/AdminRoute";
+import UserRoute from "./components/CustomRoute/UserRoute";
 
 //Import Pages
-import NotFound from "./pages/404"
-import AddParcel from "./pages/addParcel"
-import AddProductAdmin from "./pages/addProductAdmin"
-import Cart from "./pages/cart"
-import EditProduct from "./pages/editProduct"
-import EditParcel from "./pages/editParcel"
-import FillParcel from "./pages/fillParcel"
-import ForgotPassword from "./pages/forgotPassword"
-import Login from "./pages/login"
-import ParcelAdmin from "./pages/parcelAdmin"
-import ParcelDetail from "./pages/parcelDetail"
-import ProductAdmin from "./pages/productAdmin"
-import Register from "./pages/register"
-import ResetPassword from "./pages/resetPassword"
-import TransactionDetail from "./pages/transactionDetail"
-import UploadPayment from "./pages/uploadPayment"
-import UserProfile from "./pages/userProfile"
-import UserTransaction from "./pages/userTransaction"
-import Verify from "./pages/verify"
-import Revenue from "./pages/revenue"
+import NotFound from "./pages/404";
+import AddParcel from "./pages/addParcel";
+import AddProductAdmin from "./pages/addProductAdmin";
+import Cart from "./pages/cart";
+import EditProduct from "./pages/editProduct";
+import EditParcel from "./pages/editParcel";
+import FillParcel from "./pages/fillParcel";
+import ForgotPassword from "./pages/forgotPassword";
+import Login from "./pages/login";
+import ParcelAdmin from "./pages/parcelAdmin";
+import ParcelDetail from "./pages/parcelDetail";
+import ProductAdmin from "./pages/productAdmin";
+import Register from "./pages/register";
+import ResetPassword from "./pages/resetPassword";
+import TransactionDetail from "./pages/transactionDetail";
+import UploadPayment from "./pages/uploadPayment";
+import UserProfile from "./pages/userProfile";
+import UserTransaction from "./pages/userTransaction";
+import Verify from "./pages/verify";
+import Revenue from "./pages/revenue";
+import ChangePassword from "./pages/changePassword";
+import AdminTransaction from "./pages/transactionAdmin";
 
 class App extends Component {
   componentDidMount() {
-    this.props.keepLogin()
-    this.props.getTotalParcel()
+    this.props.keepLogin();
+    this.props.getTotalParcel();
   }
 
   render() {
@@ -55,10 +57,20 @@ class App extends Component {
           {/* Route Khusus User Menggunakan Custom Route UserRoute */}
           <UserRoute component={FillParcel} path="/fill-parcel/:idparcel" />
           <UserRoute component={Cart} path="/cart" />
-          <UserRoute component={UploadPayment} path="/upload-payment/:idorder" />
+          <UserRoute
+            component={UploadPayment}
+            path="/upload-payment/:idorder"
+          />
           <UserRoute component={UserTransaction} path="/user-transaction" />
-          <UserRoute component={TransactionDetail} path="/transaction-detail/:idorder" />
+          <UserRoute
+            component={TransactionDetail}
+            path="/transaction-detail/:idorder"
+          />
           <UserRoute component={UserProfile} path="/user-profile" />
+          <UserRoute
+            component={ChangePassword}
+            path="/user-profile-change-password"
+          />
 
           {/* Route Khusus Admin Menggunakan Custom Route AdminRoute */}
           <AdminRoute component={ProductAdmin} path="/productAdmin" />
@@ -68,13 +80,14 @@ class App extends Component {
           <AdminRoute component={AddParcel} path="/addParcel" />
           <AdminRoute component={EditParcel} path="/editParcelAdmin" />
           <AdminRoute component={Revenue} path="/revenue" />
+          <AdminRoute component={AdminTransaction} path="/admin-transaction" />
 
           <Route component={NotFound} path="*" />
         </Switch>
         <ToastContainer />
       </>
-    )
+    );
   }
 }
 
-export default connect(null, { keepLogin, getTotalParcel })(App)
+export default connect(null, { keepLogin, getTotalParcel })(App);

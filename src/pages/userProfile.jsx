@@ -3,6 +3,8 @@ import Axios from "axios";
 
 //import redux
 import { connect } from "react-redux";
+//import link
+import { Link } from "react-router-dom"
 
 //import styling
 import "../style/userProfile.css"
@@ -18,7 +20,11 @@ class UserProfile extends Component {
         this.state = {
             name: "",
             email: "",
-            address: ""
+            address: "",
+            avatar: "",
+            nameErr: [false, ""],
+            addressErr: [false, ""],
+            emailErr: [false, ""]
         }
     }
 
@@ -30,26 +36,43 @@ class UserProfile extends Component {
     onChangeName = (value) => {
         if (!value) {
             this.setState({ name: value })
-            alert("error name")
+            return this.setState({ nameErr: [true, "Nama harus diisi!"] })
         } else {
             this.setState({ name: value })
+            return this.setState({ nameErr: [false, ""] })
         }
     }
     onChangeEmail = (value) => {
+        const emailRegex = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!value) {
             this.setState({ email: value })
-            alert("error email")
+            return this.setState({ emailErr: [true, "Email harus diisi !"] })
+        } else if (!emailRegex.test(value)) {
+            this.setState({ email: value })
+            return this.setState({ emailErr: [true, "Mohon masukkan email yang valid!"] })
         } else {
             this.setState({ email: value })
+            return this.setState({ emailErr: [false, ""] })
         }
     }
     onChangeAddress = (value) => {
         if (!value) {
             this.setState({ address: value })
-            alert("error address")
+            return this.setState({ addressErr: [true, "Alamat harus diisi!"] })
         } else {
             this.setState({ address: value })
+            return this.setState({ addressErr: [false, ""] })
         }
+    }
+    handleChoose = (e) => {
+        console.log("e.target.files", e.target.files)
+        this.setState({ avatar: e.target.files[0] })
+    }
+    handleUpload = () => {
+        const data = new FormData()
+        console.log(data) //create new data (empty/default)
+        data.append("new", this.state.avatar)
+        console.log(data.get("new")) //new data after append (key + value)
     }
     onSave = () => {
         const newData = {
@@ -59,10 +82,19 @@ class UserProfile extends Component {
             gender: this.refs.gender.value || null,
             age: +this.refs.age.value
         }
+        const { name, email, address } = newData
+        //cek semua input terisi
+        if (!name || !email || !address)
+            return alert("input all data")
+        //cek validasi email input
+        if (this.state.emailErr[0] === true)
+            return alert("email tidak valid")
         this.props.updateData(newData)
     }
 
     render() {
+        console.log(this.props)
+        // console.log(this.state.avatar)
         return (
             <div>
                 <h1 id="profilH1">Profil Anda</h1>
@@ -77,7 +109,7 @@ class UserProfile extends Component {
                                     <Form.Control plaintext readOnly defaultValue={this.props.username} />
                                 </Col>
                             </Form.Group>
-                            <Button style={{ backgroundColor: "#7792A8", border: "none", marginBottom: "3vh" }}>
+                            <Button style={{ backgroundColor: "#7792A8", border: "none", marginBottom: "3vh" }} as={Link} to={`user-profile-change-password`}>
                                 Ubah Kata Sandi
                             </Button>
 
@@ -87,8 +119,8 @@ class UserProfile extends Component {
                                 </Form.Label>
                                 <Col sm="10">
                                     <Form.Control type="text" value={this.state.name} onChange={(e) => this.onChangeName(e.target.value)} className="profile-form" />
-                                    <Form.Text className="text-muted">
-                                        We'll never share your email with anyone else.
+                                    <Form.Text className="text-danger">
+                                        {this.state.nameErr[0] ? this.state.nameErr[1] : ""}
                                     </Form.Text>
                                 </Col>
                             </Form.Group>
@@ -99,8 +131,8 @@ class UserProfile extends Component {
                                 </Form.Label>
                                 <Col sm="10">
                                     <Form.Control type="email" value={this.state.email} onChange={(e) => this.onChangeEmail(e.target.value)} className="profile-form" />
-                                    <Form.Text className="text-muted">
-                                        We'll never share your email with anyone else.
+                                    <Form.Text className="text-danger">
+                                        {this.state.emailErr[0] ? this.state.emailErr[1] : ""}
                                     </Form.Text>
                                 </Col>
                             </Form.Group>
@@ -111,8 +143,8 @@ class UserProfile extends Component {
                                 <Col sm="10">
                                     <Form.Control type="text" value={this.state.address} onChange={(e) => this.onChangeAddress(e.target.value)}
                                         className="profile-form" />
-                                    <Form.Text className="text-muted">
-                                        We'll never share your email with anyone else.
+                                    <Form.Text className="text-danger">
+                                        {this.state.addressErr[0] ? this.state.addressErr[1] : ""}
                                     </Form.Text>
                                 </Col>
                             </Form.Group>
@@ -134,10 +166,26 @@ class UserProfile extends Component {
                             <Col xs={6} md={4}>
                                 <Image src="https://images.unsplash.com/photo-1633118342855-221562c9e7bd?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDc5fHRvd0paRnNrcEdnfHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" roundedCircle width={250} height={250} />
                             </Col>
-                            <Form.Group controlId="formFile" className="mb-3">
-                                <Form.Label>Default file input example</Form.Label>
-                                <Form.Control type="file" />
-                            </Form.Group>
+                            <form encType="multipart/form-data">
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    name="new"
+                                    onChange={(e) => this.handleChoose(e)}
+                                />
+                            </form>
+                            <Button
+                                className="button"
+                                variant="success"
+                                onClick={this.handleUpload}
+                            >
+                                Upload
+                            </Button>
+                            <Button
+                                style={{ backgroundColor: "#EF476F", border: "none" }}
+                            >
+                                Hapus
+                            </Button>
                         </div>
                     </div>
                     <div id="profile-save">
@@ -145,12 +193,6 @@ class UserProfile extends Component {
                             style={{ backgroundColor: "#8F9B85", border: "none" }} size="lg" onClick={this.onSave}
                         >
                             Simpan
-                        </Button>
-                        <Button
-                            style={{ backgroundColor: "#EF476F", border: "none" }}
-                            size="lg"
-                        >
-                            Reset
                         </Button>
                     </div>
                 </div>
