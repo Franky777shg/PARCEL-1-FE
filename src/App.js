@@ -29,6 +29,7 @@ import UploadPayment from "./pages/uploadPayment"
 import UserProfile from "./pages/userProfile"
 import UserTransaction from "./pages/userTransaction"
 import Verify from "./pages/verify"
+import SalesReport from "./pages/salesReport"
 
 class App extends Component {
   componentDidMount() {
@@ -66,6 +67,7 @@ class App extends Component {
           <AdminRoute component={AddProductAdmin} path="/addProductAdmin" />
           <AdminRoute component={AddParcel} path="/addParcel" />
           <AdminRoute component={EditParcel} path="/editParcelAdmin" />
+          <AdminRoute component={SalesReport} path="/salesReport" />
 
           <Route component={NotFound} path="*" />
         </Switch>

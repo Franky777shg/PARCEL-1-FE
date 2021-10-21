@@ -17,7 +17,7 @@ class NavAdmin extends Component {
             <NavDropdown.Item as={Link} to="/productAdmin">
               Produk
             </NavDropdown.Item>
-            <NavDropdown.Item>Laporan Penjualan</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/salesReport">Laporan Penjualan</NavDropdown.Item>
             <NavDropdown.Item>Penghasilan</NavDropdown.Item>
             <NavDropdown.Item onClick={onLogout}>Keluar</NavDropdown.Item>
           </div>
@@ -30,7 +30,7 @@ class NavAdmin extends Component {
             <NavDropdown.Item as={Link} to="/productAdmin">
               Produk
             </NavDropdown.Item>
-            <NavDropdown.Item>Laporan Penjualan</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/salesReport">Laporan Penjualan</NavDropdown.Item>
             <NavDropdown.Item>Penghasilan</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={onLogout}>Keluar</NavDropdown.Item>
