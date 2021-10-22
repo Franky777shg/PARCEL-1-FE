@@ -23,3 +23,10 @@ export const uploadAvatar = (data) => {
     });
   };
 };
+export const removeAvatar = () => {
+  return (dispatch) => {
+    return dispatch({
+      type: "REMOVE_AVATAR",
+    });
+  };
+};

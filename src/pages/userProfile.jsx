@@ -12,9 +12,11 @@ import { Button, Image, Form, Row, Col } from "react-bootstrap"
 import { toast } from "react-toastify"
 
 //import action
-import { updateData, uploadAvatar } from "../redux/actions"
+import { updateData, uploadAvatar, removeAvatar } from "../redux/actions"
 const URL_UPLOAD_AVATAR =
     "http://localhost:2000/profile/updateProfilePhoto/avatars";
+const URL_REMOVE_AVATAR =
+    "http://localhost:2000/profile/removeProfilePhoto"
 
 class UserProfile extends Component {
     constructor(props) {
@@ -77,7 +79,7 @@ class UserProfile extends Component {
         data.append("new", this.state.avatar)
         const token = localStorage.getItem("token");
         const axiosConfig = { headers: { Authorization: `Bearer ${token}` } };
-        Axios.put(`${URL_UPLOAD_AVATAR}`, data, axiosConfig).then((res) => {
+        Axios.put(URL_UPLOAD_AVATAR, data, axiosConfig).then((res) => {
             toast.success("Berhasil ubah foto profil")
             this.props.uploadAvatar(res.data)
         });
@@ -94,11 +96,23 @@ class UserProfile extends Component {
         const { name, email, address } = newData
         //cek semua input terisi
         if (!name || !email || !address)
-            return alert("input all data")
+            return toast.error("Masukkan semua data")
         //cek validasi email input
         if (this.state.emailErr[0] === true)
-            return alert("email tidak valid")
-        this.props.updateData(newData)
+            return toast.error("Email tidak valid")
+        else this.props.updateData(newData)
+        return toast.success("Data profil berhasil diubah")
+    }
+    onRemoveAvatar = () => {
+        const token = localStorage.getItem("token");
+        const axiosConfig = { headers: { Authorization: `Bearer ${token}` } };
+        Axios.put(URL_REMOVE_AVATAR, null, axiosConfig).then(
+            (res) => {
+                toast.success("Foto profil berhasil dihapus")
+                this.props.removeAvatar()
+            }
+        ).catch(err => console.log(err.response))
+
     }
 
     render() {
@@ -108,9 +122,9 @@ class UserProfile extends Component {
             <div>
                 <h1 id="profilH1">Profil Anda</h1>
                 <div id="editprofile-container">
-                    <div id="profile-form">
+                    <div id="profile-form-container">
                         <Form>
-                            <Form.Group as={Row} className="mb-3" controlId="formPlaintextUsername">
+                            <Form.Group as={Row} className="mb-2" controlId="formPlaintextUsername">
                                 <Form.Label column sm="2">
                                     Username
                                 </Form.Label>
@@ -122,7 +136,7 @@ class UserProfile extends Component {
                                 Ubah Kata Sandi
                             </Button>
 
-                            <Form.Group as={Row} className="mb-4" controlId="formPlaintextName">
+                            <Form.Group as={Row} className="mb-3" controlId="formPlaintextName">
                                 <Form.Label column sm="2">
                                     Nama Lengkap
                                 </Form.Label>
@@ -134,7 +148,7 @@ class UserProfile extends Component {
                                 </Col>
                             </Form.Group>
 
-                            <Form.Group as={Row} className="mb-4" controlId="formPlaintextEmail">
+                            <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
                                 <Form.Label column sm="2">
                                     Email
                                 </Form.Label>
@@ -145,7 +159,7 @@ class UserProfile extends Component {
                                     </Form.Text>
                                 </Col>
                             </Form.Group>
-                            <Form.Group as={Row} className="mb-4" controlId="formPlaintextAddress">
+                            <Form.Group as={Row} className="mb-3" controlId="formPlaintextAddress">
                                 <Form.Label column sm="2">
                                     Alamat
                                 </Form.Label>
@@ -157,53 +171,59 @@ class UserProfile extends Component {
                                     </Form.Text>
                                 </Col>
                             </Form.Group>
-                            <Form.Select aria-label="Default select example" className="mb-4" id="gender-form" defaultValue={this.props.gender || null} ref="gender">
-                                <option value="">Jenis Kelamin</option>
-                                <option value="MALE">Laki-laki</option>
-                                <option value="FEMALE">Perempuan</option>
-                            </Form.Select>
-                            <Form.Group as={Row} className="mb-4" controlId="formPlaintextAge">
+                            <Form.Group as={Row} className="mb-3" controlId="formPlaintextGender">
+                                <Form.Label column sm="2">
+                                    Gender
+                                </Form.Label>
+                                <Form.Select aria-label="Default select example" className="mb-3, profile-form" defaultValue={this.props.gender || null} ref="gender" id="gender-form">
+                                    <option value="">Jenis Kelamin</option>
+                                    <option value="MALE">Laki-laki</option>
+                                    <option value="FEMALE">Perempuan</option>
+                                </Form.Select>
+                            </Form.Group>
+                            <Form.Group as={Row} controlId="formPlaintextAge">
                                 <Form.Label column sm="2">
                                     Umur
                                 </Form.Label>
                                 <Col sm="10">
-                                    <Form.Control type="number" defaultValue={this.props.age} ref="age" className="profile-form" />
+                                    <Form.Control type="number" defaultValue={this.props.age} ref="age" className="profile-form" min="1" />
                                 </Col>
                             </Form.Group>
                         </Form>
-                        <div id="profile-avatar">
-                            <Col xs={6} md={4}>
-                                <Image src={`http://localhost:2000/uploads/avatars/${this.props.avatar}`} roundedCircle width={250} height={250} />
-                            </Col>
-                            <form encType="multipart/form-data">
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    name="new"
-                                    onChange={(e) => this.handleChoose(e)}
-                                />
-                            </form>
-                            <Button
-                                className="button"
-                                variant="success"
-                                onClick={this.handleUpload}
-                            >
-                                Upload
-                            </Button>
-                            <Button
-                                style={{ backgroundColor: "#EF476F", border: "none" }}
-                            >
-                                Hapus
-                            </Button>
-                        </div>
-                    </div>
-                    <div id="profile-save">
                         <Button
-                            style={{ backgroundColor: "#8F9B85", border: "none" }} size="lg" onClick={this.onSave}
+                            id="profile-save"
+                            size="lg" onClick={this.onSave}
                         >
                             Simpan
                         </Button>
                     </div>
+                    <div id="profile-avatar">
+                        <Col xs={6} md={4}>
+                            <Image src={`http://localhost:2000/uploads/avatars/${this.props.avatar}`} roundedCircle width={250} height={250} />
+                        </Col>
+                        <form encType="multipart/form-data">
+                            <input
+                                type="file"
+                                accept="image/*"
+                                name="new"
+                                onChange={(e) => this.handleChoose(e)}
+                            />
+                        </form>
+                        <Button
+                            className="button, profile-avatar-button"
+                            variant="success"
+                            onClick={this.handleUpload} style={{ backgroundColor: "#7792A8", border: "none" }}
+                        >
+                            Upload
+                        </Button>
+                        <Button
+                            className="profile-avatar-button"
+                            style={{ backgroundColor: "#EF476F", border: "none" }} onClick={this.onRemoveAvatar}
+                        >
+                            Hapus
+                        </Button>
+                    </div>
+
                 </div>
             </div>
         )
@@ -224,6 +244,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { updateData, uploadAvatar })(UserProfile)
+export default connect(mapStateToProps, { updateData, uploadAvatar, removeAvatar })(UserProfile)
 
 

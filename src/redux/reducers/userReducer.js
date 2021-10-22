@@ -40,6 +40,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         avatar: action.payload.avatar,
       };
+    case "REMOVE_AVATAR":
+      return {
+        ...state,
+        avatar: null,
+      };
     case "LOGOUT":
       return INITIAL_STATE;
     default:
