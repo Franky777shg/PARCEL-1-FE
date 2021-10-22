@@ -56,8 +56,10 @@ export const parcelForAdmin=(data)=>{
 
 export const deleteParcel =(data)=>{
     return(dispatch)=>{
+        // console.log(data)
         axios.get(`${URL_DELETE_PARCEL}/${data.id}/${data.page}/${data.nama}`)
         .then(res =>{
+            // console.log(res.data)
             return dispatch({
                 type : 'DELETE_PARCEL',
                 payload : res.data

@@ -3,6 +3,8 @@ import React from "react";
 import { Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 
+import {Redirect} from "react-router-dom"
+
 class AddProductAdmin extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +51,7 @@ class AddProductAdmin extends React.Component {
 
     const photo = new FormData();
     photo.append("new", this.state.images);
-    console.log(photo.get("new"));
+    // console.log(photo.get("new"));
 
     let data = {
       idproduct_category,
@@ -59,7 +61,7 @@ class AddProductAdmin extends React.Component {
       price,
       stock,
     };
-    console.log(data);
+    // console.log(data);
 
     if (
       !idproduct_category ||
@@ -105,7 +107,7 @@ class AddProductAdmin extends React.Component {
   render() {
     // console.log(this.state.kategori)
     // console.log(this.state.jual)
-    console.log(this.state.images);
+    // console.log(this.state.images);
     if (this.state.successModal === true) {
       toast.success(this.state.caption, {
         position: "top-center",
@@ -116,6 +118,7 @@ class AddProductAdmin extends React.Component {
         draggable: true,
         progress: undefined,
       });
+      return <Redirect to="/productAdmin" />
     }
 
     return (
