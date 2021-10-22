@@ -44,8 +44,10 @@ class EditParcel extends React.Component{
     onTambah=()=>{
         let data ={
             idparcel : this.state.idparcel,
-            idproduct_category : "",
-            qty_parcel_category : 1
+            idproduct_category : 0,
+            qty_parcel_category : 1,
+            category_name : "",
+            parent_category_name : ""
         }
 
         this.setState({
@@ -61,28 +63,43 @@ class EditParcel extends React.Component{
 
     onHapus=(index)=>{
         let newIsiParcel = this.state.parcel.filter((item, ind)=> ind !== index)
-        this.setState({parcel : newIsiParcel})
+        let newSubCate = this.state.subCategory.filter((item,ind)=> ind !==index)
+        this.setState({parcel : newIsiParcel, subCategory : newSubCate})
     }
 
     onKategori=(e,index)=>{
         axios.get(`http://localhost:2000/productAdmin/subCategories/${e}`)
         .then(res =>{
+            let kate = [...this.state.category]
+            let nameCate = kate.filter(item => item.idproduct_category === +e)
+
             let dataNew=[...this.state.subCategory].slice()
             dataNew[index] = res.data
-            this.setState({subCategory : dataNew})
+
+            let newKategori = [...this.state.parcel]
+
+            newKategori[index].kategori = e
+            newKategori[index].parent_category_name = nameCate[0].category_name
+
+            this.setState({subCategory: dataNew,parcel : newKategori})
         })
-        let newKategori = [...this.state.parcel]
-        newKategori[index].kategori = e
     }
 
     onSubKategori =(e,index)=>{
         let newSubKategori =[...this.state.parcel]
         newSubKategori[index].idproduct_category = e
+        let newCategoryName = this.state.subCategory[index]
+        let newNewCateName = newCategoryName.filter(item => item.idproduct_category === parseInt(e))
+        
+        newSubKategori[index].category_name = newNewCateName[0].category_name
+
+        this.setState({parcel : newSubKategori})
     }
 
     onQuantity=(e,index)=>{
         let newQuantity =[...this.state.parcel]
         newQuantity[index].qty_parcel_category = e
+        this.setState({parcel : newQuantity})
     }
 
     handleChoose=(e)=>{
@@ -158,8 +175,19 @@ class EditParcel extends React.Component{
 
         for(let i=0; i<this.state.parcel.length; i++){
             // console.log(this.state.parcel[i])
-            if(!this.state.parcel[i].idproduct_category){
+            if(this.state.parcel[i].idproduct_category===0){
                 return toast.error('Pastikan setiap kategori telah telah terisi!', {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    });
+            }
+            else if(this.state.parcel[i].qty_parcel_category==="0"){
+                return toast.error('Pastikan setiap Kuantitas minimal 1 !', {
                     position: "top-center",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -197,6 +225,8 @@ class EditParcel extends React.Component{
 
 
     render(){
+        // console.log(this.state.parcel)
+        // console.log(this.state.subCategory)
 
         if(this.state.modalSuccess[0]===true){
             toast.success(this.state.modalSuccess[1], {
@@ -242,23 +272,23 @@ class EditParcel extends React.Component{
                     {this.state.parcel.map((item, index)=>{
                         return(
                             <div key={index} className="d-inline-flex mb-2 col-12" >
-                        <Form.Select onChange={(e)=>this.onKategori(e.target.value, index)}  aria-label="Default select example">
-                        <option >{item.parent_category_name} </option>
+                        <Form.Select value={item.parent_category_name} onChange={(e)=>this.onKategori(e.target.value, index)}  aria-label="Default select example">
+                        <option value={0}>{item.idproduct_category ===0 ? "Kategori" : item.parent_category_name} </option>
                         {this.state.category.map((item, index) =>{
                             return (
                                 <option key={`${index}z`} value={item.idproduct_category} onChange={(e)=>this.onQuantity(e.target.value, index)}>{item.category_name}</option>
                             )
                         })}
                         </Form.Select>
-                        <Form.Select aria-label="Default select example" onChange={(e)=>this.onSubKategori(e.target.value,index)} >
-                        <option>{item.category_name}</option>
+                        <Form.Select value={item.idproduct_category} aria-label="Default select example" onChange={(e)=>this.onSubKategori(e.target.value,index)} >
+                        <option value={item.idproduct_category ? item.idproduct_category : 0}>{item.idproduct_category === 0 ? "Subkategori" : item.category_name}</option>
                         {this.state.subCategory[index].map((item, index)=>{
                             return(
                                 <option key={`a${index}`} value={item.idproduct_category} onChange={(e)=>this.onSubKategori(e.target.value, index)}>{item.category_name}</option>
                             )
                         })}
                         </Form.Select>
-                        <Form.Control type="number" placeholder="Kuantitas" defaultValue={item.qty_parcel_category} onChange={(e)=>this.onQuantity(e.target.value, index)} min="1"/>
+                        <Form.Control type="number" placeholder="Kuantitas" value={item.qty_parcel_category} onChange={(e)=>this.onQuantity(e.target.value, index)} min="1"/>
                         <Button variant="danger" onClick={()=>this.onHapus(index)}>Hapus</Button>
                     </div>
                         )

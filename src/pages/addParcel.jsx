@@ -39,7 +39,7 @@ class AddParcel extends React.Component {
   onTambah=()=>{
       let data ={
           idparcel : this.state.idparcel,
-          idproduct_category : "",
+          idproduct_category : 0,
           qty_parcel_category : 1
       }
 
@@ -48,7 +48,7 @@ class AddParcel extends React.Component {
         subCategory:[...this.state.subCategory,[]],
       })
       axios.get(`http://localhost:2000/productAdmin/mainCategories`)
-    .then(res =>{
+      .then(res =>{
         this.setState({category : res.data})
         
     })
@@ -69,10 +69,11 @@ class AddParcel extends React.Component {
       let dataNew =[...this.state.subCategory].slice()
       dataNew[index]= res.data
 
-        this.setState({subCategory :dataNew})
-    })
+      this.setState({subCategory :dataNew})
       let newKategori =[...this.state.isiParcel]
       newKategori[index].kategori = e
+      this.setState({isiParcel : newKategori})
+    })
     
   }
 
@@ -81,6 +82,7 @@ class AddParcel extends React.Component {
       let newSubKategori=[...this.state.isiParcel]
       newSubKategori[index].idproduct_category = e
       // console.log(this.state.isiParcel)
+      this.setState({isiParcel : newSubKategori})
   }
 
   onQuantity=(e, index)=>{
@@ -88,6 +90,7 @@ class AddParcel extends React.Component {
       newQuantity[index].qty_parcel_category = e
       
       // console.log(this.state.isiParcel)
+      this.setState({isiParcel : newQuantity})
       
   }
 
@@ -100,10 +103,6 @@ class AddParcel extends React.Component {
     .then(res =>{
       this.setState({newSubCategory : res.data, categoryName : name })
     })
-  }
-
-  onAdd=()=>{
-
   }
 
 
@@ -122,8 +121,19 @@ class AddParcel extends React.Component {
 
 
       for(let i=0; i<newItems.newItems.length; i++){
-        if(!newItems.newItems[i].idproduct_category){
+        if(newItems.newItems[i].idproduct_category===0){
           return toast.error('Pastikan setiap kategori telah telah terisi!', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+        }
+        else if(newItems.newItems[i].qty_parcel_category === "0"){
+          return toast.error('Pastikan setiap kuantitas minimal berjumlah 1 !', {
             position: "top-center",
             autoClose: 3000,
             hideProgressBar: false,
@@ -229,73 +239,29 @@ class AddParcel extends React.Component {
             {this.state.isiParcel.map((item,index)=>{
                 return(
                     <div key={index} className="d-inline-flex mb-2 col-12">
-                        <Form.Select onChange={(e)=>this.onKategori(e.target.value, index)} aria-label="Default select example">
-                        <option>Kategori </option>
+                        <Form.Select value={item.kategori} onChange={(e)=>this.onKategori(e.target.value, index)} aria-label="Default select example">
+                        <option value={0}>Kategori </option>
                         {this.state.category.map((item, index) =>{
                             return (
                                 <option key={index} value={item.idproduct_category} onChange={(e)=>this.onQuantity(e.target.value, index)}>{item.category_name}</option>
                             )
                         })}
                         </Form.Select>
-                        <Form.Select aria-label="Default select example" onChange={(e)=>this.onSubKategori(e.target.value, index)}>
-                        <option>SubKategori</option>
+                        <Form.Select aria-label="Default select example" value={item.idproduct_category} onChange={(e)=>this.onSubKategori(e.target.value, index)}>
+                        <option value={0}>SubKategori</option>
                         {this.state.subCategory[index].map((item,index)=>{
                             return(
                                 <option key={index} value={item.idproduct_category} onChange={(e)=>this.onSubKategori(e.target.value, index)}>{item.category_name}</option>
                             )
                         })}
                         </Form.Select>
-                        <Form.Control type="number" placeholder="Kuantitas" defaultValue={1} onChange={(e)=>this.onQuantity(e.target.value, index)} min="1"/>
+                        <Form.Control type="number" placeholder="Kuantitas"  value={item.qty_parcel_category} onChange={(e)=>this.onQuantity(e.target.value, index)} min="1"/>
                         <Button variant="danger" onClick={()=>this.onHapus(index)} >Hapus</Button>
                     </div>
                 )
             })}
 
-            {/* <div className="d-flex inline">
-            <Form.Select aria-label="Default select example"  className="input-group input-group-sm mb-3" onChange={(e,n)=>this.onNewSubKategori(e.target.value, n.target.value)}>
-             <option>Kategori </option>
-              {this.state.category.map((item, index) =>{
-              return (
-              <option key={index} value={item.idproduct_category} onChange={(e)=>this.onNewSubKategori(e.target.value, item.category_name)}>{item.category_name}</option>
-              )
-              })}
-              </Form.Select>
-              <Form.Select aria-label="Default select example" className="input-group mb-3" >
-              <option>SubKategori</option>
-              {this.state.newSubCategory.map((item,index)=>{
-              return(
-              <option key={index} value={item.idproduct_category}>{item.category_name}</option>
-              )
-              })}
-              </Form.Select>
-              <Form.Control type="number" placeholder="Kuantitas" defaultValue={1}  min="1" className="input-group mb-3"/>
-              <Button variant="primary" className="input-group mb-3"><MdAdd/> Tambah isi parsel</Button>
-            </div> */}
-
-            {/* <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>No.</th>
-                  <th>Kategori</th>
-                  <th>SubKategori</th>
-                  <th>Kuantitas</th>
-                  <th>Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.isiParcel.map((item,index)=>{
-                  return(
-                      <tr key={index}>
-                        <td>{index+1}</td>
-                        <td>{item.category_name}</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                      </tr>
-                  )
-                })}
-              </tbody>
-            </Table> */}
+            
 
             </Col>
           </Row>
