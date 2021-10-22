@@ -9,9 +9,12 @@ import { Link } from "react-router-dom"
 //import styling
 import "../style/userProfile.css"
 import { Button, Image, Form, Row, Col } from "react-bootstrap"
+import { toast } from "react-toastify"
 
 //import action
-import { updateData } from "../redux/actions"
+import { updateData, uploadAvatar } from "../redux/actions"
+const URL_UPLOAD_AVATAR =
+    "http://localhost:2000/profile/updateProfilePhoto/avatars";
 
 class UserProfile extends Component {
     constructor(props) {
@@ -65,14 +68,20 @@ class UserProfile extends Component {
         }
     }
     handleChoose = (e) => {
-        console.log("e.target.files", e.target.files)
+        // console.log("e.target.files", e.target.files)
         this.setState({ avatar: e.target.files[0] })
     }
     handleUpload = () => {
         const data = new FormData()
-        console.log(data) //create new data (empty/default)
+        // console.log(data) //create new data (empty/default)
         data.append("new", this.state.avatar)
-        console.log(data.get("new")) //new data after append (key + value)
+        const token = localStorage.getItem("token");
+        const axiosConfig = { headers: { Authorization: `Bearer ${token}` } };
+        Axios.put(`${URL_UPLOAD_AVATAR}`, data, axiosConfig).then((res) => {
+            toast.success("Berhasil ubah foto profil")
+            this.props.uploadAvatar(res.data)
+        });
+        // console.log(data.get("new")) //new data after append (key + value)
     }
     onSave = () => {
         const newData = {
@@ -93,7 +102,7 @@ class UserProfile extends Component {
     }
 
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         // console.log(this.state.avatar)
         return (
             <div>
@@ -164,7 +173,7 @@ class UserProfile extends Component {
                         </Form>
                         <div id="profile-avatar">
                             <Col xs={6} md={4}>
-                                <Image src="https://images.unsplash.com/photo-1633118342855-221562c9e7bd?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDc5fHRvd0paRnNrcEdnfHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" roundedCircle width={250} height={250} />
+                                <Image src={`http://localhost:2000/uploads/avatars/${this.props.avatar}`} roundedCircle width={250} height={250} />
                             </Col>
                             <form encType="multipart/form-data">
                                 <input
@@ -215,6 +224,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { updateData })(UserProfile)
+export default connect(mapStateToProps, { updateData, uploadAvatar })(UserProfile)
 
 

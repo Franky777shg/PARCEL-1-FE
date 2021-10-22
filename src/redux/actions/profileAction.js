@@ -14,3 +14,12 @@ export const updateData = (data) => {
     });
   };
 };
+
+export const uploadAvatar = (data) => {
+  return (dispatch) => {
+    return dispatch({
+      type: "UPDATE_AVATAR",
+      payload: data,
+    });
+  };
+};

@@ -32,9 +32,13 @@ const userReducer = (state = INITIAL_STATE, action) => {
         email: action.payload.email,
         name: action.payload.name,
         address: action.payload.address,
-        avatar: action.payload.avatar,
         gender: action.payload.gender,
         age: action.payload.age,
+      };
+    case "UPDATE_AVATAR":
+      return {
+        ...state,
+        avatar: action.payload.avatar,
       };
     case "LOGOUT":
       return INITIAL_STATE;
