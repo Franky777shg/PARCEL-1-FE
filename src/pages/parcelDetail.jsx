@@ -13,6 +13,7 @@ import { Link, Redirect } from "react-router-dom";
 //import styling
 import { Button } from "react-bootstrap";
 import "../style/parcelDetail.css";
+import NumberFormat from "react-number-format"
 
 class ParcelDetail extends Component {
   constructor(props) {
@@ -59,7 +60,7 @@ class ParcelDetail extends Component {
       return <Redirect to="/login" />;
     }
 
-    console.log(this.props)
+    // console.log(this.props)
 
     return (
       <div>
@@ -90,7 +91,13 @@ class ParcelDetail extends Component {
             </div>
             <div className="button-detail">
               <h5>
-                <b>Rp. {parcelPrice.toLocaleString()}</b>
+                <b><NumberFormat
+                  value={parcelPrice}
+                  prefix="Rp. "
+                  displayType="text"
+                  thousandSeparator="."
+                  decimalSeparator=","
+                /></b>
               </h5>
               <Button
                 style={{ backgroundColor: "#8F9B85", border: "none" }}
