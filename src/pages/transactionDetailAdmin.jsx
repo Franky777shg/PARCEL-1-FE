@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import Axios from "axios"
-import { format } from "date-fns"
 import NumberFormat from "react-number-format"
 //import link
 import { Link } from "react-router-dom"
@@ -8,6 +7,7 @@ import { Link } from "react-router-dom"
 import "../style/transactionAdmin.css"
 import { Button, Table, Card, Image } from "react-bootstrap"
 import noImage from "../assets/img/no-avatar.jpeg"
+import { toast } from "react-toastify"
 
 class AdminTransactionDetail extends Component {
     constructor(props) {
@@ -17,9 +17,7 @@ class AdminTransactionDetail extends Component {
             orderItem: []
         }
     }
-    componentDidMount() {
-        const params = Object.values(this.props.match.params)
-        const idOrder = +params[0]
+    fetchData = (idOrder) => {
         Axios.get(`http://localhost:2000/adminTransaction/getDetailTransaction/${idOrder}`).then(res => {
             //push data bio ke state(orderBio)
             this.setState({ orderBio: res.data.orderBio })
@@ -30,6 +28,27 @@ class AdminTransactionDetail extends Component {
         })
             .catch(err => console.log(err))
     }
+    componentDidMount() {
+        const params = Object.values(this.props.match.params)
+        const idOrder = +params[0]
+        this.fetchData(idOrder)
+    }
+    onConfirmPayment = (idOrderStatus) => {
+        const params = Object.values(this.props.match.params)
+        const idOrder = +params[0]
+        const body = {
+            idOrder,
+            "idOrderStatus": idOrderStatus
+        }
+        Axios.put(`http://localhost:2000/adminTransaction/confirmPayment`, body).then(
+            res => {
+                toast.success("Status pesanan berhasil diubah")
+                this.fetchData(idOrder)
+            }
+        )
+            .catch(err => console.log(err))
+    }
+
     render() {
         const { order_number, idorder_status, order_price, date_order, recipient_name, recipient_address, payment_proof, name, order_status } = this.state.orderBio
         console.log(this.state.orderItem)
@@ -64,9 +83,9 @@ class AdminTransactionDetail extends Component {
                         <Button style={{ backgroundColor: "#8F9B85", border: "none" }} size="lg" as={Link} to={`/admin-transaction`} >
                             Kembali
                         </Button>
-                        {idorder_status === 3 && <div> <Button style={{ backgroundColor: "#8F9B85", border: "none" }}>
+                        {idorder_status === 3 && <div className="confirm-button"> <Button style={{ backgroundColor: "#7792A8", border: "none", marginBottom: "2vh" }} onClick={() => this.onConfirmPayment(4)}>
                             Terima Pesanan
-                        </Button> <Button style={{ backgroundColor: "#8F9B85", border: "none" }}>
+                        </Button> <Button style={{ backgroundColor: "#EF476F", border: "none" }} onClick={() => this.onConfirmPayment(5)}>
                                 Tolak Pesanan
                             </Button>
                         </div>}
