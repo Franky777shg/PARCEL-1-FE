@@ -2,6 +2,8 @@ import React, { Component } from "react"
 import axios from "axios"
 import { format } from "date-fns"
 import NumberFormat from "react-number-format"
+//import link
+import { Link } from "react-router-dom"
 //import styling
 import "../style/transactionAdmin.css"
 import { Button, Table } from "react-bootstrap"
@@ -22,6 +24,7 @@ class AdminTransaction extends Component {
             let data = [...this.state.order]
             data.push(...res.data)
             this.setState({ order: data })
+            // console.log(this.state)
         })
             .catch(err => console.log(err))
     }
@@ -47,7 +50,7 @@ class AdminTransaction extends Component {
                         Transaksi Ditolak
                     </Button>
                 </div>
-                <Table striped bordered hover responsive>
+                <Table id="admintransaction-table" striped bordered hover>
                     <thead>
                         <tr>
                             <th>No.</th>
@@ -63,7 +66,7 @@ class AdminTransaction extends Component {
                             return (
                                 <tr key={index}>
                                     <td>{index + 1}</td>
-                                    <td>{item.order_number}</td>
+                                    <td>#{item.order_number}</td>
                                     <td>{format(new Date(item.order_date), "dd MMMM yyyy")}</td>
                                     <td><NumberFormat
                                         value={item.order_price}
@@ -73,12 +76,12 @@ class AdminTransaction extends Component {
                                         decimalSeparator=","
                                     /></td>
                                     <td>{item.order_status}</td>
-                                    <td>  <Button style={{ backgroundColor: "#7792A8", border: "none" }}>
-                                        Detail Transaksi
+                                    <td>  <Button style={{ backgroundColor: "#7792A8", border: "none" }} as={Link} to={`/admin-transaction-detail/${item.idorder}`}>
+                                        Detail
                                     </Button> </td>
                                     <td>
                                         {item.idorder_status === 3 && <Button style={{ backgroundColor: "#8F9B85", border: "none" }}>
-                                            Cek Transaksi
+                                            Konfirmasi
                                         </Button>}
                                     </td>
                                 </tr>
