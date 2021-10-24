@@ -44,5 +44,8 @@
 .items-container {
   padding: 1vw;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
+}
+.table-items {
+  width: 40vw;
 }

@@ -94,5 +94,4 @@ class AdminTransaction extends Component {
         );
     }
 }
-
 export default AdminTransaction;

@@ -11,7 +11,6 @@ import { Button, Table, Card, Image } from "react-bootstrap"
 class AdminTransactionDetail extends Component {
     constructor(props) {
         super(props)
-
         this.state = {
             orderBio: {},
             orderItem: []
@@ -29,9 +28,7 @@ class AdminTransactionDetail extends Component {
             this.setState({ orderItem: dataItem })
         })
             .catch(err => console.log(err))
-
     }
-
     render() {
         const { order_number, idorder_status, order_price, order_date, recipient_name, recipient_address, payment_proof, name, order_status } = this.state.orderBio
         console.log(this.state.orderItem)
@@ -85,7 +82,7 @@ class AdminTransactionDetail extends Component {
                                         <Image style={{ width: "15vw", height: "25vh" }} src={`http://localhost:2000/uploads/parcels/${item.parcel_image}`} thumbnail />
                                     </div>
                                     <div>
-                                        <Table striped bordered hover>
+                                        <Table striped bordered hover className="table-items">
                                             <thead>
                                                 <tr>
                                                     <th>No.</th>
