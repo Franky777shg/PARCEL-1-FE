@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+import Axios from "axios";
 
 //import component
 import Navbar from "../components/Navbar";
@@ -32,7 +32,7 @@ class ParcelDetail extends Component {
   componentDidMount() {
     const idParcel = this.props.location.search.substring(1);
 
-    axios
+    Axios
       .get(`http://localhost:2000/homepage/parcelDetail/${idParcel}`)
       .then((res) => {
         this.setState({
