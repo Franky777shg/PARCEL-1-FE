@@ -21,7 +21,7 @@
 }
 .checkbox-container {
   width: 6vw;
-  height: 20vh;
+  height: 30vh;
   display: flex;
   justify-content: space-evenly;
 }
