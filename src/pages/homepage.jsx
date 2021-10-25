@@ -71,7 +71,6 @@ class Homepage extends Component {
         })
     }
 
-
     return (
       <div className="main-container">
         <div className="navbar-homepage">
@@ -81,32 +80,34 @@ class Homepage extends Component {
           <div className="filter">
             <h3>Filter Parsel</h3>
             <p>Berdasarkan Kategori</p>
-            <form action="kategori">
-              <div className="checkbox">
-                <input type="checkbox" id="Makanan" />
-                <label htmlFor="Makanan">Makanan</label>
-              </div>
-              <div className="checkbox">
-                <input type="checkbox" id="Minuman" />
-                <label htmlFor="Minuman">Minuman</label>
-              </div>
-              <div className="checkbox">
-                <input type="checkbox" id="Pakaian" />
-                <label htmlFor="Pakaian">Pakaian</label>
-              </div>
-              <div className="checkbox">
-                <input type="checkbox" id="Sembako" />
-                <label htmlFor="Sembako">Sembako</label>
-              </div>
-              <div className="checkbox">
-                <input type="checkbox" id="Perabotan" />
-                <label htmlFor="Perabotan">Perabotan</label>
-              </div>
-              <div className="checkbox">
-                <input type="checkbox" id="Kesehatan" />
-                <label htmlFor="Kesehatan">Kesehatan</label>
-              </div>
-            </form>
+            <div className="checkbox-container">
+              <form action="kategori">
+                <div className="checkbox">
+                  <input type="checkbox" id="Makanan" />
+                  <label htmlFor="Makanan">Makanan</label>
+                </div>
+                <div className="checkbox">
+                  <input type="checkbox" id="Minuman" />
+                  <label htmlFor="Minuman">Minuman</label>
+                </div>
+                <div className="checkbox">
+                  <input type="checkbox" id="Pakaian" />
+                  <label htmlFor="Pakaian">Pakaian</label>
+                </div>
+                <div className="checkbox">
+                  <input type="checkbox" id="Sembako" />
+                  <label htmlFor="Sembako">Kesehatan</label>
+                </div>
+                <div className="checkbox">
+                  <input type="checkbox" id="Perabotan" />
+                  <label htmlFor="Perabotan">Sembako</label>
+                </div>
+                <div className="checkbox">
+                  <input type="checkbox" id="Kesehatan" />
+                  <label htmlFor="Kesehatan">Perabotan</label>
+                </div>
+              </form>
+            </div>
             <Button style={{ backgroundColor: "#7792A8", border: "none" }}>
               Reset Filter
             </Button>
@@ -122,7 +123,7 @@ class Homepage extends Component {
                     alt="First slide"
                   />
                   <Carousel.Caption>
-                    <h5>Custom parsel dengan produk pilihanmu sendiri</h5>
+                    <h4><b>Custom parsel dengan produk pilihanmu sendiri</b></h4>
                   </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item >
@@ -131,9 +132,8 @@ class Homepage extends Component {
                     src="https://media.istockphoto.com/photos/blue-light-background-old-grunge-texture-blank-pastel-abstract-paper-picture-id1217216727?b=1&k=20&m=1217216727&s=170667a&w=0&h=ZhFnbRzvTZ5dEHQfF3dt2-m1I8Rb3fMqhlo7clboXeI="
                     alt="Second slide"
                   />
-
                   <Carousel.Caption>
-                    <h5>Pilih parsel sesuai keperluan anda</h5>
+                    <h4><b>Pilih parsel sesuai keperluan anda</b></h4>
                   </Carousel.Caption>
                 </Carousel.Item>
               </Carousel>
@@ -160,7 +160,6 @@ class Homepage extends Component {
                       <div className="card-desc">
                         <Card.Text>
                           {item.parcel_desc}
-
                         </Card.Text>
                         <Card.Text>
                           <b><NumberFormat
@@ -171,7 +170,6 @@ class Homepage extends Component {
                             decimalSeparator=","
                           /></b>
                         </Card.Text>
-
                         <Button
                           style={{ backgroundColor: "#8F9B85", border: "none" }}
                           as={Link} to={`/parcel-detail/?${item.idparcel}`}
