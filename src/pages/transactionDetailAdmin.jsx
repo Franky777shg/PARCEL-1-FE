@@ -7,6 +7,7 @@ import { Link } from "react-router-dom"
 //import styling
 import "../style/transactionAdmin.css"
 import { Button, Table, Card, Image } from "react-bootstrap"
+import noImage from "../assets/img/no-avatar.jpeg"
 
 class AdminTransactionDetail extends Component {
     constructor(props) {
@@ -30,7 +31,7 @@ class AdminTransactionDetail extends Component {
             .catch(err => console.log(err))
     }
     render() {
-        const { order_number, idorder_status, order_price, order_date, recipient_name, recipient_address, payment_proof, name, order_status } = this.state.orderBio
+        const { order_number, idorder_status, order_price, date_order, recipient_name, recipient_address, payment_proof, name, order_status } = this.state.orderBio
         console.log(this.state.orderItem)
         return (
             <div className="admintransactiondetail-container">
@@ -38,7 +39,7 @@ class AdminTransactionDetail extends Component {
                 <div className="bio-container">
                     <Card className="bio-card" style={{ backgroundColor: "#D4DEEB" }}>
                         <Card.Body>
-                            <h5>Tanggal Pemesanan: {order_date}</h5>
+                            <h5>Tanggal Pemesanan: {date_order}</h5>
                             <h5>Pengirim: {name}</h5>
                             <h5>Penerima: {recipient_name}</h5>
                             <h5>Alamat Penerima: {recipient_address}</h5>
@@ -55,13 +56,20 @@ class AdminTransactionDetail extends Component {
                     <Card>
                         <Card.Body>
                             <h5>Bukti Pembayaran</h5>
-                            <Image src={`http://localhost:2000/uploads/payments/${payment_proof}`} thumbnail />
+                            {payment_proof ? <Image width="150px" height="200px" src={`http://localhost:2000/uploads/payments/${payment_proof}`} thumbnail /> : <Image src={noImage} />}
+
                         </Card.Body>
                     </Card>
                     <div className="bio-button">
                         <Button style={{ backgroundColor: "#8F9B85", border: "none" }} size="lg" as={Link} to={`/admin-transaction`} >
                             Kembali
                         </Button>
+                        {idorder_status === 3 && <div> <Button style={{ backgroundColor: "#8F9B85", border: "none" }}>
+                            Terima Pesanan
+                        </Button> <Button style={{ backgroundColor: "#8F9B85", border: "none" }}>
+                                Tolak Pesanan
+                            </Button>
+                        </div>}
                     </div>
                 </div>
                 {/* Daftar Item dalam order */}

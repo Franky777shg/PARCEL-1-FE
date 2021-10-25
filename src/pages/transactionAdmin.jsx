@@ -20,33 +20,42 @@ class AdminTransaction extends Component {
         }
     }
     componentDidMount() {
+        this.onGetAllStatus()
+    }
+    onGetAllStatus = () => {
         axios.get(ADM_TRX_URL).then(res => {
             let data = [...this.state.order]
             data.push(...res.data)
             this.setState({ order: data })
-            // console.log(this.state)
         })
             .catch(err => console.log(err))
     }
+    onGetStatus = (idStatus) => {
+        axios.get(`http://localhost:2000/adminTransaction/getTransactions/${idStatus}`).then(res => {
+            this.setState({ order: res.data })
+        })
+            .catch(err => console.log(err))
+    }
+
     render() {
         return (
             <div id="admintransaction-container">
                 <h2 className="fw-bold">Daftar Transaksi</h2>
                 <div id="statusfilter-button">
                     <h4>Status Transaksi :</h4>
-                    <Button style={{ backgroundColor: "#7792A8", border: "none" }}>
+                    <Button style={{ backgroundColor: "#7792A8", border: "none" }} onClick={this.onGetAllStatus}>
                         All Status
                     </Button>
-                    <Button style={{ backgroundColor: "#7792A8", border: "none" }}>
+                    <Button style={{ backgroundColor: "#7792A8", border: "none" }} onClick={() => this.onGetStatus(2)}>
                         Belum Bayar
                     </Button>
-                    <Button style={{ backgroundColor: "#7792A8", border: "none" }}>
+                    <Button style={{ backgroundColor: "#7792A8", border: "none" }} onClick={() => this.onGetStatus(3)}>
                         Menunggu Konfirmasi
                     </Button>
-                    <Button style={{ backgroundColor: "#7792A8", border: "none" }}>
+                    <Button style={{ backgroundColor: "#7792A8", border: "none" }} onClick={() => this.onGetStatus(4)}>
                         Pembayaran Berhasil
                     </Button>
-                    <Button style={{ backgroundColor: "#7792A8", border: "none" }}>
+                    <Button style={{ backgroundColor: "#7792A8", border: "none" }} onClick={() => this.onGetStatus(5)}>
                         Transaksi Ditolak
                     </Button>
                 </div>
