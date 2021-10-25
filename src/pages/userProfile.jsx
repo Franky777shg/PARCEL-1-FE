@@ -10,6 +10,7 @@ import { Link } from "react-router-dom"
 import "../style/userProfile.css"
 import { Button, Image, Form, Row, Col } from "react-bootstrap"
 import { toast } from "react-toastify"
+import noImage from "../assets/img/no-avatar.jpeg"
 
 //import action
 import { updateData, uploadAvatar, removeAvatar } from "../redux/actions"
@@ -201,7 +202,7 @@ class UserProfile extends Component {
                     </div>
                     <div id="profile-avatar">
                         <Col xs={6} md={4}>
-                            {this.props.avatar ? <Image src={`http://localhost:2000/uploads/avatars/${this.props.avatar}`} roundedCircle width={250} height={250} /> : <Image src="../assets/img/no-avatar.jpeg" roundedCircle width={250} height={250} />}
+                            {this.props.avatar ? <Image src={`http://localhost:2000/uploads/avatars/${this.props.avatar}`} roundedCircle width={250} height={250} /> : <Image src={noImage} roundedCircle width={250} height={250} />}
 
                         </Col>
                         <form encType="multipart/form-data">

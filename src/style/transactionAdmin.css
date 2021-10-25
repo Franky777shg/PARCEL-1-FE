@@ -37,6 +37,11 @@
 }
 .bio-button {
   margin-left: 3vw;
+  width: 8vw;
+  height: 25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 .items-card {
   width: 73vw;
@@ -48,4 +53,9 @@
 }
 .table-items {
   width: 40vw;
+}
+.confirm-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
