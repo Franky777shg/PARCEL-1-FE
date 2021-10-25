@@ -89,7 +89,7 @@ class AdminTransaction extends Component {
                                         Detail
                                     </Button> </td>
                                     <td>
-                                        {item.idorder_status === 3 && <Button style={{ backgroundColor: "#8F9B85", border: "none" }} as={Link} to={`/admin-transaction-detail/${item.idorder}`} >
+                                        {item.idorder_status === 3 && <Button style={{ backgroundColor: "#8F9B85", border: "none" }} as={Link} to={`/admin-transaction-detail/${item.idorder}`}>
                                             Konfirmasi
                                         </Button>}
                                     </td>

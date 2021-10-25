@@ -18,7 +18,6 @@ import NumberFormat from "react-number-format"
 class Homepage extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
       parcel: [],
       currentPage: "",
@@ -35,10 +34,15 @@ class Homepage extends Component {
       })
       .catch(err => console.log(err))
   }
-
-  onSort = (sort) => {
-    console.log(sort)
-
+  onSort = (sortMethod) => {
+    const body = {
+      "sortMethod": sortMethod
+    }
+    axios.post(`http://localhost:2000/homepage/sortParcel`, body)
+      .then(res => {
+        this.setState({ ...this.state, ...res.data })
+      })
+      .catch(err => console.log(err))
   }
 
   render() {
@@ -137,14 +141,12 @@ class Homepage extends Component {
                 <Dropdown.Toggle
                   style={{ backgroundColor: "#7792A8", border: "none", marginLeft: "5vw" }}
                 >
-                  Sort
+                  Urutkan
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1" onClick={() => this.onSort("parcel_name")}>by Parsel Name (A-Z)</Dropdown.Item>
-                  <Dropdown.Item href="#/action-1" onClick={() => this.onSort("parcel_name")}>by Parsel Name (Z-A)</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2" onClick={() => this.onSort("parcel_price")}>by Parsel Price (Low - High)</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2" onClick={() => this.onSort("parcel_price")}>by Parsel Price (High - Low)</Dropdown.Item>
+                  <Dropdown.Item href="#/action-2" onClick={() => this.onSort("asc")}>Berdasarkan Harga (Terendah - Tertinggi)</Dropdown.Item>
+                  <Dropdown.Item href="#/action-2" onClick={() => this.onSort("desc")}>Berdasarkan Harga (Tertinggi - Terendah)</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>
