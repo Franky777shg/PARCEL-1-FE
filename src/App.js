@@ -33,6 +33,7 @@ import Revenue from "./pages/revenue";
 import SalesReport from "./pages/salesReport";
 import ChangePassword from "./pages/changePassword";
 import AdminTransaction from "./pages/transactionAdmin";
+import AdminTransactionDetail from "./pages/transactionDetailAdmin";
 
 class App extends Component {
   componentDidMount() {
@@ -83,6 +84,10 @@ class App extends Component {
           <AdminRoute component={SalesReport} path="/salesReport" />
           <AdminRoute component={Revenue} path="/revenue" />
           <AdminRoute component={AdminTransaction} path="/admin-transaction" />
+          <AdminRoute
+            component={AdminTransactionDetail}
+            path="/admin-transaction-detail/:idorder"
+          />
 
           <Route component={NotFound} path="*" />
         </Switch>

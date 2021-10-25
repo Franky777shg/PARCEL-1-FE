@@ -13,6 +13,7 @@ import Pagination from "../components/pagination";
 //import styling
 import { Card, Button, Dropdown, Carousel } from "react-bootstrap";
 import "../style/homepage.css";
+import NumberFormat from "react-number-format"
 
 class Homepage extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class Homepage extends Component {
     axios.get(`http://localhost:2000/homepage/getHomepage/${1}`)
       .then(res => {
         this.setState({ ...this.state, ...res.data })
-        console.log(this.state)
+        // console.log(this.state)
       })
       .catch(err => console.log(err))
   }
@@ -160,7 +161,13 @@ class Homepage extends Component {
 
                         </Card.Text>
                         <Card.Text>
-                          <b> Rp. {(item.parcel_price).toLocaleString()} </b>
+                          <b><NumberFormat
+                            value={item.parcel_price}
+                            prefix="Rp. "
+                            displayType="text"
+                            thousandSeparator="."
+                            decimalSeparator=","
+                          /></b>
                         </Card.Text>
 
                         <Button

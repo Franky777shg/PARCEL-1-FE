@@ -108,11 +108,13 @@ class UserProfile extends Component {
         const axiosConfig = { headers: { Authorization: `Bearer ${token}` } };
         Axios.put(URL_REMOVE_AVATAR, null, axiosConfig).then(
             (res) => {
+                if (this.props.avatar === null)
+                    return toast.error("Tidak ada foto untuk dihapus")
+                else
+                    this.props.removeAvatar()
                 toast.success("Foto profil berhasil dihapus")
-                this.props.removeAvatar()
             }
         ).catch(err => console.log(err.response))
-
     }
 
     render() {
@@ -199,7 +201,8 @@ class UserProfile extends Component {
                     </div>
                     <div id="profile-avatar">
                         <Col xs={6} md={4}>
-                            <Image src={`http://localhost:2000/uploads/avatars/${this.props.avatar}`} roundedCircle width={250} height={250} />
+                            {this.props.avatar ? <Image src={`http://localhost:2000/uploads/avatars/${this.props.avatar}`} roundedCircle width={250} height={250} /> : <Image src="../assets/img/no-avatar.jpeg" roundedCircle width={250} height={250} />}
+
                         </Col>
                         <form encType="multipart/form-data">
                             <input
