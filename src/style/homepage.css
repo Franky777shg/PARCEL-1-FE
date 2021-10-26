@@ -6,9 +6,7 @@
   width: 100vw;
   height: 8vh;
 }
-
 .content-container {
-  margin-top: 1vh;
   background-color: #f1f1f1;
   height: 80vh;
   display: flex;
@@ -21,7 +19,16 @@
   align-items: center;
   padding-top: 20vh;
 }
-
+.checkbox-container {
+  width: 6vw;
+  height: 30vh;
+  display: flex;
+  justify-content: space-evenly;
+}
+.checkbox {
+  margin-bottom: 1vh;
+  width: 10vh;
+}
 .content {
   width: 85vw;
   display: flex;
@@ -31,44 +38,34 @@
   display: flex;
   padding-top: 3vh;
 }
-
-.carousel {  
+.carousel {
   width: 60vw;
   height: 10vh;
   border-radius: 2px;
   margin-left: 10vw;
-  
 }
 .carousel img {
   width: 40vw;
   height: 10vh;
   border-radius: 30px;
 }
-
-
-.card-container{
+.card-container {
   display: flex;
-  
   width: 85vw;
   height: 60vh;
-  
   margin-top: 3vh;
-  padding-left: 2vw;  
+  padding-left: 2vw;
   padding-right: 3vw;
   margin-bottom: 3vh;
 }
-.card-desc{
+.card-desc {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;  
+  justify-content: space-between;
   height: 28vh;
 }
-
-
 .footer {
   background-color: #d4deeb;
-  height: 11vh;
+  height: 12vh;
   padding-top: 4vh;
 }
-
-
