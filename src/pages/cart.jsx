@@ -12,7 +12,7 @@ import CartSummary from "../components/Cart/CartSummary"
 import CartSummaryButton from "../components/Cart/CartSummaryButton"
 import { getTotalParcel } from "../redux/actions"
 
-const TRX_API = "http://localhost:2000/transaction"
+const TRX_API = "https://api-parcel-1.purwadhikafs2.com/transaction"
 
 class Cart extends Component {
   constructor(props) {

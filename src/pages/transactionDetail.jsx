@@ -9,7 +9,7 @@ import TransactionParcelItems from "../components/TransactionDetail/TransactionP
 import TransactionPaymentDetail from "../components/TransactionDetail/TransactionPaymentDetail"
 import TransactionPrice from "../components/TransactionDetail/TransactionPrice"
 
-const TRX_API = "http://localhost:2000/transaction"
+const TRX_API = "https://api-parcel-1.purwadhikafs2.com/transaction"
 
 export default class TransactionDetail extends Component {
   constructor(props) {

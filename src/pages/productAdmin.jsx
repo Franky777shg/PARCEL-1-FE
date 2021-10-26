@@ -118,7 +118,7 @@ class ProductAdmin extends React.Component{
                     {this.props.product.map((item, index) =>{
                         return(
                         <Card style={{ width: '18rem', marginLeft:"1vw", marginBottom:"1vh" }} key={index}>
-                        <Card.Img variant="top" src={`http://localhost:2000/uploads/products/${item.product_image}`} style={{height:"35vh"}} />
+                        <Card.Img variant="top" src={`https://api-parcel-1.purwadhikafs2.com/uploads/products/${item.product_image}`} style={{height:"35vh"}} />
                         <Card.Body>
                           <Card.Title>{item.product_name}</Card.Title>
                           <Card.Text className="overflow-auto"  style={{height:"25vh"}}>

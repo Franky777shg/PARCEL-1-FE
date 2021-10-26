@@ -22,7 +22,7 @@ class AddProductAdmin extends React.Component {
   }
   componentDidMount() {
     axios
-      .get(`http://localhost:2000/productAdmin/productCategories`)
+      .get(`https://api-parcel-1.purwadhikafs2.com/productAdmin/productCategories`)
       .then((res) => {
         this.setState({ kategori: res.data });
       });
@@ -84,12 +84,12 @@ class AddProductAdmin extends React.Component {
     }
 
     axios
-      .post(`http://localhost:2000/productAdmin/addProductAdmin`, data)
+      .post(`https://api-parcel-1.purwadhikafs2.com/productAdmin/addProductAdmin`, data)
       .then((res) => {
         this.setState({ idproduct: res.data.idproduct });
         axios
           .post(
-            `http://localhost:2000/productAdmin/editUploadProduct/${this.state.idproduct}/products`,
+            `https://api-parcel-1.purwadhikafs2.com/productAdmin/editUploadProduct/${this.state.idproduct}/products`,
             photo,
             { headers: { "Content-Type": "multipart/form-data" } }
           )

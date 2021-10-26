@@ -26,11 +26,11 @@ class EditProduct extends React.Component {
   componentDidMount() {
     window.scrollTo(0,0)
     axios
-      .get(`http://localhost:2000/productAdmin/getProductId/${this.props.location.search.substring(1)}`)
+      .get(`https://api-parcel-1.purwadhikafs2.com/productAdmin/getProductId/${this.props.location.search.substring(1)}`)
       .then((res) => {
         this.setState({ product: res.data[0], categorySelect: res.data[0].idproduct_category, jual : res.data[0].product_price });
         axios
-          .get(`http://localhost:2000/productAdmin/productCategories`)
+          .get(`https://api-parcel-1.purwadhikafs2.com/productAdmin/productCategories`)
           .then((res) => {
             this.setState({ category: res.data });
           })
@@ -69,7 +69,7 @@ class EditProduct extends React.Component {
           product_stock
       }
       // console.log(data)
-      axios.post(`http://localhost:2000/productAdmin/editProduct/${this.state.product.idproduct}`, data)
+      axios.post(`https://api-parcel-1.purwadhikafs2.com/productAdmin/editProduct/${this.state.product.idproduct}`, data)
       .then(res =>{
           this.setState({product: res.data[0], categorySelect: res.data[0].idproduct_category, successModal: true, caption : "Data produk berhasil diubah"})
           this.setState({successModal:false})
@@ -88,7 +88,7 @@ class EditProduct extends React.Component {
       data.append('new', this.state.images)
       // console.log(data.get('new'))
 
-      axios.post(`http://localhost:2000/productAdmin/editUploadProduct/${this.state.product.idproduct}/products`, data, {headers:{'Content-Type': 'multipart/form-data'}}).then(res =>{
+      axios.post(`https://api-parcel-1.purwadhikafs2.com/productAdmin/editUploadProduct/${this.state.product.idproduct}/products`, data, {headers:{'Content-Type': 'multipart/form-data'}}).then(res =>{
           this.setState({product : res.data[0], categorySelect:res.data[0].idproduct_category, successModal: res.data[1].success, uploadModal: false, caption : "Gambar berhasil di upload" })
           this.setState({successModal:false})
       })
@@ -121,7 +121,7 @@ class EditProduct extends React.Component {
         <h1>Edit Product</h1>
         <div className="d-flex flex-wrap  bd-highlight mb-3 justify-content-center">
             <div className="d-flex flex-column">
-          <Image src={`http://localhost:2000/uploads/products/${this.state.product.product_image}`} className="me-2 mb-2" width={300} height={340} />
+          <Image src={`https://api-parcel-1.purwadhikafs2.com/uploads/products/${this.state.product.product_image}`} className="me-2 mb-2" width={300} height={340} />
           <Button variant="primary" style={{width:"35%", margin:"auto", marginTop:"2%"}} onClick={()=>this.setState({uploadModal:true})}>Upload Foto</Button>
             </div>
           <div style={{width:"40vw"}}>

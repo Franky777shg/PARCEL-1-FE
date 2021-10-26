@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Card, Col, Image, Row, Button } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
-const IMG_PAYMENT = "http://localhost:2000/uploads/payments"
+const IMG_PAYMENT = "https://api-parcel-1.purwadhikafs2.com/uploads/payments"
 
 export default class TransactionPaymentDetail extends Component {
   render() {

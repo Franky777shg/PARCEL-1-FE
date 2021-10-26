@@ -15,9 +15,9 @@ import noImage from "../assets/img/no-avatar.jpeg"
 //import action
 import { updateData, uploadAvatar, removeAvatar } from "../redux/actions"
 const URL_UPLOAD_AVATAR =
-    "http://localhost:2000/profile/updateProfilePhoto/avatars";
+    "https://api-parcel-1.purwadhikafs2.com/profile/updateProfilePhoto/avatars";
 const URL_REMOVE_AVATAR =
-    "http://localhost:2000/profile/removeProfilePhoto"
+    "https://api-parcel-1.purwadhikafs2.com/profile/removeProfilePhoto"
 
 class UserProfile extends Component {
     constructor(props) {
@@ -202,7 +202,7 @@ class UserProfile extends Component {
                     </div>
                     <div id="profile-avatar">
                         <Col xs={6} md={4}>
-                            {this.props.avatar ? <Image src={`http://localhost:2000/uploads/avatars/${this.props.avatar}`} roundedCircle width={250} height={250} /> : <Image src={noImage} roundedCircle width={250} height={250} />}
+                            {this.props.avatar ? <Image src={`https://api-parcel-1.purwadhikafs2.com/uploads/avatars/${this.props.avatar}`} roundedCircle width={250} height={250} /> : <Image src={noImage} roundedCircle width={250} height={250} />}
 
                         </Col>
                         <form encType="multipart/form-data">

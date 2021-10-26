@@ -9,7 +9,7 @@ import FillParcelModal from "../components/FillParcel/FillParcelModal"
 import FillParcelOverlay from "../components/FillParcel/FillParcelOverlay"
 import FillParcelProduct from "../components/FillParcel/FillParcelProduct"
 
-const TRX_API = "http://localhost:2000/transaction"
+const TRX_API = "https://api-parcel-1.purwadhikafs2.com/transaction"
 
 class FillParcel extends Component {
   constructor(props) {

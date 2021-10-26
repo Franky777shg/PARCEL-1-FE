@@ -7,7 +7,7 @@ import TransactionHead from "../components/UserTransaction/TransactionHead"
 import UserTransactionEmpty from "../components/UserTransaction/UserTransactionEmpty"
 import UserTransactionFilter from "../components/UserTransaction/UserTransactionFilter"
 
-const TRX_API = "http://localhost:2000/transaction"
+const TRX_API = "https://api-parcel-1.purwadhikafs2.com/transaction"
 
 export default class UserTransaction extends Component {
   constructor(props) {

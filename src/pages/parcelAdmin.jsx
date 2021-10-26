@@ -109,7 +109,7 @@ class ParcelAdmin extends React.Component{
                     {this.props.parcel.map((item, index) =>{
                         return(
                         <Card className="card" key={index}>
-                        <Card.Img variant="top" src={`http://localhost:2000/uploads/parcels/${item.parcel_image}`} style={{height:"30vh"}} />
+                        <Card.Img variant="top" src={`https://api-parcel-1.purwadhikafs2.com/uploads/parcels/${item.parcel_image}`} style={{height:"30vh"}} />
                         <Card.Body>
                           <Card.Title>{item.parcel_name}</Card.Title>
                           <Card.Text style={{height:"20vh"}}>

@@ -38,7 +38,7 @@ class ChangePassword extends Component {
         const axiosConfig = { headers: { Authorization: `Bearer ${token}` } };
         if (this.state.newPassword !== this.state.confirmNewPassword) return toast.error("Konfirmasi kata sandi tidak sesuai")
 
-        Axios.post("http://localhost:2000/profile/changePassword", body, axiosConfig).then(res => {
+        Axios.post("https://api-parcel-1.purwadhikafs2.com/profile/changePassword", body, axiosConfig).then(res => {
             toast.success(res.data)
             this.setState({
                 oldPassword: "",

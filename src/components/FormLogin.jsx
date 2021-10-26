@@ -6,7 +6,7 @@ import { onLogin, getTotalParcel } from "../redux/actions"
 import { Link } from "react-router-dom"
 import Axios from "axios"
 
-const AUTH_API = "http://localhost:2000/auth"
+const AUTH_API = "https://api-parcel-1.purwadhikafs2.com/auth"
 
 class FormLogin extends Component {
   constructor(props) {

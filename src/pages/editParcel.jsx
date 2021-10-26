@@ -24,7 +24,7 @@ class EditParcel extends React.Component{
     }
     componentDidMount(){
         window.scrollTo(0,0)
-        axios.get(`http://localhost:2000/productAdmin/getParcelbyId/${this.props.location.search.substring(1)}`)
+        axios.get(`https://api-parcel-1.purwadhikafs2.com/productAdmin/getParcelbyId/${this.props.location.search.substring(1)}`)
         .then(res => {
             let dataSubCategory = []
 
@@ -32,7 +32,7 @@ class EditParcel extends React.Component{
                 dataSubCategory.push([])
             }
             this.setState({parcel : res.data[0], detail : res.data[1], nama : res.data[1].parcel_name, harga : res.data[1].parcel_price, desc : res.data[1].parcel_desc, subCategory : dataSubCategory, idparcel : res.data[1].idparcel})
-            axios.get(`http://localhost:2000/productAdmin/mainCategories`)
+            axios.get(`https://api-parcel-1.purwadhikafs2.com/productAdmin/mainCategories`)
             .then(res =>{
                 this.setState({category : res.data})
             })
@@ -54,7 +54,7 @@ class EditParcel extends React.Component{
             parcel:[...this.state.parcel, data],
             subCategory : [...this.state.subCategory, []]
         })
-        axios.get(`http://localhost:2000/productAdmin/mainCategories`)
+        axios.get(`https://api-parcel-1.purwadhikafs2.com/productAdmin/mainCategories`)
         .then(res => {
             this.setState({category : res.data})
         })
@@ -68,7 +68,7 @@ class EditParcel extends React.Component{
     }
 
     onKategori=(e,index)=>{
-        axios.get(`http://localhost:2000/productAdmin/subCategories/${e}`)
+        axios.get(`https://api-parcel-1.purwadhikafs2.com/productAdmin/subCategories/${e}`)
         .then(res =>{
             let kate = [...this.state.category]
             let nameCate = kate.filter(item => item.idproduct_category === +e)
@@ -128,7 +128,7 @@ class EditParcel extends React.Component{
                 });
         }
 
-        axios.post(`http://localhost:2000/productAdmin/editDeskripsi`, data)
+        axios.post(`https://api-parcel-1.purwadhikafs2.com/productAdmin/editDeskripsi`, data)
         .then(res =>{
             let dataSubCategory = []
 
@@ -155,7 +155,7 @@ class EditParcel extends React.Component{
             });
         }
 
-        axios.post(`http://localhost:2000/productAdmin/uploadEditParcel/${this.state.idparcel}/parcels`, photo, {headers:{'Content-Type' : 'multipart/form-data'}})
+        axios.post(`https://api-parcel-1.purwadhikafs2.com/productAdmin/uploadEditParcel/${this.state.idparcel}/parcels`, photo, {headers:{'Content-Type' : 'multipart/form-data'}})
         .then(res => {
             let dataSubCategory = []
 
@@ -211,7 +211,7 @@ class EditParcel extends React.Component{
                 progress: undefined,
                 });
         }
-        axios.post(`http://localhost:2000/productAdmin/updateParcel`, data)
+        axios.post(`https://api-parcel-1.purwadhikafs2.com/productAdmin/updateParcel`, data)
         .then(res =>{
             let dataSubCategory = []
 
@@ -247,7 +247,7 @@ class EditParcel extends React.Component{
                     <Row className="justify-content-start">
                         <Col className="col-sm-8 col-md-8 col-lg-4">
                         <div className="d-flex flex-column mb-2">
-                    <Image src={`http://localhost:2000/uploads/parcels/${this.state.detail.parcel_image}`} className="me-2 mb-2" width={300} height={340}  rounded />
+                    <Image src={`https://api-parcel-1.purwadhikafs2.com/uploads/parcels/${this.state.detail.parcel_image}`} className="me-2 mb-2" width={300} height={340}  rounded />
                     <Button variant="primary" className="mb-2 mx-auto" style={{width:"35%"}} onClick={()=>this.setState({modal : true})}>Upload Gambar</Button>
                     <FloatingLabel controlId="floatingTextarea" label="Nama Parcel" className="mb-3">
                     <Form.Control as="textarea" defaultValue={this.state.nama} onChange={(e)=>this.setState({nama : e.target.value})} />

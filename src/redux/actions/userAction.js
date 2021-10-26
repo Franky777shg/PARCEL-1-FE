@@ -1,6 +1,6 @@
 import Axios from "axios"
 
-const AUTH_API = "http://localhost:2000/auth"
+const AUTH_API = "https://api-parcel-1.purwadhikafs2.com/auth"
 
 export const onLogin = (data) => ({
   type: "LOGIN",

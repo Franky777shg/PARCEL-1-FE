@@ -34,12 +34,12 @@ class SalesReport extends React.Component {
 
   componentDidMount() {
     axios
-      .get(`http://localhost:2000/productAdmin/getParcelReport`)
+      .get(`https://api-parcel-1.purwadhikafs2.com/productAdmin/getParcelReport`)
       .then((res) => {
         // console.log(res.data)
         this.setState({ parcel: res.data[0], parcelLabel : res.data[1], parcelData : res.data[2], dateDesc : res.data[3] });
         axios
-          .get(`http://localhost:2000/productAdmin/getProductReport`)
+          .get(`https://api-parcel-1.purwadhikafs2.com/productAdmin/getProductReport`)
           .then((res) => {
             this.setState({ product: res.data[0], productLabel : res.data[1], productData : res.data[2], prodDesc : res.data[3] });
           })
@@ -54,7 +54,7 @@ class SalesReport extends React.Component {
           dateParcel2 : this.state.parcelDate2
       }
     //   console.log(data)
-      axios.post(`http://localhost:2000/productAdmin/getParcelDate`,data)
+      axios.post(`https://api-parcel-1.purwadhikafs2.com/productAdmin/getParcelDate`,data)
       .then(res =>{
           this.setState({parcel : res.data[0], parcelLabel : res.data[1], parcelData : res.data[2], dateDesc: res.data[3]})
       })
@@ -69,7 +69,7 @@ class SalesReport extends React.Component {
           date2 : this.state.date2
       }
     //   console.log(data)
-      axios.post(`http://localhost:2000/productAdmin/getProductDate`, data)
+      axios.post(`https://api-parcel-1.purwadhikafs2.com/productAdmin/getProductDate`, data)
       .then(res =>{
           this.setState({product : res.data[0], productLabel : res.data[1], productData : res.data[2], prodDesc : res.data[3]})
       })
@@ -84,7 +84,7 @@ class SalesReport extends React.Component {
       dateParcel2 : this.state.parcelDate2
     }
 
-    axios.post(`http://localhost:2000/productAdmin/sortParcelDate`, data)
+    axios.post(`https://api-parcel-1.purwadhikafs2.com/productAdmin/sortParcelDate`, data)
     .then(res =>{
       this.setState({parcel : res.data[0], parcelLabel : res.data[1], parcelData : res.data[2], dateDesc : res.data[3]})
     })

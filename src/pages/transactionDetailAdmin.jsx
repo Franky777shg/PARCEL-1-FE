@@ -18,7 +18,7 @@ class AdminTransactionDetail extends Component {
         }
     }
     fetchData = (idOrder) => {
-        Axios.get(`http://localhost:2000/adminTransaction/getDetailTransaction/${idOrder}`).then(res => {
+        Axios.get(`https://api-parcel-1.purwadhikafs2.com/adminTransaction/getDetailTransaction/${idOrder}`).then(res => {
             //push data bio ke state(orderBio)
             this.setState({ orderBio: res.data.orderBio })
             //push data item ke state(orderItem)
@@ -40,7 +40,7 @@ class AdminTransactionDetail extends Component {
             idOrder,
             "idOrderStatus": idOrderStatus
         }
-        Axios.put(`http://localhost:2000/adminTransaction/confirmPayment`, body).then(
+        Axios.put(`https://api-parcel-1.purwadhikafs2.com/adminTransaction/confirmPayment`, body).then(
             res => {
                 toast.success("Status pesanan berhasil diubah")
                 this.fetchData(idOrder)
@@ -75,7 +75,7 @@ class AdminTransactionDetail extends Component {
                     <Card>
                         <Card.Body>
                             <h5>Bukti Pembayaran</h5>
-                            {payment_proof ? <Image width="150px" height="200px" src={`http://localhost:2000/uploads/payments/${payment_proof}`} thumbnail /> : <Image src={noImage} />}
+                            {payment_proof ? <Image width="150px" height="200px" src={`https://api-parcel-1.purwadhikafs2.com/uploads/payments/${payment_proof}`} thumbnail /> : <Image src={noImage} />}
 
                         </Card.Body>
                     </Card>
@@ -106,7 +106,7 @@ class AdminTransactionDetail extends Component {
                                             thousandSeparator="."
                                             decimalSeparator=","
                                         /></h5>
-                                        <Image style={{ width: "15vw", height: "25vh" }} src={`http://localhost:2000/uploads/parcels/${item.parcel_image}`} thumbnail />
+                                        <Image style={{ width: "15vw", height: "25vh" }} src={`https://api-parcel-1.purwadhikafs2.com/uploads/parcels/${item.parcel_image}`} thumbnail />
                                     </div>
                                     <div>
                                         <Table striped bordered hover className="table-items">

@@ -10,7 +10,7 @@ import { Button, Table } from "react-bootstrap"
 
 //admin transaction URL
 const ADM_TRX_URL =
-    "http://localhost:2000/adminTransaction/getAllTransactions"
+    "https://api-parcel-1.purwadhikafs2.com/adminTransaction/getAllTransactions"
 
 class AdminTransaction extends Component {
     constructor(props) {
@@ -31,7 +31,7 @@ class AdminTransaction extends Component {
             .catch(err => console.log(err))
     }
     onGetStatus = (idStatus) => {
-        axios.get(`http://localhost:2000/adminTransaction/getTransactions/${idStatus}`).then(res => {
+        axios.get(`https://api-parcel-1.purwadhikafs2.com/adminTransaction/getTransactions/${idStatus}`).then(res => {
             this.setState({ order: res.data })
         })
             .catch(err => console.log(err))

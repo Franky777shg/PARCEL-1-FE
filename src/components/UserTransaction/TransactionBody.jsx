@@ -4,7 +4,7 @@ import NumberFormat from "react-number-format"
 import { Link } from "react-router-dom"
 import placeholderImage from "../../assets/img/no-img.png"
 
-const IMG_PARCEL = "http://localhost:2000/uploads/parcels"
+const IMG_PARCEL = "https://api-parcel-1.purwadhikafs2.com/uploads/parcels"
 
 export default class TransactionBody extends Component {
   render() {

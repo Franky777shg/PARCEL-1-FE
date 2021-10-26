@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import ReactAvatar from "react-avatar"
 import { connect } from "react-redux"
 
-const AVATAR_URL = "http://localhost:2000/uploads/avatars"
+const AVATAR_URL = "https://api-parcel-1.purwadhikafs2.com/uploads/avatars"
 
 class Avatar extends Component {
   render() {

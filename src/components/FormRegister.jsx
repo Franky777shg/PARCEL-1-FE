@@ -5,7 +5,7 @@ import { toast } from "react-toastify"
 import { isEmail } from "validator"
 import { withRouter } from "react-router"
 
-const AUTH_API = "http://localhost:2000/auth"
+const AUTH_API = "https://api-parcel-1.purwadhikafs2.com/auth"
 
 class FormRegister extends Component {
   constructor(props) {

@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Card, Col, Form, Row, Button } from "react-bootstrap"
 
-const PRODUCT_IMG_URL = "http://localhost:2000/uploads/products"
+const PRODUCT_IMG_URL = "https://api-parcel-1.purwadhikafs2.com/uploads/products"
 
 export default class FillParcelProduct extends Component {
   getProductQty = (idproduct) => {

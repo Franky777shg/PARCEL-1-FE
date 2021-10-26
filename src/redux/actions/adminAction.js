@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const URL_API = 'http://localhost:2000/productAdmin/getProductPerPage'
-const URL_DELETE = 'http://localhost:2000/productAdmin/deleteProduct'
-const URL_PARCEL = 'http://localhost:2000/productAdmin/getParcelPerPage'
-const URL_DELETE_PARCEL = 'http://localhost:2000/productAdmin/deleteParcel'
+const URL_API = 'https://api-parcel-1.purwadhikafs2.com/productAdmin/getProductPerPage'
+const URL_DELETE = 'https://api-parcel-1.purwadhikafs2.com/productAdmin/deleteProduct'
+const URL_PARCEL = 'https://api-parcel-1.purwadhikafs2.com/productAdmin/getParcelPerPage'
+const URL_DELETE_PARCEL = 'https://api-parcel-1.purwadhikafs2.com/productAdmin/deleteParcel'
 
 export const productForAdmin =(data)=>{
     return(dispatch)=>{

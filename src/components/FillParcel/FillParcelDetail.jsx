@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Button, Col, Image, ProgressBar, Row } from "react-bootstrap"
 import NumberFormat from "react-number-format"
 
-const PARCEL_IMG_URL = "http://localhost:2000/uploads/parcels"
+const PARCEL_IMG_URL = "https://api-parcel-1.purwadhikafs2.com/uploads/parcels"
 
 export default class FillParcelDetail extends Component {
   render() {

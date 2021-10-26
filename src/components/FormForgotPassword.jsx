@@ -4,7 +4,7 @@ import { Button, Form } from "react-bootstrap"
 import { withRouter } from "react-router"
 import { toast } from "react-toastify"
 
-const AUTH_API = "http://localhost:2000/auth"
+const AUTH_API = "https://api-parcel-1.purwadhikafs2.com/auth"
 
 class FormForgotPassword extends Component {
   constructor(props) {

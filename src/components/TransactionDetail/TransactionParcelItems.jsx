@@ -3,7 +3,7 @@ import { Col, Image, Row, Table } from "react-bootstrap"
 import NumberFormat from "react-number-format"
 import placeholderImage from "../../assets/img/no-img.png"
 
-const IMG_PARCEL = "http://localhost:2000/uploads/parcels"
+const IMG_PARCEL = "https://api-parcel-1.purwadhikafs2.com/uploads/parcels"
 
 export default class TransactionParcelItems extends Component {
   render() {

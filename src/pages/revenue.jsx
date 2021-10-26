@@ -17,7 +17,7 @@ import FilterInput from "../components/Revenue/Filter/FilterInput"
 import ParcelRevenue from "../components/Revenue/Parcel/ParcelRevenue"
 import ParcelRevenueContainer from "../components/Revenue/Parcel/ParcelRevenueContainer"
 
-const REVENUE_API = "http://localhost:2000/revenue"
+const REVENUE_API = "https://api-parcel-1.purwadhikafs2.com/revenue"
 
 const lastMonth = new Date().setMonth(new Date().getMonth() - 1)
 

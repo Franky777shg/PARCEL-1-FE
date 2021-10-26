@@ -28,7 +28,7 @@ class Homepage extends Component {
     }
   }
   componentDidMount() {
-    axios.get(`http://localhost:2000/homepage/getHomepage/${1}`)
+    axios.get(`https://api-parcel-1.purwadhikafs2.com/homepage/getHomepage/${1}`)
       .then(res => {
         this.setState({ ...this.state, ...res.data })
         // console.log(this.state)
@@ -36,7 +36,7 @@ class Homepage extends Component {
       .catch(err => console.log(err))
   }
   onResetFilter = () => {
-    axios.get(`http://localhost:2000/homepage/getHomepage/${1}`)
+    axios.get(`https://api-parcel-1.purwadhikafs2.com/homepage/getHomepage/${1}`)
       .then(res => {
         this.setState({ ...this.state, ...res.data })
         // console.log(this.state)
@@ -47,7 +47,7 @@ class Homepage extends Component {
     const body = {
       "sortMethod": sortMethod
     }
-    axios.post(`http://localhost:2000/homepage/sortParcel`, body)
+    axios.post(`https://api-parcel-1.purwadhikafs2.com/homepage/sortParcel`, body)
       .then(res => {
         this.setState({ ...this.state, ...res.data })
       })
@@ -58,13 +58,13 @@ class Homepage extends Component {
       const body = {
         "idProductCategory": this.state.filterID
       }
-      axios.post(`http://localhost:2000/homepage/filterParcel/1`, body)
+      axios.post(`https://api-parcel-1.purwadhikafs2.com/homepage/filterParcel/1`, body)
         .then(res => {
           this.setState({ ...this.state, ...res.data, active: 1 })
         })
         .catch(err => console.log(err))
     } else {
-      axios.get(`http://localhost:2000/homepage/getHomepage/1`)
+      axios.get(`https://api-parcel-1.purwadhikafs2.com/homepage/getHomepage/1`)
         .then(res => {
 
           this.setState({ ...this.state, ...res.data, active: 1 })
@@ -90,13 +90,13 @@ class Homepage extends Component {
       const body = {
         "idProductCategory": this.state.filterID
       }
-      axios.post(`http://localhost:2000/homepage/filterParcel/${pageNum}`, body)
+      axios.post(`https://api-parcel-1.purwadhikafs2.com/homepage/filterParcel/${pageNum}`, body)
         .then(res => {
           this.setState({ ...this.state, ...res.data, active: pageNum })
         })
         .catch(err => console.log(err))
     } else {
-      axios.get(`http://localhost:2000/homepage/getHomepage/${pageNum}`)
+      axios.get(`https://api-parcel-1.purwadhikafs2.com/homepage/getHomepage/${pageNum}`)
         .then(res => {
 
           this.setState({ ...this.state, ...res.data, active: pageNum })
@@ -110,14 +110,14 @@ class Homepage extends Component {
       const body = {
         "idProductCategory": this.state.filterID
       }
-      axios.post(`http://localhost:2000/homepage/filterParcel/${currentPage + 1}`, body)
+      axios.post(`https://api-parcel-1.purwadhikafs2.com/homepage/filterParcel/${currentPage + 1}`, body)
         .then(res => {
           this.setState({ ...this.state, ...res.data, active: currentPage + 1 })
         })
         .catch(err => console.log(err))
     }
     else {
-      axios.get(`http://localhost:2000/homepage/getHomepage/${currentPage + 1}`)
+      axios.get(`https://api-parcel-1.purwadhikafs2.com/homepage/getHomepage/${currentPage + 1}`)
         .then(res => {
           this.setState({ ...this.state, ...res.data, active: currentPage + 1 })
         })
@@ -130,13 +130,13 @@ class Homepage extends Component {
       const body = {
         "idProductCategory": this.state.filterID
       }
-      axios.post(`http://localhost:2000/homepage/filterParcel/${currentPage - 1}`, body)
+      axios.post(`https://api-parcel-1.purwadhikafs2.com/homepage/filterParcel/${currentPage - 1}`, body)
         .then(res => {
           this.setState({ ...this.state, ...res.data, active: currentPage - 1 })
         })
         .catch(err => console.log(err))
     } else {
-      axios.get(`http://localhost:2000/homepage/getHomepage/${currentPage - 1}`)
+      axios.get(`https://api-parcel-1.purwadhikafs2.com/homepage/getHomepage/${currentPage - 1}`)
         .then(res => {
           this.setState({ ...this.state, ...res.data, active: currentPage - 1 })
         })
@@ -230,7 +230,7 @@ class Homepage extends Component {
               {this.state.parcel.map((item, index) => {
                 return (
                   <Card style={{ width: "18rem" }} key={index}>
-                    <Card.Img variant="top" src={`http://localhost:2000/uploads/parcels/${item.parcel_image}`} style={{ height: "15vh", marginTop: "1vh" }} />
+                    <Card.Img variant="top" src={`https://api-parcel-1.purwadhikafs2.com/uploads/parcels/${item.parcel_image}`} style={{ height: "15vh", marginTop: "1vh" }} />
                     <Card.Body>
                       <Card.Title> <b> {item.parcel_name} </b></Card.Title>
                       <div className="card-desc">

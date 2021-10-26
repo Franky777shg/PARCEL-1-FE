@@ -33,7 +33,7 @@ class ParcelDetail extends Component {
     const idParcel = this.props.location.search.substring(1);
 
     Axios
-      .get(`http://localhost:2000/homepage/parcelDetail/${idParcel}`)
+      .get(`https://api-parcel-1.purwadhikafs2.com/homepage/parcelDetail/${idParcel}`)
       .then((res) => {
         this.setState({
           parcelName: res.data[0].parcel_name,
@@ -68,7 +68,7 @@ class ParcelDetail extends Component {
         <div className="content-container">
           <div className="parcel-container">
             <img
-              src={`http://localhost:2000/uploads/parcels/${parcelImage}`}
+              src={`https://api-parcel-1.purwadhikafs2.com/uploads/parcels/${parcelImage}`}
               alt=""
               className="image-detail"
             />

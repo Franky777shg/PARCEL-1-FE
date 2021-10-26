@@ -30,7 +30,7 @@ class AddParcel extends React.Component {
   }
 
   componentDidMount(){
-    axios.get(`http://localhost:2000/productAdmin/mainCategories`)
+    axios.get(`https://api-parcel-1.purwadhikafs2.com/productAdmin/mainCategories`)
     .then(res =>{
         this.setState({category : res.data})
     })
@@ -47,7 +47,7 @@ class AddParcel extends React.Component {
         isiParcel :[...this.state.isiParcel, data],
         subCategory:[...this.state.subCategory,[]],
       })
-      axios.get(`http://localhost:2000/productAdmin/mainCategories`)
+      axios.get(`https://api-parcel-1.purwadhikafs2.com/productAdmin/mainCategories`)
       .then(res =>{
         this.setState({category : res.data})
         
@@ -63,7 +63,7 @@ class AddParcel extends React.Component {
   }
 
   onKategori=(e,index)=>{
-    axios.get(`http://localhost:2000/productAdmin/subCategories/${e}`)
+    axios.get(`https://api-parcel-1.purwadhikafs2.com/productAdmin/subCategories/${e}`)
     .then(res=>{
       // console.log(res.data)
       let dataNew =[...this.state.subCategory].slice()
@@ -99,7 +99,7 @@ class AddParcel extends React.Component {
   }
 
   onNewSubKategori=(e, name)=>{
-    axios.get(`http://localhost:2000/productAdmin/subCategories/${e}`)
+    axios.get(`https://api-parcel-1.purwadhikafs2.com/productAdmin/subCategories/${e}`)
     .then(res =>{
       this.setState({newSubCategory : res.data, categoryName : name })
     })
@@ -158,7 +158,7 @@ class AddParcel extends React.Component {
       }
 
       // console.log(data)
-      axios.post(`http://localhost:2000/productAdmin/addParcel`, data)
+      axios.post(`https://api-parcel-1.purwadhikafs2.com/productAdmin/addParcel`, data)
       .then(res =>{
         let newItemsIdParcel = newItems.newItems
         let parcelDetail =[]
@@ -172,10 +172,10 @@ class AddParcel extends React.Component {
         }
 
         this.setState({idparcel : res.data[0].idparcel})
-        axios.post(`http://localhost:2000/productAdmin/uploadParcel/${this.state.idparcel}/parcels`,photo, {headers:{'Content-Type' : 'multipart/form-data'}})
+        axios.post(`https://api-parcel-1.purwadhikafs2.com/productAdmin/uploadParcel/${this.state.idparcel}/parcels`,photo, {headers:{'Content-Type' : 'multipart/form-data'}})
         .then(res =>{
           this.setState({ modal :res.data})
-          axios.post(`http://localhost:2000/productAdmin/addParcelItens`,newParcelDetail)
+          axios.post(`https://api-parcel-1.purwadhikafs2.com/productAdmin/addParcelItens`,newParcelDetail)
           .then(res =>{
           this.setState({idparcel : 0, modal:[false, ""]})
         })

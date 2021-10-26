@@ -1,6 +1,6 @@
 import Axios from "axios"
 
-const TRX_API = "http://localhost:2000/transaction"
+const TRX_API = "https://api-parcel-1.purwadhikafs2.com/transaction"
 
 export const getTotalParcel = () => {
   return (dispatch) => {

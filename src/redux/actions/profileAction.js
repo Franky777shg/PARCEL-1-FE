@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const URL_PROFILE = "http://localhost:2000/profile/updateProfileData";
+const URL_PROFILE = "https://api-parcel-1.purwadhikafs2.com/profile/updateProfileData";
 
 export const updateData = (data) => {
   return (dispatch) => {
