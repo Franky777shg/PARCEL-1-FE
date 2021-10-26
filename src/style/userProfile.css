@@ -1,0 +1,62 @@
+#profilH1 {
+  margin-top: 3vh;
+}
+#editprofile-container {
+  background-color: white;
+  height: 70vh;
+  width: 70vw;
+  margin-left: 15vw;
+  margin-top: 3vh;
+  border-radius: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#profile-form-container {
+  width: 40vw;
+  background-color: white;
+  margin-left: 5vw;
+  height: 65vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.profile-form {
+  width: 20vw;
+}
+#gender-form {
+  margin-left: 0.75vw;
+}
+#profile-save {
+  background-color: #8f9b85;
+  border: none;
+  width: 8vw;
+  align-self: center;
+}
+#profile-avatar {
+  background-color: white;
+  width: 15vw;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-self: center;
+}
+.profile-avatar-button {
+  width: 5vw;
+  align-self: center;
+}
+#changepassword-container {
+  background-color: white;
+  height: 60vh;
+  width: 50vw;
+  margin: 10vh 20vw 10vh 25vw;
+  padding: 3vh 15vw 3vh 15vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+#changepassword-button {
+  display: flex;
+  justify-content: space-evenly;
+}

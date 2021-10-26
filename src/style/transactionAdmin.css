@@ -1,0 +1,61 @@
+#admintransaction-container {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  margin: 5vh 10vw;
+  flex-direction: column;
+  align-items: center;
+}
+#statusfilter-button {
+  background-color: white;
+  width: 76vw;
+  padding: 1vw;
+  margin: 2vh 5vw;
+  display: flex;
+  justify-content: space-evenly;
+}
+#admintransaction-table {
+  background-color: white;
+  width: 76vw;
+}
+.admintransactiondetail-container {
+  background-color: white;
+  display: flex;
+  margin: 3vh 12vw;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 2vh;
+}
+.bio-container {
+  width: 74vw;
+  display: flex;
+  margin-bottom: 2vh;
+}
+.bio-card {
+  padding-top: 1vh;
+  width: 40vw;
+}
+.bio-button {
+  margin-left: 3vw;
+  width: 8vw;
+  height: 25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.items-card {
+  width: 73vw;
+}
+.items-container {
+  padding: 1vw;
+  display: flex;
+  justify-content: space-around;
+}
+.table-items {
+  width: 40vw;
+}
+.confirm-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
